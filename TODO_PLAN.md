@@ -1,13 +1,22 @@
 # To do's 
 
-## Shell Loop & Basic Input 
+## Shell Loop & Basic User Input 
 
 - [ ] display prompt
 - [ ] read user input
 - [ ] exit on Ctrl-D
 
+# Lexical Analysis (Lexer)
+ - [ ] Split input into tokens: words, redirection symbols, pipes
+  - [ ] Handle:
+  	- [ ] Whitespace
+  	- [ ] Quotes (' and ")
+  	- [ ] Pipes (|)
+  	- [ ] Redirections (<, >, >>, <<)
+  - [ ] Create a token struct and a token list
+  - [ ] Implement error handling for invalid token sequences
 
-## Modular Parser 
+## Parser 
 
 - [ ] tokenezation 
 - [ ] handle quotes
@@ -16,12 +25,20 @@
 ## Piping 
 
 - [ ] handle multiple pipes
+- [ ] connect fd between processes
+- [ ] close unsused pipe end in parent/child
+- [ ] use dup2 to redirect stdin/stdout 
 
 ## Redirections 
 
-- [ ] implement piping
-- [ ] support i/o redirection > & <
-- [ ] support i/o redirection >> & <<
+- [ ] Output redirection > 
+- [ ] Input redirection <
+- [ ] Append output redirection >>
+- [ ] Heredoc redirection <<
+	- [ ] stop reading at delimeter
+	- [ ] Don't add heredoc input to history
+- [ ] handle redirection errors (bad files, permissions)
+
 
 ## Builtins 
 
@@ -41,10 +58,16 @@
 ## Signals 
 
 - [ ] Implement Ctrl-C, Ctrl-
-- [ ] memory leaks
+
 
 
 ## Testing Edge Cases 
 
-- [ ] spaces
-- [ ] run tester
+- [ ] test with different spaces
+- [ ] test all built'ins individually
+- [ ] test redirection with files
+- [ ] test heredoc woth / without signal
+- [ ] test pipe with external commands
+- [ ] compare behaviour to bash
+- [ ] use valgrind for memory leaks
+- [ ] run 42 tester
