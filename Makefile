@@ -11,12 +11,12 @@ CFLAGS = -Wall -Wextra -Werror -I.
 LIBS = -lreadline
 
 $(NAME): $(OBJ)
-    $(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
-	
+	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
+
 clean:
-    rm -f $(OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
-    rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean $(NAME)
