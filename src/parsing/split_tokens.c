@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-30 08:53:13 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-05-30 08:53:13 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/05/30 08:53:13 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/06/02 17:19:32 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/parsing.h"
 
 static int	correct_delimiter(int c)
 {

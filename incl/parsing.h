@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-27 10:45:04 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-05-27 10:45:04 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/05/27 10:45:04 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/06/02 14:54:05 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include <unistd.h>
 # include <sys/types.h>
@@ -22,7 +22,6 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "Libft/libft.h"
 
 # define WORD 1
 # define PIPE 2

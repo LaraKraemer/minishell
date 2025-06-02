@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-27 10:38:57 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-05-27 10:38:57 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/05/27 10:38:57 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/06/02 17:20:07 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/parsing.h"
 
-void	get_tokens(char *input)
-{
-	t_token	*first_token;
-	t_token	*current_token;
+// void	get_tokens(char *input)
+// {
+// 	t_token	*first_token;
+// 	t_token	*current_token;
 
-	while (*input)
-	{
-		skip_delimiter(&input);
+// 	while (*input)
+// 	{
+// 		skip_delimiter(&input);
 
-	}
-}
+// 	}
+// }
 
+
+/*
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
@@ -44,3 +46,4 @@ int	main(int argc, char **argv, char **env)
 	//return EXIT_SUCCESS;
 	//exit(0); //need to exit with the correct exit code
 }
+*/
