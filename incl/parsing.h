@@ -20,15 +20,18 @@
 # include <errno.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "minishell.h"
 
-# define WORD 1
-# define PIPE 2
-# define REDIRECT_IN 3
-# define REDIRECT_OUT 4
-# define HEREDOC 5
-# define APPEND 6
+typedef enum e_token_type
+{
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_APPEND,
+	TOKEN_HEREDOC,
+	TOKEN_UNKNOWN
+}	t_token_type;
 
 typedef struct s_token
 {
@@ -37,10 +40,18 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-t_token	*ms_lstnew(int type, char *value);
-t_token	*ms_lstlast(t_token *lst);
-void	ms_lstadd_back(t_token **lst, t_token *new);
-void	skip_delimiter(char **s);
+t_token			*ms_lstnew(int type, char *value);
+t_token			*ms_lstlast(t_token *lst);
+void			ms_lstadd_back(t_token **lst, t_token *new);
+void			skip_delimiter(char **s);
+int				correct_delimiter(int c);
+int				special_character(int c);
+int				is_word_token_start(int c);
+char			*copy_words(char **start);
+int				get_tokens(char *input, t_token **first_token);
+t_token_type	determine_type(char *start, char *next);
+char			*determine_value(t_token_type type, char **start);
+int				error_input(char *msg, int error);
 
 // typedef struct s_cmd
 // {
