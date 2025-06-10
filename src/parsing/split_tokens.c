@@ -18,9 +18,9 @@ t_token_type	determine_type(char *start, char *next)
 		return (TOKEN_WORD);
 	else if (*start == '|')
 		return (TOKEN_PIPE);
-	else if (*start == '<')
+	else if (*start == '<' && *next != '<')
 		return (TOKEN_REDIR_IN);
-	else if (*start == '>')
+	else if (*start == '>' && *next != '>')
 		return (TOKEN_REDIR_OUT);
 	else if (*start == '>' && *next == '>')
 		return (TOKEN_APPEND);

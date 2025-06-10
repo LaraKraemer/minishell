@@ -28,7 +28,8 @@ int	special_character(int c)
 
 int	is_word_token_start(int c)
 {
-	if (ft_isalnum(c) || c == '"' || c == '\'')
+	if (ft_isalnum(c) || c == '"' || c == '\'' || c == '-'
+		|| c == '.' || c == '/')
 		return (1);
 	return (0);
 }
