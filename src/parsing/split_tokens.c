@@ -29,40 +29,46 @@ t_token_type	determine_type(char *start, char *next)
 	return (TOKEN_UNKNOWN);
 }
 
+static void	handle_quotes(char **end, int *single_quote, int *double_quote)
+{
+	if (**end == '"')
+	{
+		(*double_quote)++;
+		(*end)++;
+		while (**end != '"' && **end)
+			(*end)++;
+		if (**end == '"')
+			(*double_quote)++;
+	}
+	else if (**end == '\'')
+	{
+		(*single_quote)++;
+		(*end)++;
+		while (**end != '\'' && **end)
+			(*end)++;
+		if (**end == '\'')
+			(*single_quote)++;
+	}
+}
+
 char	*copy_words(char **start)
 {
 	char		*end;
 	char		*word;
 	size_t		word_len;
-	int			single_quot;
-	int			double_quot;
+	int			single_quote;
+	int			double_quote;
 
 	end = *start;
-	single_quot = 0;
-	double_quot = 0;
+	single_quote = 0;
+	double_quote = 0;
 	while (!correct_delimiter(*end) && !special_character(*end) && *end)
 	{
-		if (*end == '"')
-		{
-			double_quot++;
-			end++;
-			while (*end != '"' && *end)
-				end++;
-			if (*end == '"')
-				double_quot++;
-		}
-		else if (*end == '\'')
-		{
-			single_quot++;
-			end++;
-			while (*end != '\'' && *end)
-				end++;
-			if (*end == '\'')
-				single_quot++;
-		}
+		if (*end == '"' || *end == '\'')
+			handle_quotes(&end, &single_quote, &double_quote);
 		end++;
 	}
-	if (double_quot % 2 != 0 || single_quot % 2 != 0)
+	if (double_quote % 2 != 0 || single_quote % 2 != 0)
 		return (NULL);
 	word_len = end - *start;
 	word = malloc((word_len + 1) * sizeof(char));
