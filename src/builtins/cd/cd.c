@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:18:43 by lkramer           #+#    #+#             */
-/*   Updated: 2025/05/30 11:54:04 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/02 17:17:30 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../minishell.h"
+# include "../../../incl/execution.h"
 
 
-char *cd_path(char *line, char *cwd, size_t cwd_size) 
+char *cd_path(char *line, char *cwd, size_t cwd_size)
 {
 	if (strcmp(line, "cd") == 0) {
 			if (getcwd(cwd, cwd_size) != NULL)
@@ -25,7 +25,7 @@ char *cd_path(char *line, char *cwd, size_t cwd_size)
 		if (chdir("..") == 0) {
 			if (getcwd(cwd, cwd_size) != NULL)
 				printf("Moved to: %s\n", cwd);
-			else 
+			else
 				perror("getcwd failed after cd ..");
 		}
 		else
@@ -35,7 +35,7 @@ char *cd_path(char *line, char *cwd, size_t cwd_size)
 		if (chdir("small_shell") == 0) {
 			if (getcwd(cwd, cwd_size) != NULL)
 				printf("Moved to: %s\n", cwd);
-			else 
+			else
 				perror("getcwd failed after cd ..");
 		}
 		else

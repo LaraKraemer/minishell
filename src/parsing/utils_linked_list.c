@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_linked_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-29 14:44:00 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-05-29 14:44:00 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/05/29 14:44:00 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/06/02 17:20:35 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/parsing.h"
 
 t_token	*ms_lstnew(int type, char *value)
 {
@@ -42,6 +42,6 @@ void	ms_lstadd_back(t_token **lst, t_token *new)
 
 	if (new == NULL)
 		return ;
-	last = ft_lstlast(*lst);
+	last = ms_lstlast(*lst);
 	last->next = new;
 }

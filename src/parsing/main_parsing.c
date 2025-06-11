@@ -3,44 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-27 10:38:57 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-05-27 10:38:57 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/05/27 10:38:57 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/06/02 17:20:07 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/parsing.h"
 
-void	get_tokens(char *input)
+int	get_tokens(char *input, t_token **first_token)
 {
-	t_token	*first_token;
-	t_token	*current_token;
+	t_token			*current_token;
+	t_token_type	type;
+	char			*value;
 
 	while (*input)
 	{
 		skip_delimiter(&input);
-
+		if (!*input)
+			return (1);
+		type = determine_type(input, input + 1);
+		value = determine_value(type, &input);
+		if (!value)
+			return (error_input("Syntax error", 1));
+		if (*first_token == NULL)
+		{
+			*first_token = ms_lstnew(type, value);
+			current_token = *first_token;
+		}
+		else
+		{
+			current_token = ms_lstnew(type, value);
+			ms_lstadd_back(first_token, current_token);
+		}
 	}
+	return (0);
 }
 
-int	main(int argc, char **argv, char **env)
-{
-	char	*input;
-
-	// argv[argc] = NULL;
-	// printf("%s\n", env[0]);
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-			break ;
-		//printf("%s\n", input);
-		if (*input)
-			add_history(input); //what if it will be just space in input line?
-		get_tokens(input);
-		free(input);
-	}
-	//return EXIT_SUCCESS;
-	//exit(0); //need to exit with the correct exit code
-}
