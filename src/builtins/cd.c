@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:18:43 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 11:53:25 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/11 13:54:30 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ cd /users/lara/
 cd /var/log
 cd / → go to the root directory.
 */
-int	cd_builtin(char *path)
+int	cd_builtin(char *args)
 {
-	if (!path)
+	if (!args)
 	{
 		if (!getenv("HOME"))
 			ft_putstr_fd(ERR_CD, 2);
 		return (1);
 	}
-	if (chdir(path) == -1)
+	if (chdir(args) == -1)
 	{
 		perror("cd failed");
 		return (1);

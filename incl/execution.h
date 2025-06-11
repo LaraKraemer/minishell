@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 11:39:58 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/11 13:54:37 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define EXECUTION_H
 
 # include <stdlib.h>
+# include <stdbool.h>
 # include "minishell.h"
-
+# include "parsing.h"
 # define ERR_QUOTE "Syntax minishell error: Unclosed quotes"
 # define ERR_ENV "Not a valid identifier\n"
 # define ERR_CD "testshell: cd: HOME not set\n"
@@ -51,7 +52,7 @@ int		exit_builtin(char **args);
 int		pwd_builtin(char **args, char *cwd, size_t cwd_size);
 
 // cd
-int		cd_builtin(char *path);
+int		cd_builtin(char *args);
 
 // echo
 int		echo_builtin(char **path);
@@ -63,7 +64,7 @@ int		env_builtin(char **env);
 int		export_builtin(char **args, char **env);
 char	**assign_var(char **env, char *args);
 char	**assign_var_and_value(char *equal_sign, char **env, char *args);
-int		pdate_add_var(char **args, char **env);
+int		update_add_var(char **args, char **env);
 int		export_without_var(char **env);
 
 // export utils
