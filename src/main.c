@@ -6,46 +6,46 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:23 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 12:18:27 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/11 13:54:55 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-// char **cell_split_input(char *input)
-// {
-// 	char **tokens;
-// 	unsigned int position;
-// 	size_t		bufsize;
-// 	char *token;
+char **cell_split_input(char *input)
+{
+	char **tokens;
+	unsigned int position;
+	size_t		bufsize;
+	char *token;
 
-// 	bufsize = BUFSIZ;
-// 	tokens = malloc(bufsize * sizeof * tokens);
-// 	if (!tokens) {
-//         perror("malloc failed");
-//         exit(EXIT_FAILURE);
-//     }
+	bufsize = BUFSIZ;
+	tokens = malloc(bufsize * sizeof * tokens);
+	if (!tokens) {
+        perror("malloc failed");
+        exit(EXIT_FAILURE);
+    }
 
-// 	position = 0;
-// 	token = strtok(input, DEL);
-// 	while(token != NULL)
-// 	{
-// 		tokens[position++] = token;
-// 		if(position >= bufsize)
-// 		{
-// 			bufsize *= 2;
-// 			tokens = realloc(tokens, bufsize * sizeof(char *));
-// 			 if (!tokens) {
-//                 perror("realloc failed");
-//                 exit(EXIT_FAILURE);
-//             }
-// 		}
-// 		token = strtok(NULL, DEL);
+	position = 0;
+	token = strtok(input, DEL);
+	while(token != NULL)
+	{
+		tokens[position++] = token;
+		if(position >= bufsize)
+		{
+			bufsize *= 2;
+			tokens = realloc(tokens, bufsize * sizeof(char *));
+			 if (!tokens) {
+                perror("realloc failed");
+                exit(EXIT_FAILURE);
+            }
+		}
+		token = strtok(NULL, DEL);
 
-// 	}
-// 	tokens[position] = NULL;
-// 	return tokens;
-// }
+	}
+	tokens[position] = NULL;
+	return tokens;
+}
 
 
 // REPL
@@ -54,9 +54,7 @@ int main(int argc, char **argv, char **env)
 {
 
 	char *input;
-	// char cwd[BUFSIZ];
-	char cwd[BUFSIZ];
-	t_token	*first_token;
+	// t_token	*first_token;
 
 	argv[argc] = "h";
 	env[0] = "h";
@@ -100,6 +98,7 @@ int main(int argc, char **argv, char **env)
 		// 	printf("Token[%d]: %s\n",i,  args[i]);
 		// 	i++;
 		// }
+		/*
 		first_token = NULL;
 		if (get_tokens(input, &first_token))
 			continue ;
@@ -110,13 +109,18 @@ int main(int argc, char **argv, char **env)
 			printf("Splitted token: %s\n", current->value);
 			current = current->next;
 		}
+		*/
+		/*
+    	if (first_token && first_token->type == TOKEN_WORD)
+			builtins(first_token, env);
+		*/
 		// cd minimal testing
 
 		// 2 - get tokens
 		// 		lexing -> parsing (EVALUATING)
 
 		// 3 - Exec
-		//free(args);
+		free(args);
 		free(input);
 	}
 	return 0;
