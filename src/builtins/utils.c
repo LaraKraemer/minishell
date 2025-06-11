@@ -6,33 +6,32 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:03:18 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/03 18:25:04 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/11 11:51:50 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../incl/execution.h"
+#include "../../incl/execution.h"
 
-	
-int builtins(char **args, char **env)
+int	builtins(char **args, char **env)
 {
-	char cwd[BUFSIZ];
+	char	cwd[BUFSIZ];
 
 	if (args[0] == NULL)
-   		return 0;
+   		return (0);
 	if (ft_strcmp(args[0], "cd") == 0)
-		cd_builtin(args[1], cwd, sizeof(cwd));
+		cd_builtin(args[1]);
 	else if (ft_strcmp(args[0], "echo") == 0)
 		echo_builtin(args);
 	else if (ft_strcmp(args[0], "pwd") == 0)
-		pwd_builtin(cwd, sizeof(cwd));
+		pwd_builtin(args, cwd, sizeof(cwd));
 	else if (ft_strcmp(args[0], "export") == 0)
-		export_builtin(env);
+		export_builtin(args, env);
 	else if (ft_strcmp(args[0], "unset") == 0)
-		printf("To be implemented");
+		unset_builtin(args, env);
 	else if (ft_strcmp(args[0], "env") == 0)
 		env_builtin(env);
 	else if (ft_strcmp(args[0], "exit") == 0)
-		exit_builtin(args[0]);
+		exit_builtin(args);
 	return (EXIT_SUCCESS);
 }
 

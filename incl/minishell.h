@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/02 17:50:05 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/03 16:09:45 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@
 # include "parsing.h"
 # include "execution.h"
 # include "Libft/libft.h"
+
+
+char **cell_split_input(char *input);
+
 
 #endif

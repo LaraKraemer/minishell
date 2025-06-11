@@ -6,11 +6,11 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:18:43 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/03 18:42:32 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/11 11:53:25 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../incl/execution.h"
+#include "../../incl/execution.h"
 
 /* 
 Relative path:
@@ -25,16 +25,18 @@ cd /users/lara/
 cd /var/log
 cd / → go to the root directory.
 */
-char *cd_builtin(char *path, char *cwd, size_t cwd_size)
+int	cd_builtin(char *path)
 {
-	if (chdir(path) == 0)
+	if (!path)
 	{
-		if (getcwd(cwd, cwd_size) != NULL)
-			printf("Moved to: %s\n", cwd); 
-		else
-			perror("getcwd failed");
+		if (!getenv("HOME"))
+			ft_putstr_fd(ERR_CD, 2);
+		return (1);
 	}
-	else
-		perror("Invalid cd path");
-	return (cwd);
+	if (chdir(path) == -1)
+	{
+		perror("cd failed");
+		return (1);
+	}
+	return (0);
 }
