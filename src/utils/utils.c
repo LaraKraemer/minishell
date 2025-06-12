@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:25:14 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/02 17:19:09 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/06/11 11:56:22 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../incl/execution.h"
+#include "../../incl/execution.h"
 
-void print_banner(void)
+void	print_banner(void)
 {
 	printf(".######..######...####...######...####...##..##..######..##......##.....\n"
 		   "...##....##......##........##....##......##..##..##......##......##.....\n"

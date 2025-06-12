@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/03 16:09:45 by lkramer          ###   ########.fr       */
+/*   Created: 2025/06/03 17:39:29 by lkramer           #+#    #+#             */
+/*   Updated: 2025/06/11 11:56:05 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../incl/execution.h"
 
+/*
+Returns global env vars
+Returns always 0
+*/
+int	env_builtin(char **env)
+{
+	int	i;
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <dirent.h>
-# include <readline/readline.h>
-# include "parsing.h"
-# include "execution.h"
-# include "Libft/libft.h"
-
-
-char **cell_split_input(char *input);
-
-
-#endif
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strchr(env[i], '='))
+			printf("%s\n", env[i]);
+		i++;
+	}
+	return (0);
+}
