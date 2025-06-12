@@ -6,12 +6,15 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:00:30 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 13:46:18 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/12 13:54:52 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execution.h"
 
+/*
+Runs in parent process - since it exit shell.
+*/
 int	exit_builtin(char **args)
 {
 	int	i;

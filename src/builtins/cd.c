@@ -6,13 +6,15 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:18:43 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 13:54:30 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/12 13:54:11 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execution.h"
 
 /* 
+Runs in parent process - since it affects shell state
+
 Relative path:
 A path relative to the current working directory.
 cd .. → go up one directory.

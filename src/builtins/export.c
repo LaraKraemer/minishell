@@ -6,13 +6,15 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:23:54 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 13:46:34 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/12 13:55:44 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execution.h"
 
 /*
+Runs in parent process - since it affects env of shell
+
 export (with no options)
 export VAR ☑️
 export VAR=value
