@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:53:19 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/12 13:58:55 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/13 16:53:50 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@ it doesn’t change anything.
 
 echo hello world
 Output: hello world\n
+
 echo -n hello
 Output: hello (No Trailing newline)
+
 No errors - always returns 0
 */
-int	echo_builtin(char **args)
+int	echo_builtin(char **args, char **env)
 {
-	int	i;
-	int	new_line;
+	int		i;
+	int		new_line;
 
 	i = 1;
 	new_line = 1;
@@ -36,7 +38,10 @@ int	echo_builtin(char **args)
 	}
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		if (args[i][0] == '$')
+			echo_env(args[i], env);
+		else
+				printf("%s", args[i]);
 		if (args[i + 1])
 			printf(" ");
 		i++;
@@ -44,4 +49,20 @@ int	echo_builtin(char **args)
 	if (new_line)
 		printf("\n");
 	return (0);
+}
+
+/*
+Calls env function and prints respective value to STDOUT
+*/
+void echo_env(char *arg, char **env)
+{
+	char	*expanded_var;
+
+	if (!arg || !env)
+        return;
+    if (arg[0] == '$')
+        arg++;
+	expanded_var = get_env_value(arg, env);
+	if (expanded_var)
+		printf("%s", expanded_var);
 }
