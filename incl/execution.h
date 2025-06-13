@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 13:54:37 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/13 14:46:16 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_data
 // utils
 int		ft_strcmp(const char *s1, const char *s2);
 int		builtins(char **args, char **env);
+int		is_builtin(char *arg);
 void	print_banner(void);
 
 // exit

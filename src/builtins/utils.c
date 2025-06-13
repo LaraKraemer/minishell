@@ -6,11 +6,34 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:03:18 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 13:47:17 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/13 14:59:45 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execution.h"
+
+int	is_builtin(char *arg)
+{
+	int		i;
+	char	*builtin_list[8];
+
+	builtin_list[0] = "cd";
+	builtin_list[1] = "echo";
+	builtin_list[2] = "pwd";
+	builtin_list[3] = "export";
+	builtin_list[4] = "unset";
+	builtin_list[5] = "env";
+	builtin_list[6] = "exit";
+	builtin_list[7] = NULL;
+	i = 0;
+	while (builtin_list[i])
+	{
+		if (ft_strcmp(arg, builtin_list[i]) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	builtins(char **args, char **env)
 {
