@@ -6,12 +6,18 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:03:18 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/13 14:59:45 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/13 15:06:41 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execution.h"
 
+/*
+This Checker identifies builtin commands from input.
+
+Returns 0 on success 
+Returns 1 on failure 
+*/
 int	is_builtin(char *arg)
 {
 	int		i;
@@ -35,6 +41,12 @@ int	is_builtin(char *arg)
 	return (0);
 }
 
+/*
+This Helper function, verifies and calls builtin cmd function.
+
+Returns 0 on success 
+Returns 1 on failure 
+*/
 int	builtins(char **args, char **env)
 {
 	char	cwd[BUFSIZ];
@@ -58,6 +70,12 @@ int	builtins(char **args, char **env)
 	return (EXIT_SUCCESS);
 }
 
+/*
+This helper function verifies whether two strings are identical.
+
+Returns 0 on success 
+Returns 1 on failure 
+*/
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t					i;
