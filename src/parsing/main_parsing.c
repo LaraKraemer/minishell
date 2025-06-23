@@ -95,7 +95,7 @@ int	split_into_cmds(t_command *cmd, t_token **first_token)
 			{
 				start = start->next;
 				cmd->cmd_args[i++] = start->value;
-				// printf("%s - cmd_arg\n", cmd->cmd_args[i - 1]);
+				printf("%s - cmd_arg\n", cmd->cmd_args[i - 1]);
 			}
 			cmd->cmd_args[i] = NULL;
 		}
@@ -155,13 +155,11 @@ int	parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char
 			return (error_input("syntax error", 0));
 		// if (first_token)
 		// 	first_token++;
-		//printf("%s - cmd %d\n", cmds_array[i].cmd, i);
+		printf("%s - cmd %d\n", cmds_array[i].cmd, i);
 		// if (first_token)
 		// 	printf("%s - first token value\n", first_token->value);
 		// fflush(0);
 		i++;
 	}
-	// if (cmd_count > 1)
-	// 	fill_pipes_fd(cmds_array, cmd_count);
 	return (1);
 }

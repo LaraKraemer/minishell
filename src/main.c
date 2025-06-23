@@ -54,6 +54,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*first_token;
 	int			cmd_count;
 	t_command	*cmds_array;
+	int			*pipe_fds;
 
 	argv[argc] = "h";
 	envp[0] = "h";
@@ -100,6 +101,14 @@ int	main(int argc, char **argv, char **envp)
 		{
 			free (cmds_array);
 			continue ;
+		}
+		if (cmd_count > 1)
+		{
+			if (!fill_pipes_fd(pipe_fds, cmd_count))
+			{
+				free(cmds_array);
+				continue ;
+			}
 		}
 		//free(args);
 		free(input);

@@ -13,21 +13,20 @@
 #include "../../incl/tokenisation.h"
 #include "../../incl/parsing.h"
 
-// int	fill_pipes_fd(t_command *cmds_array, int cmd_count)
-// {
-// 	int	i;
+int	fill_pipes_fd(int *pipe_fds, int cmd_count)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (i < cmd_count - 1)
-// 	{
-// 		if (pipe(cmds_array[i].pipe_fd) == -1)
-// 		{
-// 			perror("pipe");
-// 			return (0);
-// 		}
-// 		cmds_array[i].fd_out = cmds_array[i].pipe_fd[1];
-// 		cmds_array[i + 1].fd_in = cmds_array[i].pipe_fd[0];
-// 		i++;
-// 	}
-// 	r
-// }
+	pipe_fds = malloc((cmd_count - 1) * 2 * sizeof(int));
+	if (!pipe_fds)
+		return (error_input("malloc failed", 0));
+	i = 0;
+	while (i < cmd_count - 1)
+	{
+		if (pipe(&pipe_fds[2 * i]) == -1)
+			return (error_input("pipe failed", 0));
+		i++;
+	}
+	return (1);
+}
+

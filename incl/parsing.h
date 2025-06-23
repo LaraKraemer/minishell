@@ -20,8 +20,7 @@
 # include <errno.h>
 # include <stdlib.h>
 # include <stdio.h>
-// # include "minishell.h"
-// # include "tokenisation.h"
+
 # define MAX_ARGS 100
 
 typedef struct s_command
@@ -31,7 +30,7 @@ typedef struct s_command
 	char	**env;
 	int		fd_in;
 	int		fd_out;
-	int		pipe_fd[2];
+	//int		pipe_fd[2];
 }	t_command;
 
 int	count_cmd_num(t_token *first_token);
@@ -39,5 +38,6 @@ int	parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char
 int	split_into_cmds(t_command *cmd, t_token **start);
 int	is_last_token_word(t_token *first_token);
 int	open_file(t_command *cmd, char *file, int i);
+int	fill_pipes_fd(int *pipe_fds, int cmd_count);
 
 #endif
