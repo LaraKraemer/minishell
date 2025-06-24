@@ -6,3 +6,5 @@ minishell
 *~
 *.swp
 .DS_Store
+*.yml
+Dockerfile
