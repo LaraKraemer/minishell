@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:53:19 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/13 16:53:50 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:34:29 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	echo_builtin(char **args, char **env)
 	}
 	while (args[i])
 	{
+		if (args[1][1] == '?')
+			echo_exit_code(args[i]);
 		if (args[i][0] == '$')
 			echo_env(args[i], env);
 		else
@@ -61,8 +63,28 @@ void echo_env(char *arg, char **env)
 	if (!arg || !env)
         return;
     if (arg[0] == '$')
+	{
         arg++;
+	}
 	expanded_var = get_env_value(arg, env);
 	if (expanded_var)
 		printf("%s", expanded_var);
+}
+
+/*
+Calls exit function and prints respective value to STDOUT
+*/
+void echo_exit_code(char *arg)
+{
+	char	*expanded_exit;
+
+	if (!arg)
+        return;
+    if (arg[0] == '$')
+	{
+        arg++;
+	}
+	expanded_exit = expand_exit_code(arg);
+	if (expanded_exit)
+		printf("%s", expanded_exit);
 }

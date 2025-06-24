@@ -6,14 +6,14 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:03:18 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/13 15:06:41 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:43:34 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execution.h"
 
 /*
-This Checker identifies builtin commands from input.
+Identifies builtin commands from input.
 
 Returns 0 on success 
 Returns 1 on failure 
@@ -42,7 +42,7 @@ int	is_builtin(char *arg)
 }
 
 /*
-This Helper function, verifies and calls builtin cmd function.
+Verifies and calls builtin cmd function.
 
 Returns 0 on success 
 Returns 1 on failure 
@@ -54,9 +54,9 @@ int	builtins(char **args, char **env)
 	if (args[0] == NULL)
    		return (0);
 	if (ft_strcmp(args[0], "cd") == 0)
-		cd_builtin(args[1]);
+		cd_builtin(args[1], env);
 	else if (ft_strcmp(args[0], "echo") == 0)
-		echo_builtin(args);
+		echo_builtin(args, env);
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		pwd_builtin(args, cwd, sizeof(cwd));
 	else if (ft_strcmp(args[0], "export") == 0)
@@ -71,7 +71,7 @@ int	builtins(char **args, char **env)
 }
 
 /*
-This helper function verifies whether two strings are identical.
+Function verifies whether two strings are identical.
 
 Returns 0 on success 
 Returns 1 on failure 

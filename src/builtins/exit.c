@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:00:30 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/12 13:54:52 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:20:49 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 /*
 Runs in parent process - since it exit shell.
+# one cmd run in parent process 
+# two run in child process 
 */
 int	exit_builtin(char **args)
 {

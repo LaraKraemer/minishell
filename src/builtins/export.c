@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:23:54 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/12 13:55:44 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/12 14:50:54 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 /*
 Runs in parent process - since it affects env of shell
 
-export (with no options)
-export VAR ☑️
+export
 export VAR=value
 export VAR
 
