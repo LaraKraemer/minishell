@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/13 16:56:56 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/16 16:34:56 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_data
 
 // expansion
 char	*get_env_value(char *arg, char **env); 
+char	*expand_exit_code(char *arg);
 
 /* 
 builtins folder
@@ -64,6 +65,7 @@ int		cd_builtin(char *args, char **env);
 // echo.c
 int		echo_builtin(char **path, char **env);
 void	echo_env(char *args, char **env);
+void echo_exit_code(char *arg);
 
 // env.c
 int		env_builtin(char **env);

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/03 16:09:45 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/16 14:32:11 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include <readline/readline.h>
+# include<readline/history.h>
 # include "parsing.h"
 # include "execution.h"
 # include "Libft/libft.h"
