@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:31 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/13 17:01:25 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/06/16 17:13:42 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,34 @@ char	*get_env_value(char *arg, char **env)
 	while(env[i])
 	{
 		if (ft_strncmp(env[i], arg, arg_len) == 0 && env[i][arg_len] == '=')
-			return (env[i] + arg_len + 1);
+        	return (ft_strdup(env[i] + arg_len + 1));
 		i++;
 	}
 	return (NULL);
 }
 
-/*
-char *expand_var(char *arg, char **env)
-{
-	char	*value;
-	char	*result;
-	int		exit_code;
 
-	if (ft_strcmp(arg[0], '?') == 0)
-		value = ft_itoa(exit_code);
-	else
-		value = get_env_value(arg, env);
-	if (value != NULL)
-	{
-		result = ft_strdup(value);
-		if (ft_strcmp(arg, '?') == 0)
-			free(value);
-		return (result);
-	}
-	else
-		return (ft_strdup(""));
+char *expand_exit_code(char *arg)
+{
+    char    *value;
+    char    *result;
+    int     exit_code;
+
+    exit_code = 1; // Get this from global / passed as parameter
+    if (arg && arg[1] == '?')
+	printf("%d\n", arg[1]);
+    {
+        value = ft_itoa(exit_code);
+        if (!value)
+            return (NULL);
+        result = ft_strdup(value);
+        free(value);
+        return (result);
+    }
+    return (ft_strdup(""));
 }
 
-*/
+
 /*
 
 
