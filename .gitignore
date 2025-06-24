@@ -8,3 +8,4 @@ minishell
 .DS_Store
 *.yml
 Dockerfile
+*.supp
