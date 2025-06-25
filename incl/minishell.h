@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include <readline/readline.h>
+# include "tokenisation.h"
 # include "parsing.h"
 # include "execution.h"
 # include "Libft/libft.h"

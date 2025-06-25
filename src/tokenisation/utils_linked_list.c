@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/parsing.h"
+#include "../../incl/tokenisation.h"
 
 t_token	*ms_lstnew(int type, char *value)
 {
@@ -36,12 +36,12 @@ t_token	*ms_lstlast(t_token *lst)
 	return (lst);
 }
 
-void	ms_lstadd_back(t_token **lst, t_token *new)
+void	ms_lstadd_back(t_token **lst, t_token *new_node)
 {
 	t_token	*last;
 
-	if (new == NULL)
+	if (new_node == NULL)
 		return ;
 	last = ms_lstlast(*lst);
-	last->next = new;
+	last->next = new_node;
 }
