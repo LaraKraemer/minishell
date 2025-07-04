@@ -6,11 +6,11 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:27:35 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 11:50:42 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:38:39 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/execution.h"
+#include "../../incl/builtins.h"
 
 char	**copy_env(char **env)
 {
