@@ -5,87 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/16 16:34:56 by lkramer          ###   ########.fr       */
+/*   Created: 2025/07/01 13:37:27 by lkramer           #+#    #+#             */
+/*   Updated: 2025/07/04 17:27:09 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
+# ifndef EXECUTION_H
 # define EXECUTION_H
 
 # include <stdlib.h>
 # include <stdbool.h>
-# include "minishell.h"
 # include "parsing.h"
-# define ERR_QUOTE "Syntax minishell error: Unclosed quotes"
-# define ERR_ENV "Not a valid identifier\n"
-# define ERR_CD "testshell: cd: HOME not set\n"
-# define ERR_ARG_SIZE "testshell: too many arguments\n"
-# define DEL  " \t\r\n\a"
+# include "builtins.h"
+# include "Libft/libft.h"
 
-typedef struct s_cmd
-{
-	int		cmd_count;
-	char	*cmd_path;
-	char	**cmd_argv;
-}	t_cmd;
 
-typedef struct s_data
-{
-	int		fd_in;
-	int		fd_out;
-	t_cmd	command;
-	pid_t	*child_pid;
-	int		*pipe_fd;
-	char	**path_file;
-}	t_data;
-
-// expansion
-char	*get_env_value(char *arg, char **env); 
-char	*expand_exit_code(char *arg);
-
-/* 
-builtins folder
-*/
-// utils.c
-int		ft_strcmp(const char *s1, const char *s2);
-int		builtins(char **args, char **env);
-int		is_builtin(char *arg);
-void	print_banner(void);
-
-// exit.c
-int		exit_builtin(char **args);
-
-// pwd.c
-int		pwd_builtin(char **args, char *cwd, size_t cwd_size);
-
-// cd.c
-int		cd_builtin(char *args, char **env);
-
-// echo.c
-int		echo_builtin(char **path, char **env);
-void	echo_env(char *args, char **env);
-void echo_exit_code(char *arg);
-
-// env.c
-int		env_builtin(char **env);
-
-// export.c
-int		export_builtin(char **args, char **env);
-char	**assign_var(char **env, char *args);
-char	**assign_var_and_value(char *equal_sign, char **env, char *args);
-int		update_add_var(char **args, char **env);
-int		export_without_var(char **env);
-
-// export_utils.c
-int		valid_identifier(char *arg);
-char	**copy_env(char **env);
-void	sort_env(char **env);
-void	print_export(char **env);
-void	free_env(char **env);
-
-// unset.c
-int		unset_builtin(char **args, char **env);
-void	remove_var_from_env(char *args, char **env);
+int		check_command(t_command *cmd_struct);
+int		execute_with_pipex_logic(t_command *cmds, int cmd_count, char **envp);
+int setup_pipes(int cmd_count, int **pipe_fds);
+int parent_process(pid_t pid, int *pipe_fds, int cmd_count, int i);
+void handle_child_redirections(t_command *cmd, int i, int *pipe_fds, int cmd_count);
+void print_child_debug(t_command *cmd, int i);
+void setup_child_fds(int i, int *pipe_fds, int cmd_count);
+/* static int parent_process(t_command *cmds, pid_t pid, int *pipe_fds, 
+                         int cmd_count, int i); */
+void child_process(t_command *cmds, int i, int *pipe_fds, char **envp);
+int		set_path(t_command *cmd, char *envp[]);
+void	free_array(char **str_array);
+void	free_commands(t_command *cmds, int cmd_count);
 
 #endif
