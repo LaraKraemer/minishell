@@ -9,3 +9,5 @@ minishell
 *.yml
 Dockerfile
 *.supp
+/minishell_tester
+
