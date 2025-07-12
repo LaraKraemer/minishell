@@ -6,13 +6,15 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:15:00 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/03 11:52:32 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/12 20:18:21 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execution.h"
 
-
+/* 
+Filter function for builtin cmd in parent process
+*/
 int must_run_in_parent(const char *cmd)
 {
 	int i;

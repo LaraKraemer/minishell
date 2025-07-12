@@ -6,20 +6,15 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/12 18:45:50 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/12 20:16:59 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execution.h"
 
-/*
-1 input 
-1 output 
-1 command 
-if file descriptor is filled write / read from it. 
-do we have input / output redirections 		
-	*/ 
-
+/* 
+Executes a pipeline of commands with fork/exec and pipe redirection 
+*/
 int	execute_with_pipex_logic(t_command *cmds, int cmd_count, char **envp)
 {
     int		*pipe_fds;
@@ -47,6 +42,10 @@ int	execute_with_pipex_logic(t_command *cmds, int cmd_count, char **envp)
     return (free(pipe_fds), free(child_pids), exit_status);
 }
 
+/* 
+Initializes pipe file descriptors for command pipeline 
+Allocates (cmd_count-1)*2 file descriptors in pipe_fds
+*/
 int setup_pipes(int cmd_count, int **pipe_fds)
 {
     int i;
@@ -66,6 +65,9 @@ int setup_pipes(int cmd_count, int **pipe_fds)
     return (0);
 }
 
+/* 
+Manages stdin/stdout redirection for a child process
+*/
 void setup_child_fds(int i, int *pipe_fds, int cmd_count)
 {
     if (i > 0)
@@ -82,6 +84,11 @@ void setup_child_fds(int i, int *pipe_fds, int cmd_count)
     }
 }
 
+/* 
+Manages file redirections and closes unused pipe ends
+Closes all pipe FDs not used by this command and applies
+file-based redirections when specified
+*/
 void handle_child_redirections(t_command *cmd, int i, int *pipe_fds, int cmd_count)
 {
     int j;
@@ -106,6 +113,10 @@ void handle_child_redirections(t_command *cmd, int i, int *pipe_fds, int cmd_cou
     }
 }
 
+/* 
+Child process execution handler
+Never returns - exits via exit() or execve()
+*/
 void child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
 {
     int cmd_count;
@@ -136,6 +147,10 @@ void child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
     exit(127);
 }
 
+/* 
+Manages parent process responsibilities during pipeline execution
+Closes unused pipe ends and waits for child completion
+*/
 int parent_process(pid_t pid, int *pipe_fds, int cmd_count, int i)
 {
     int status;
@@ -152,6 +167,7 @@ int parent_process(pid_t pid, int *pipe_fds, int cmd_count, int i)
     return (0);
 }
 
+/* Temporary debugging function */
 void print_child_debug(t_command *cmd, int i)
 {		   
     fprintf(stderr, "Executing: %s\n", cmd[i].cmd_path);
