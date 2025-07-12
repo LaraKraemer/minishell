@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/08 21:41:35 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/12 18:45:50 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,11 @@ void child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
         cmd_count++;
     setup_child_fds(i, pipe_fds, cmd_count);
     handle_child_redirections(cmds, i, pipe_fds, cmd_count);
+	if (is_builtin(cmds[i].cmd_args[0]))
+    {
+		fprintf(stderr, "Executing builtin: %s\n", cmds[i].cmd_args[0]);
+        exit(builtins(&cmds[i], envp));
+    }
     if (check_command(&cmds[i]) != 0)
         exit(cmds[i].exit_status);
 	print_child_debug(cmds, i);
@@ -162,9 +167,6 @@ void print_child_debug(t_command *cmd, int i)
 }
 
 
-
-
-
 /* 
 
 Later add to child process: 
@@ -174,134 +176,6 @@ Later add to child process:
 		fprintf(stderr, "Executing builtin: %s\n", cmds[i].cmd_args[0]);
         exit(builtins(&cmds[i], envp));
     }
-
-	
-
-
-
-void child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
-{
-	if (cmds[i].fd_in < 0) cmds[i].fd_in = STDIN_FILENO;
-    if (cmds[i].fd_out < 0) cmds[i].fd_out = STDOUT_FILENO;
-	
-	fprintf(stderr, "\n=== CHILD PROCESS DEBUG ===\n");
-    fprintf(stderr, "Command index: %d\n", i);
-    fprintf(stderr, "Command: %s\n", cmds[i].cmd);
-    fprintf(stderr, "fd_in: %d, fd_out: %d\n", cmds[i].fd_in, cmds[i].fd_out);
-
-    int cmd_count = 0;
-    while (cmds[cmd_count].cmd != NULL)
-        cmd_count++;
-    if (i > 0)
-    {
-		fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]);
-        if (dup2(pipe_fds[(i - 1) * 2], STDIN_FILENO) == -1)
-            perror("dup2 input");
-    }
-    if (i < cmd_count - 1)
-    {
-		 fprintf(stderr, "Connecting stdout to pipe %d\n", pipe_fds[i*2+1]);
-        if (dup2(pipe_fds[i * 2 + 1], STDOUT_FILENO) == -1)
-            perror("dup2 output");
-    }
-	int j = 0;
-    while (j < (cmd_count - 1) * 2)
-	{
-		close(pipe_fds[j]);
-		j++;
-	}
-    if (cmds[i].fd_in != STDIN_FILENO)
-    {
-        if (dup2(cmds[i].fd_in, STDIN_FILENO) == -1)
-            perror("dup2 fd_in");
-		close(cmds->fd_in);
-    }
-    if (cmds[i].fd_out != STDOUT_FILENO)
-    {
-        if (dup2(cmds[i].fd_out, STDOUT_FILENO) == -1)
-            perror("dup2 fd_out");
-		 close(cmds->fd_out);
-    }
-
-	int actual_in = dup(STDIN_FILENO);
-    int actual_out = dup(STDOUT_FILENO);
-    fprintf(stderr, "ACTUAL FDs after dup2 - in:%d out:%d\n", actual_in, actual_out);
-    close(actual_in);
-    close(actual_out);
-	
-	if (check_command(&cmds[i]) != 0)
-		exit(cmds[i].exit_status);
-    fprintf(stderr, "Executing: %s\n", cmds[i].cmd_path);
-    fprintf(stderr, "With args: ");
-    for (int k = 0; cmds[i].cmd_args[k]; k++) {
-        fprintf(stderr, "'%s' ", cmds[i].cmd_args[k]);
-    }
-    fprintf(stderr, "\n");
-    for (int k = 0; cmds[i].cmd_args[k]; k++) {
-        fprintf(stderr, "'%s' ", cmds[i].cmd_args[k]);
-    }
-    fprintf(stderr, "\n");
-    execve(cmds[i].cmd_path, cmds[i].cmd_args, envp);
-	perror("execve");
-	exit(127);
-    
-}
-
-static int parent_process(t_command *cmds, pid_t pid, int *pipe_fds, 
-                         int cmd_count, int i)
-{
-    int status;
-    
-    if (i > 0) 
-		close(pipe_fds[2*(i-1)]);
-    if (i < cmd_count-1) 
-		close(pipe_fds[2*i+1]);
-
-    waitpid(pid, &status, 0);
-    
-    if (WIFEXITED(status))
-        cmds[i].exit_status = WEXITSTATUS(status);
-    else if (WIFSIGNALED(status))
-        cmds[i].exit_status = 128 + WTERMSIG(status);
-	return cmds[i].exit_status;
-}
-
-int	execute_with_pipex_logic(t_command *cmds, int cmd_count, char **envp)
-{
-	int exit_status = 0;
-    int *pipe_fds = NULL;
-	
-    pid_t *child_pids = malloc(cmd_count * sizeof(pid_t));
-    if (cmd_count > 1) {
-        pipe_fds = malloc((cmd_count - 1) * 2 * sizeof(int));
-		int i = 0;
-        while (i < cmd_count - 1) {
-            if (pipe(pipe_fds + i*2) == -1) {
-                perror("pipe");
-                exit(1);
-            }
-			i++;
-        }
-    }
-	int i = 0;
-    while (i < cmd_count)
-	{
-        child_pids[i] = fork();
-        if (child_pids[i] == -1) {
-            perror("fork");
-            exit(1);
-        }
-        else if (child_pids[i] == 0) {
-            child_process(cmds, i, pipe_fds, envp);
-        }
-        else {
-            parent_process(cmds, child_pids[i], pipe_fds, cmd_count, i);
-        }
-		i++;
-    }
-    free(pipe_fds);
-    free(child_pids);
-	return exit_status;
-} */
+*/
 
 
