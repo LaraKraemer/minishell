@@ -81,6 +81,7 @@ int	split_into_cmds(t_command *cmd, t_token **first_token)
 		}
 		else if (start->type == TOKEN_WORD)
 		{
+			//start->value = check_quotes(start->value);
 			cmd->cmd = start->value;
 			i = 0;
 			// printf("%s - cmd\n", cmd->cmd);
@@ -89,7 +90,7 @@ int	split_into_cmds(t_command *cmd, t_token **first_token)
 			if (!cmd->cmd_args)
 				return (error_input("malloc failed", 0));
 			cmd->cmd_args[i++] = start->value;
-			// printf("%s - cmd_arg\n", cmd->cmd_args[i - 1]);
+			printf("%s - cmd_arg\n", cmd->cmd_args[i - 1]);
 			// fflush(0);
 			while (start->next && start->next->type == TOKEN_WORD)
 			{
@@ -98,6 +99,7 @@ int	split_into_cmds(t_command *cmd, t_token **first_token)
 				printf("%s - cmd_arg\n", cmd->cmd_args[i - 1]);
 			}
 			cmd->cmd_args[i] = NULL;
+			printf("%s - cmd_arg\n", cmd->cmd_args[i - 1]);
 		}
 		// printf("%s - last token value\n", start->value);
 		if (start)
