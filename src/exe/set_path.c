@@ -6,13 +6,13 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 11:52:03 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/06/03 15:19:36 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/08 21:15:05 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../../incl/execution.h"
 
-/*
+
 static int	extract_path(char *envp[])
 {
 	int	i;
@@ -21,65 +21,63 @@ static int	extract_path(char *envp[])
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			break ;
+			return (i);
 		i++;
 	}
-	if (envp[i] == NULL)
-	{
-		ft_putendl_fd("Failed to find the path", 2);
-		return (-1);
-	}
-	return (i);
+	ft_putendl_fd("Failed to find the PATH", 2);
+	return (-1);
 }
 
-static int	add_slash_topath(t_data *data, char **path_file)
+static int	add_slash_topath(char ***dest, char **path_file)
 {
 	int	i;
 
 	i = 0;
 	while (path_file[i])
 		i++;
-	data->path_file = malloc((i + 1) * sizeof(char *));
+	*dest = malloc((i + 1) * sizeof(char *));
 	i = 0;
 	while (path_file[i])
 	{
-		data->path_file[i] = ft_strjoin(path_file[i], "/");
-		if (data->path_file == NULL)
+		(*dest)[i] = ft_strjoin(path_file[i], "/");
+		if (!(*dest)[i])
 		{
 			free_array(path_file);
-			free_array(data->path_file);
+			free_array(*dest);
 			return (-1);
 		}
 		i++;
 	}
-	data->path_file[i] = NULL;
+	(*dest)[i] = NULL;
 	free_array(path_file);
 	return (0);
 }
 
-int	set_path(t_data *data, char *envp[])
+int	set_path(t_command *cmd, char *envp[])
 {
 	char	*path;
-	char	**path_file;
+	char	**split_path;
+	char	**path_cache;
 	int		i;
 
-	i = extract_path(envp);
-	if (i == -1)
-		return (-1);
-	path = ft_strtrim(envp[i], "PATH=");
-	if (path == NULL || ft_strlen(path) == 0)
-	{
-		ft_putendl_fd("Failed to find the path", 2);
-		return (-1);
-	}
-	path_file = ft_split(path, ':');
-	free(path);
-	if (path_file == NULL || add_slash_topath(data, path_file) == -1)
-	{
-		ft_putendl_fd("Failed to find the path", 2);
-		return (-1);
-	}
-	return (0);
+	if (cmd->path_file)
+        free_array(cmd->path_file);
+	path_cache = NULL;
+	if (path_cache == NULL) {
+        i = extract_path(envp);
+        if (i == -1) 
+			return (-1);
+        path = ft_strtrim(envp[i], "PATH=");
+        split_path = ft_split(path, ':');
+        free(path);
+		// Debug: Print each path in the split PATH
+        /* for (int j = 0; split_path[j]; j++) {
+            printf("\033[0;31mDebug: split_path[%d] = %s\033[0m\n", j, split_path[j]);
+        } */
+        if (add_slash_topath(&path_cache, split_path) == -1)
+            return (-1);
+    }
+    cmd->path_file = path_cache;
+    return (0);
 }
 
-*/

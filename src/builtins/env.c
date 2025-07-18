@@ -6,14 +6,18 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 17:39:29 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 11:56:05 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:38:31 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/execution.h"
+#include "../../incl/builtins.h"
 
 /*
-Returns global env vars
+Runs in child process - no issues with forking since 
+it doesn’t change anything.
+
+Returns global env variables
+
 Returns always 0
 */
 int	env_builtin(char **env)

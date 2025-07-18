@@ -6,12 +6,15 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:44:54 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/11 11:58:16 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:38:49 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/execution.h"
+#include "../../incl/builtins.h"
 
+/*
+Runs in parent process - since it affects env of shell
+*/
 int	unset_builtin(char **args, char **env)
 {
 	int	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:45:04 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/06/02 14:54:05 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:58:51 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <errno.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include "tokenisation.h"
 
 # define MAX_ARGS 100
 
@@ -30,6 +31,9 @@ typedef struct s_command
 	char	**env;
 	int		fd_in;
 	int		fd_out;
+	char	**path_file;
+	char	*cmd_path;
+	int		exit_status;
 	//int		pipe_fd[2];
 }	t_command;
 

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/06/03 16:09:45 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/03 18:55:30 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,18 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include <readline/readline.h>
+# include<readline/history.h>
 # include "tokenisation.h"
 # include "parsing.h"
 # include "execution.h"
+# include "builtins.h"
 # include "Libft/libft.h"
 
 
-char **cell_split_input(char *input);
+void	print_banner(void);
+void free_resources(char *input, t_command *cmds, int count);
+/* static char	**copy_environment(char **envp);
+ */
 
 
 #endif
