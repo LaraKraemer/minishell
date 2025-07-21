@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*input)
 			add_history(input);
 		printf("Raw input: \"%s\"\n", input);
-		// Tokenizer 
+		// Tokenizer
 		first_token = NULL;
 		if (get_tokens(input, &first_token))
 			continue ;
@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 			current = current->next;
 		}
 		cmd_count = count_cmd_num(first_token);
-		cmds_array = malloc((cmd_count) * sizeof(t_command));
+		cmds_array = malloc((cmd_count + 1) * sizeof(t_command));
 		if (!cmds_array)
 		{
 			error_input("malloc failed", 1);
@@ -72,17 +72,20 @@ int	main(int argc, char **argv, char **envp)
 			free (cmds_array);
 			continue ;
 		}
-		// Debug printer 
+		// Debug printer
         for (int i = 0; i < cmd_count; i++) {
             printf("CMD %d: %s\n", i, cmds_array[i].cmd);
             printf("  ARGS:");
-            for (int j = 0; cmds_array[i].cmd_args[j]; j++)
+			int j;
+            for (j = 0; cmds_array[i].cmd_args[j]; j++)
                 printf(" [%s]", cmds_array[i].cmd_args[j]);
+			if (cmds_array[i].cmd_args[j] == NULL)
+				printf(" [NULL]");
             printf("\n");
         }
 		while (i < cmd_count)
 		{
-			if (set_path(&cmds_array[i], envp) == -1)
+			if (set_path(&cmds_array[i], cmds_array[i].env) == -1)
 			{
 				error_input("Failed to set PATH", 127);
 				break;
@@ -114,18 +117,18 @@ int	main(int argc, char **argv, char **envp)
 
 
 
-/* 
+/*
 // printf("cmd count - %d\n", cmd_count);
 		// fflush(0);
-		
+
 
 if (cmd_count > 1)
 		{
 			pipe_fds = malloc((cmd_count - 1) * 2 * sizeof(int));
 			int i = 0;
-			while (i < cmd_count - 1) 
+			while (i < cmd_count - 1)
 			{
-				if (pipe(pipe_fds + i*2) == -1) 
+				if (pipe(pipe_fds + i*2) == -1)
 				{
 					perror("pipe");
 					exit(1);
@@ -144,7 +147,7 @@ if (cmd_count > 1)
 		//free(args);
 
 
-		
+
 // char **args = cell_split_input(input);
 		// builtins(args, env);
 		// non_builtins(args, env);
@@ -154,4 +157,4 @@ if (cmd_count > 1)
 		// 	printf("Token[%d]: %s\n",i,  args[i]);
 		// 	i++;
 		// }
-		
+

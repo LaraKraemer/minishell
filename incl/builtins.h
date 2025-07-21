@@ -32,10 +32,10 @@
 
 
 // expansion
-char	*get_env_value(char *arg, char **env); 
+char	*get_env_value(char *arg, char **env);
 char	*expand_exit_code(char *arg);
 
-/* 
+/*
 builtins folder
 */
 // utils.c
@@ -70,7 +70,6 @@ int		export_without_var(char **env);
 
 // export_utils.c
 int		valid_identifier(char *arg);
-char	**copy_env(char **env);
 void	sort_env(char **env);
 void	print_export(char **env);
 void	free_env(char **env);
