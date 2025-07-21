@@ -34,14 +34,14 @@ typedef struct s_command
 	char	**path_file;
 	char	*cmd_path;
 	int		exit_status;
-	//int		pipe_fd[2];
 }	t_command;
 
-int	count_cmd_num(t_token *first_token);
-int	parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char **envp);
-int	split_into_cmds(t_command *cmd, t_token **start);
-int	is_last_token_word(t_token *first_token);
-int	open_file(t_command *cmd, char *file, int i);
-int	fill_pipes_fd(int *pipe_fds, int cmd_count);
+int		count_cmd_num(t_token *first_token);
+int		parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char **envp);
+int		split_into_cmds(t_command *cmd, t_token **start);
+int		is_last_token_word(t_token *first_token);
+int		open_file(t_command *cmd, char *file, int i);
+char	**copy_env(char **env);
+
 
 #endif
