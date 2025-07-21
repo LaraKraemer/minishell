@@ -13,6 +13,8 @@
 #include "../../incl/tokenisation.h"
 #include "../../incl/parsing.h"
 
+/*Iterates through the token list and counts
+the number of commands based on PIPE tokens.*/
 int	count_cmd_num(t_token *first_token)
 {
 	t_token	*current;
@@ -29,6 +31,10 @@ int	count_cmd_num(t_token *first_token)
 	return (pipe_count + 1);
 }
 
+/*Checks the redirection types (input, output, append) and opens the
+ corresponding files. Updates the file descriptors (fd_in, fd_out)
+ in the command structure. Also checks for errors if there is redirection
+ but without filename*/
 int	in_out_redir(t_command *cmd, t_token **current_token)
 {
 	int	current_type;
@@ -61,6 +67,9 @@ int	in_out_redir(t_command *cmd, t_token **current_token)
 	return (1);
 }
 
+/*Processes the token list and extracts information for a single command
+ (command name, arguments, redirections). Updates the command structure
+ and moves the token pointer to the next command.*/
 int	split_into_cmds(t_command *cmd, t_token **first_token)
 {
 	t_token	*start;
@@ -118,7 +127,8 @@ int	split_into_cmds(t_command *cmd, t_token **first_token)
 	return (1);
 }
 
-void	init_array(t_command *cmds_array, int cmd_count, char **envp)
+/*Initializes an array of command structures.*/
+int	init_array(t_command *cmds_array, int cmd_count, char **envp)
 {
 	int	i;
 
@@ -127,18 +137,28 @@ void	init_array(t_command *cmds_array, int cmd_count, char **envp)
 	{
 		cmds_array[i].cmd = NULL;
 		cmds_array[i].cmd_args = NULL;
-		cmds_array[i].env = envp;
+		//cmds_array[i].env = envp;
+		cmds_array[i].env = copy_env(envp);
+		if (!cmds_array[i].env)
+			return (error_input("malloc failed", 0));
 		cmds_array[i].fd_in = -1;
 		cmds_array[i].fd_out = -1;
+		cmds_array[i].path_file = NULL;
+		cmds_array[i].cmd_path = NULL;
+		cmds_array[i].exit_status = 0;
 		i++;
-		//pipe_fd are not filled
 	}
-	//cmds_array[i] = NULL;
+	cmds_array[i].cmd = NULL;
+	return (1);
 }
 
+/* Main function for parsing.
+Validates the syntax of the token list, initializes the command structures,
+and splits the token list into individual commands. Processes each command
+and stores the information in the array of command structures.*/
 int	parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char **envp)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (!is_last_token_word(first_token))
@@ -146,7 +166,11 @@ int	parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char
 		// printf("last token not word\n");
 		return (error_input("syntax error", 0));
 	}
-	init_array(cmds_array, cmd_count, envp);
+	if (!init_array(cmds_array, cmd_count, envp))
+		return (0);
+	// if (!do_expansion(first_token))
+	// 	return (0);
+	// printf("%s - first token value\n", first_token->value);
 	while (first_token && i < cmd_count)
 	{
 		if (!split_into_cmds(&cmds_array[i], &first_token))
