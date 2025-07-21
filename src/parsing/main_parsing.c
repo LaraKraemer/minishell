@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-12 14:59:13 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-06-12 14:59:13 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/06/12 14:59:13 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/07/21 18:47:41 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/12 20:16:59 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/21 11:52:03 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ void setup_child_fds(int i, int *pipe_fds, int cmd_count)
 {
     if (i > 0)
 	{
-        fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]);
+        /* fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]); */
         if (dup2(pipe_fds[(i-1)*2], STDIN_FILENO) == -1)
             perror("dup2 input");
     }
     if (i < cmd_count - 1)
 	{
-        fprintf(stderr, "Connecting stdout to pipe %d\n", pipe_fds[i*2+1]);
+        /* fprintf(stderr, "Connecting stdout to pipe %d\n", pipe_fds[i*2+1]); */
         if (dup2(pipe_fds[i*2+1], STDOUT_FILENO) == -1)
             perror("dup2 output");
     }
@@ -101,13 +101,13 @@ void handle_child_redirections(t_command *cmd, int i, int *pipe_fds, int cmd_cou
     }
     if (cmd[i].fd_in != STDIN_FILENO)
 	{
-		fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]);
+		/* fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]); */
         dup2(cmd[i].fd_in, STDIN_FILENO);
         close(cmd[i].fd_in);
     }
     if (cmd[i].fd_out != STDOUT_FILENO)
 	{
-		fprintf(stderr, "Connecting stdout to pipe %d\n", pipe_fds[i*2+1]);
+		/* fprintf(stderr, "Connecting stdout to pipe %d\n", pipe_fds[i*2+1]); */
         dup2(cmd[i].fd_out, STDOUT_FILENO);
         close(cmd[i].fd_out);
     }
@@ -125,9 +125,9 @@ void child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
         cmds[i].fd_in = STDIN_FILENO;
     if (cmds[i].fd_out < 0)
         cmds[i].fd_out = STDOUT_FILENO;
-    fprintf(stderr, "\n=== CHILD PROCESS DEBUG ===\n");
+    /* fprintf(stderr, "\n=== CHILD PROCESS DEBUG ===\n");
     fprintf(stderr, "Command index: %d\n", i);
-    fprintf(stderr, "Command: %s\n", cmds[i].cmd);
+    fprintf(stderr, "Command: %s\n", cmds[i].cmd); */
     cmd_count = 0;
     while (cmds[cmd_count].cmd)
         cmd_count++;
@@ -135,13 +135,13 @@ void child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
     handle_child_redirections(cmds, i, pipe_fds, cmd_count);
 	if (is_builtin(cmds[i].cmd_args[0]))
     {
-		fprintf(stderr, "Executing builtin: %s\n", cmds[i].cmd_args[0]);
+		/* fprintf(stderr, "Executing builtin: %s\n", cmds[i].cmd_args[0]); */
         exit(builtins(&cmds[i], envp));
     }
     if (check_command(&cmds[i]) != 0)
         exit(cmds[i].exit_status);
-	print_child_debug(cmds, i);
-	printf("\033[0;31mCommand %d path: %s\033[0m\n", i, cmds[i].cmd_path);
+	/* print_child_debug(cmds, i); */
+	/* printf("\033[0;31mCommand %d path: %s\033[0m\n", i, cmds[i].cmd_path); */
     execve(cmds[i].cmd_path, cmds[i].cmd_args, envp);
     perror("execve");
     exit(127);
@@ -168,7 +168,7 @@ int parent_process(pid_t pid, int *pipe_fds, int cmd_count, int i)
 }
 
 /* Temporary debugging function */
-void print_child_debug(t_command *cmd, int i)
+/* void print_child_debug(t_command *cmd, int i)
 {		   
     fprintf(stderr, "Executing: %s\n", cmd[i].cmd_path);
     fprintf(stderr, "With args: ");
@@ -178,9 +178,11 @@ void print_child_debug(t_command *cmd, int i)
     {
         fprintf(stderr, "'%s' ", cmd[i].cmd_args[k]);
         k++;
+		if (cmd[i].cmd_args[k] == NULL)
+			printf("NULL\n");
     }
     fprintf(stderr, "\n");
-}
+} */
 
 
 /* 
