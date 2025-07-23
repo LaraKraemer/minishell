@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:37:27 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/04 17:27:09 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/23 12:14:45 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 
 int		check_command(t_command *cmd_struct);
-int		execute_with_pipex_logic(t_command *cmds, int cmd_count, char **envp);
+int		execute_with_pipex_logic(t_command *cmds, int cmd_count);
 int setup_pipes(int cmd_count, int **pipe_fds);
 int parent_process(pid_t pid, int *pipe_fds, int cmd_count, int i);
 void handle_child_redirections(t_command *cmd, int i, int *pipe_fds, int cmd_count);

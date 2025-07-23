@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/21 11:52:03 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:13:56 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* 
 Executes a pipeline of commands with fork/exec and pipe redirection 
 */
-int	execute_with_pipex_logic(t_command *cmds, int cmd_count, char **envp)
+int	execute_with_pipex_logic(t_command *cmds, int cmd_count)
 {
     int		*pipe_fds;
     pid_t	*child_pids;
@@ -34,7 +34,7 @@ int	execute_with_pipex_logic(t_command *cmds, int cmd_count, char **envp)
         if (child_pids[i] == -1) 
 			return (free(pipe_fds), free(child_pids), perror("fork"), exit(1), 1);
         if (child_pids[i] == 0)
-            child_process(cmds, i, pipe_fds, envp);
+            child_process(cmds, i, pipe_fds, cmds[i].env);
         else
             exit_status = parent_process(child_pids[i], pipe_fds, cmd_count, i);
         i++;
@@ -134,10 +134,10 @@ void child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
     setup_child_fds(i, pipe_fds, cmd_count);
     handle_child_redirections(cmds, i, pipe_fds, cmd_count);
 	if (is_builtin(cmds[i].cmd_args[0]))
-    {
-		/* fprintf(stderr, "Executing builtin: %s\n", cmds[i].cmd_args[0]); */
-        exit(builtins(&cmds[i], envp));
-    }
+	{
+		fprintf(stderr, "Executing builtin: %s\n", cmds[i].cmd_args[0]);
+		exit(builtins(&cmds[i], &envp));
+	}
     if (check_command(&cmds[i]) != 0)
         exit(cmds[i].exit_status);
 	/* print_child_debug(cmds, i); */
@@ -183,17 +183,3 @@ int parent_process(pid_t pid, int *pipe_fds, int cmd_count, int i)
     }
     fprintf(stderr, "\n");
 } */
-
-
-/* 
-
-Later add to child process: 
- printf("\033[0;31mCommand %d path: %s\033[0m\n", i, cmds[i].cmd_path);
-    if (is_builtin(cmds[i].cmd_args[0]))
-    {
-		fprintf(stderr, "Executing builtin: %s\n", cmds[i].cmd_args[0]);
-        exit(builtins(&cmds[i], envp));
-    }
-*/
-
-

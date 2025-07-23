@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:27:35 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/01 13:38:39 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/22 15:54:57 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	valid_identifier(char *arg)
 	int	i;
 
 	i = 0;
-	printf("%c\n", arg[0]);
+	// printf("%c\n", arg[0]);
 	if (!arg || (!ft_isalpha(arg[0]) && arg[0] != '_'))
 		return (0);
 	while (arg[i] && arg[i] != '=')
@@ -92,6 +92,8 @@ void	free_env(char **env)
 {
 	int	i;
 
+	if (!env)
+		return;
 	i = 0;
 	while (env[i])
 	{

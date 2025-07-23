@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 11:52:03 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/21 18:48:54 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/23 12:24:52 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	add_slash_topath(char ***dest, char **path_file)
 	return (0);
 }
 
-int	set_path(t_command *cmd, char *envp[])
+int	set_path(t_command *cmd, char **envp)
 {
 	char	*path;
 	char	**split_path;

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/03 14:15:42 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/23 15:30:13 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ builtins folder
 */
 // utils.c
 int		ft_strcmp(const char *s1, const char *s2);
-int		builtins(t_command *cmd, char **env);
+int		builtins(t_command *cmd, char ***global_env);
 int		is_builtin(char *arg);
 int		must_run_in_parent(const char *cmd);
 
@@ -52,7 +52,10 @@ int		exit_builtin(char **args);
 int		pwd_builtin(char **args, char *cwd, size_t cwd_size);
 
 // cd.c
-int	cd_builtin(t_command *cmd, char **env);
+int	cd_builtin(t_command *cmd, char ***env);
+int	cd_get_target_and_oldpwd(t_command *cmd, char ***env, char **target, char **oldpwd);
+int	cd_change_and_update_env(char *target, char *oldpwd, char ***env);
+
 // echo.c
 int		echo_builtin(t_command *cmd, char **env);
 void	echo_env(char *arg, char **env);
@@ -62,11 +65,11 @@ void echo_exit_code(char *arg);
 int		env_builtin(char **env);
 
 // export.c
-int		export_builtin(char **args, char **env);
-char	**assign_var(char **env, char *args);
-char	**assign_var_and_value(char *equal_sign, char **env, char *args);
-int		update_add_var(char **args, char **env);
-int		export_without_var(char **env);
+int		export_builtin(t_command *cmd, char ***global_env);
+char	**assign_var(char *arg, char **env);
+char	**assign_var_and_value(char *equal_sign, char *arg, char **env);
+int		update_add_var(char **args, char ***global_env);
+int		export_without_var(char **global_env);
 
 // export_utils.c
 int		valid_identifier(char *arg);
