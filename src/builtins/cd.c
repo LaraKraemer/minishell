@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:18:43 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/03 14:34:42 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/23 17:08:08 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,91 +27,58 @@ cd /users/lara/
 cd /var/log
 cd / → go to the root directory.
 */
-int	cd_builtin(t_command *cmd, char **env)
+
+int	cd_builtin(t_command *cmd, char ***env)
 {
 	char	*target;
-	char    cwd_before[PATH_MAX];
-    char    cwd_after[PATH_MAX];
-	// char	cwd[PATH_MAX];
-	if (!getcwd(cwd_before, sizeof(cwd_before))) {
-        perror("minishell: cd: getcwd");
-        return (1);
-    }
-	if (!cmd || !cmd->cmd_args || !cmd->cmd_args[1] || !*cmd->cmd_args[1])
-	{
-		target = get_env_value("HOME", env);
-		if (!target)
-		{
-			ft_putstr_fd(ERR_CD, STDERR_FILENO);
-			return (1);
-		}
-	}
-	else
-		target = cmd->cmd_args[1];
-	if (chdir(target) == -1)
-	{
-		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		perror(target);
-		return (1);
-	}
-	if (!getcwd(cwd_after, sizeof(cwd_after))) {
-        perror("minishell: cd: getcwd");
-        // Revert to previous directory if verification fails
-        chdir(cwd_before);
-        return (1);
-    }
-	printf("Changed directory from %s to %s\n", cwd_before, cwd_after);
+	char 	*oldpwd;
 	
-	/* if (!getcwd(cwd, sizeof(cwd)))
-    {
-        perror("minishell: cd: getcwd");
+	 if (cmd->cmd_args && cmd->cmd_args[2])
+        return (ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO), 1);
+	if (cd_get_target_and_oldpwd(cmd, env, &target, &oldpwd))
         return (1);
-    } */
-	return (0);
+    return (cd_change_and_update_env(target, oldpwd, env));
+	
 }
 
-/*
- char *cwd, size_t cwd_size
-
- 
-int cd_env(char arg, char **env)
+int	cd_get_target_and_oldpwd(t_command *cmd, char ***env, char **target, char **oldpwd)
 {
-	
+    char cwd_before[PATH_MAX];
+
+    if (!cmd || !cmd->cmd_args || !cmd->cmd_args[1] || !*cmd->cmd_args[1])
+    {
+        *target = get_env_value("HOME", *env);
+        if (!*target)
+            return (ft_putstr_fd(ERR_CD, STDERR_FILENO), 1);
+    }
+    else
+        *target = cmd->cmd_args[1];
+    if (!getcwd(cwd_before, sizeof(cwd_before)))
+        return (perror("minishell: cd: getcwd"), 1);
+    *oldpwd = ft_strdup(cwd_before);
+    if (!*oldpwd)
+        return (perror("minishell: cd: strdup"), 1);
+    return (0);
 }
 
+int	cd_change_and_update_env(char *target, char *oldpwd, char ***env)
+{
+    char	cwd_after[PATH_MAX];
+    char	*oldpwd_str;
+    char	*pwd_str;
 
-else 
-	{
-		target = cmd->cmd_args[1];
-		if (!target)
-		{
-            target = get_env_value("HOME", env);
-			if (!target)
-			{
-				ft_putstr_fd(ERR_CD, STDERR_FILENO);
-				return (1);
-			}
-		}
-	}
-	char *oldpwd = getcwd(cwd, sizeof(cwd));
-    if (!oldpwd) {
-        perror("minishell: cd: getcwd");
-        return (1);
-    }
-	if (chdir(target) == -1)
-	{
-		perror("cd failed");
-		return (1);
-	}
-    if (getcwd(cwd, sizeof(cwd_size)))
-	{
-		update_add_var(cmd->cmd_args, env);
-        get_env_value("PWD", env);
-		
-    } 
-	else {
-        perror("minishell: cd: getcwd");
-        return (1);
-    } 
-		
-*/
+    if (chdir(target) == -1)
+        return (ft_putstr_fd("minishell: cd: ", STDERR_FILENO), perror(target), free(oldpwd), 1);
+    if (!getcwd(cwd_after, sizeof(cwd_after)))
+        return (perror("minishell: cd: getcwd"), chdir(oldpwd), free(oldpwd), 1);
+    oldpwd_str = ft_strjoin("OLDPWD=", oldpwd);
+    pwd_str = ft_strjoin("PWD=", cwd_after);
+    if (!oldpwd_str || !pwd_str)
+        return (perror("minishell: cd: malloc"), free(oldpwd), free(oldpwd_str), free(pwd_str), 1);
+    *env = assign_var_and_value(oldpwd_str + 6, oldpwd_str, *env);
+    *env = assign_var_and_value(pwd_str + 3, pwd_str, *env);
+    free(oldpwd_str);
+    free(pwd_str);
+    free(oldpwd);
+    return (0);
+}
