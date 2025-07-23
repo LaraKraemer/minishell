@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-12 14:59:13 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-06-12 14:59:13 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/06/12 14:59:13 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/07/23 12:18:03 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	init_array(t_command *cmds_array, int cmd_count, char **envp)
 	{
 		cmds_array[i].cmd = NULL;
 		cmds_array[i].cmd_args = NULL;
-		//cmds_array[i].env = envp;
+		/* cmds_array[i].env = envp; */
 		cmds_array[i].env = copy_env(envp);
 		if (!cmds_array[i].env)
 			return (error_input("malloc failed", 0));

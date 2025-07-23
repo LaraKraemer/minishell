@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 17:39:29 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/01 13:38:31 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/22 16:50:29 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ int	env_builtin(char **env)
 {
 	int	i;
 
+	if (!env)
+	{
+		ft_putstr_fd("minishell: env: ", STDERR_FILENO);
+		ft_putstr_fd("environment not found\n", STDERR_FILENO);
+		return (1);
+	}
 	i = 0;
 	while (env[i])
 	{

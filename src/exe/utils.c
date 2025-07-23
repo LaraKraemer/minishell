@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:15:00 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/12 20:18:21 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/23 12:21:54 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	free_commands(t_command *cmds, int cmd_count)
 			free_array(cmds[i].cmd_args);
 		if (cmds[i].path_file)
 			free_array(cmds[i].path_file);
+		if (cmds[i].env)
+			free_array(cmds[i].env);
 		i++;
 	}
 	free(cmds);

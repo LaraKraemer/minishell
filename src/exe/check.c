@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 12:56:27 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/04 17:11:17 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/21 13:33:56 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	find_path(t_command *cmd)
 			return (err_handl(cmd->cmd, ": command not found", 127));
 		if (access(temp, F_OK) == 0)
 		{
-			printf("  FOUND at: %s\n", temp);
+			/* printf("  FOUND at: %s\n", temp); */
 			cmd->cmd_path = temp;
 			return (0);
 		}
@@ -66,7 +66,7 @@ int	check_command(t_command *cmd)
 	}
 	else
 	{
-		printf("Calling find path\n");
+		/* printf("Calling find path\n"); */
 		error = find_path(cmd);
 		if (error)
 			return (error);
