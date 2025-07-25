@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:15:00 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/23 12:21:54 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/24 15:28:32 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,47 +58,3 @@ void	free_array(char **str_array)
 		free (str_array[i++]);
 	free (str_array);
 }
-
-/*
-void	create_pipe(t_data *data, int i)
-{
-	if (pipe(&data->pipe_fd[2 * i]) == -1)
-	{
-		perror("Pipe failed");
-		free_data(data);
-		exit(1);
-	}
-}
-
-void	cleanup_and_exit(t_data *data, int i, int err)
-{
-	close_fds(data, i);
-	free_data(data);
-	exit(err);
-}
-
-void	close_fds(t_data *data, int i)
-{
-	if (i == 0)
-	{
-		close(data->pipe_fd[2 * i]);
-		if (data->fd_in != -1)
-			close(data->fd_in);
-		close(data->pipe_fd[2 * i + 1]);
-	}
-	else if (i == data->command.cmd_count - 1)
-	{
-		close(data->pipe_fd[2 * i - 2]);
-		close(data->pipe_fd[2 * i - 1]);
-		if (data->fd_out != -1)
-			close(data->fd_out);
-	}
-	else
-	{
-		close(data->pipe_fd[2 * i - 2]);
-		close(data->pipe_fd[2 * i - 1]);
-		close(data->pipe_fd[2 * i]);
-		close(data->pipe_fd[2 * i + 1]);
-	}
-}
-	*/

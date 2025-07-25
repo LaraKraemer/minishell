@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_parsing.c                                     :+:      :+:    :+:   */
+/*   main_tokenisation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:38:57 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/06/02 17:20:07 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:49:03 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenisation.h"
+#include "../../incl/minishell.h"
 
 int	get_tokens(char *input, t_token **first_token)
 {
@@ -26,7 +27,7 @@ int	get_tokens(char *input, t_token **first_token)
 		type = determine_type(input, input + 1);
 		value = determine_value(type, &input);
 		if (!value)
-			return (error_input("Syntax error", 1));
+			return (error_input(ERR_SYNTAX_T, 1));
 		if (*first_token == NULL)
 		{
 			*first_token = ms_lstnew(type, value);

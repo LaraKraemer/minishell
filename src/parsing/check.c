@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-16 13:40:53 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-06-16 13:40:53 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/06/16 13:40:53 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/07/25 11:47:47 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../incl/tokenisation.h"
+
 #include "../../incl/parsing.h"
+#include "../../incl/minishell.h"
 
 int	is_last_token_word(t_token *first_token)
 {
@@ -29,7 +30,7 @@ int	open_file(t_command *cmd, char *file, int i)
 		cmd->fd_in = open(file, O_RDONLY);
 		if (cmd->fd_in == -1)
 		{
-			perror("Error with opening file");
+			sys_error("parser", ERR_FILE_OPEN);
 			return (0);
 		}
 	}
@@ -38,7 +39,7 @@ int	open_file(t_command *cmd, char *file, int i)
 		cmd->fd_out = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (cmd->fd_out == -1)
 		{
-			perror("Error with opening file");
+			sys_error("parser", ERR_FILE_OPEN);
 			return (0);
 		}
 	}
@@ -47,7 +48,7 @@ int	open_file(t_command *cmd, char *file, int i)
 		cmd->fd_out = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		if (cmd->fd_out == -1)
 		{
-			perror("Error with opening file");
+			sys_error("parser", ERR_FILE_OPEN);
 			return (0);
 		}
 	}

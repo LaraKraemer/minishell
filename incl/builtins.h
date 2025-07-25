@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/23 15:30:13 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/25 19:15:11 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,16 @@
 # include <stdbool.h>
 # include "minishell.h"
 # include "parsing.h"
-# define ERR_QUOTE "Syntax minishell error: Unclosed quotes"
-# define ERR_ENV "Not a valid identifier\n"
-# define ERR_CD "testshell: cd: HOME not set\n"
-# define ERR_ARG_SIZE "testshell: too many arguments\n"
-# define DEL  " \t\r\n\a"
-
-/* typedef struct s_cmd
-{
-	int		cmd_count;
-	char	*cmd_path;
-	char	**cmd_argv;
-}	t_cmd; */
 
 
 // expansion
 char	*get_env_value(char *arg, char **env);
-char	*expand_exit_code(char *arg);
+char	*expand_exit_code(char *arg, int exit_code);
 
-/*
-builtins folder
-*/
+
 // utils.c
 int		ft_strcmp(const char *s1, const char *s2);
-int		builtins(t_command *cmd, char ***global_env);
+int		builtins(t_command *cmd, char ***global_env, int exit_code);
 int		is_builtin(char *arg);
 int		must_run_in_parent(const char *cmd);
 
@@ -52,17 +38,17 @@ int		exit_builtin(char **args);
 int		pwd_builtin(char **args, char *cwd, size_t cwd_size);
 
 // cd.c
-int	cd_builtin(t_command *cmd, char ***env);
-int	cd_get_target_and_oldpwd(t_command *cmd, char ***env, char **target, char **oldpwd);
-int	cd_change_and_update_env(char *target, char *oldpwd, char ***env);
+int		cd_builtin(t_command *cmd, char ***env);
+int		cd_get_target_and_oldpwd(t_command *cmd, char ***env, char **target, char **oldpwd);
+int		cd_change_and_update_env(char *target, char *oldpwd, char ***env);
 
 // echo.c
-int		echo_builtin(t_command *cmd, char **env);
+int		echo_builtin(t_command *cmd, char **env, int exit_code);
 void	echo_env(char *arg, char **env);
-void echo_exit_code(char *arg);
+void	echo_exit_code(char *arg, int exit_code);
 
 // env.c
-int		env_builtin(char **env);
+int		env_builtin(char **args, char **env);
 
 // export.c
 int		export_builtin(t_command *cmd, char ***global_env);

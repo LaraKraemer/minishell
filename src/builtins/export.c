@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:23:54 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/23 18:46:18 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/24 14:53:50 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	update_add_var(char **args, char ***global_env)
 	int		i;
 	char	*equal_sign;
 	char    **new_env;
+	int		exit_code;
 
 	i = 1;
 	new_env = NULL;
@@ -59,7 +60,8 @@ int	update_add_var(char **args, char ***global_env)
 	{
 		if (!valid_identifier(args[i]))
 		{
-			ft_putstr_fd(ERR_ENV, 2);
+			print_error(args[i], ERR_ENV);
+			exit_code = 1;
 			i++;
 			continue;
 		}
@@ -73,7 +75,7 @@ int	update_add_var(char **args, char ***global_env)
 		*global_env = new_env;
 		i++;
 	}
-	return (0);
+	return (exit_code);
 }
 
 /* 

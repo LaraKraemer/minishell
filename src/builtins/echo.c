@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:53:19 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/23 17:41:43 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/25 19:49:29 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Output: hello (No Trailing newline)
 
 No errors - always returns 0
 */
-int	echo_builtin(t_command *cmd, char **env)
+int	echo_builtin(t_command *cmd, char **env, int exit_code)
 {
 	int		i;
 	int		new_line;
@@ -41,8 +41,8 @@ int	echo_builtin(t_command *cmd, char **env)
 	while (cmd->cmd_args[i])
 	{
 		if (cmd->cmd_args[i][1] == '?')
-			echo_exit_code(cmd->cmd_args[i]);
-		if (cmd->cmd_args[i][0] == '$')
+			echo_exit_code(cmd->cmd_args[i], exit_code);
+		else if (cmd->cmd_args[i][0] == '$')
 			echo_env(cmd->cmd_args[i], env);
 		else
 			printf("%s", cmd->cmd_args[i]);
@@ -77,15 +77,12 @@ void echo_env(char *arg, char **env)
 /*
 Calls exit function and prints respective value to STDOUT
 */
-void echo_exit_code(char *arg)
+void echo_exit_code(char *arg, int exit_code)
 {
 	char	*expanded_exit;
 
-	if (!arg)
-        return;
-    if (arg[0] == '$')
-        arg++;
-	expanded_exit = expand_exit_code(arg);
+	expanded_exit = expand_exit_code(arg, exit_code);
 	if (expanded_exit)
 		printf("%s", expanded_exit);
+	free(expanded_exit);
 }

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:16:31 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/08 21:37:32 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/25 19:24:16 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,12 @@ char	*get_env_value(char *arg, char **env)
 	}
 	return (NULL);
 }
-
-
-char *expand_exit_code(char *arg)
-{
-    char    *value;
-    char    *result;
-    int     exit_code;
-
-    exit_code = 1; // Get this from global / passed as parameter
-    if (arg && arg[1] == '?')
-	printf("%d\n", arg[1]);
-    {
-        value = ft_itoa(exit_code);
-        if (!value)
-            return (NULL);
-        result = ft_strdup(value);
-        free(value);
-        return (result);
-    }
-    return (ft_strdup(""));
-}
-
-
 /*
-
-
-char *get_env_value(char *name, char **env)
-{
-	
-}
-
-int get_exit_status(char *exit_status)
-{
-	
-}
+Returns exit code as a string for expansion.
 */
+char *expand_exit_code(char *arg, int exit_code)
+{
+	if (!arg || ft_strcmp(arg, "$?") != 0)
+        return (NULL);
+    return ft_itoa(exit_code);
+}

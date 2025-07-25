@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:45:04 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/23 11:29:38 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/25 11:49:46 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_command
 	int		fd_out;
 	char	**path_file;
 	char	*cmd_path;
-	int		exit_status;
+	int		exit_code;
 }	t_command;
 
 int		count_cmd_num(t_token *first_token);

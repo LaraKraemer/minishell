@@ -3,18 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-06 14:50:02 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-06-06 14:50:02 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/06/06 14:50:02 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/07/25 11:54:03 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/tokenisation.h"
+# include "../../incl/tokenisation.h"
+# include "../../incl/minishell.h"
 # include "Libft/libft.h"
 
-int	error_input(char *msg, int error)
+/* int	error_input(char *msg, int error)
 {
-	ft_putendl_fd(msg, 2);
+	ft_putstr_fd(RED, 2);
+	ft_putstr_fd("❌ error: ", 2);
+	ft_putstr_fd(RESET, 2);
+	ft_putstr_fd(msg, 2);
 	return (error);
-}
+} */
+
+

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:23:59 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/08 21:48:08 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/25 12:31:15 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	pwd_builtin(char **args, char *cwd, size_t cwd_size)
 		printf("%s\n", cwd);
 	else
 	{
-		perror("getcwd failed");
+		sys_error("getcwd", cwd);
 		return (1);
 	}
 	return (0);

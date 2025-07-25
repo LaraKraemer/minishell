@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:27:35 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/22 15:54:57 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/24 15:06:53 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**copy_env(char **env)
 		i++;
 	env_dup = malloc((i + 1) * sizeof(char *));
 	if (!env_dup)
-		return (NULL);
+		return (print_error("malloc", ERR_MEM_ALLO), NULL);
 	while (j < i)
 	{
 		env_dup[j] = ft_strdup(env[j]);
