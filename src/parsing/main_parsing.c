@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-12 14:59:13 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-06-12 14:59:13 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/06/12 14:59:13 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/07/25 11:45:48 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenisation.h"
 #include "../../incl/parsing.h"
+#include "../../incl/minishell.h"
 
 /*Iterates through the token list and counts
 the number of commands based on PIPE tokens.*/
@@ -40,7 +41,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token)
 	int	current_type;
 
 	if (!(*current_token)->next || (*current_token)->next->type != TOKEN_WORD)
-		return (error_input("syntax error", 0));
+		return (error_input(ERR_SYNTAX_T, 0));
 	current_type = -1;
 	if ((*current_token)->type == TOKEN_REDIR_IN)
 	{
@@ -96,7 +97,7 @@ int	split_into_cmds(t_command *cmd, t_token **first_token)
 			// fflush(0);
 			cmd->cmd_args = malloc(MAX_ARGS * sizeof(char *));
 			if (!cmd->cmd_args)
-				return (error_input("malloc failed", 0));
+				return (error_input(ERR_MEM_ALLO, 0));
 			cmd->cmd_args[i++] = start->value;
 			// printf("%s - cmd_arg\n", cmd->cmd_args[i - 1]);
 			// fflush(0);
@@ -137,15 +138,15 @@ int	init_array(t_command *cmds_array, int cmd_count, char **envp)
 	{
 		cmds_array[i].cmd = NULL;
 		cmds_array[i].cmd_args = NULL;
-		//cmds_array[i].env = envp;
+		/* cmds_array[i].env = envp; */
 		cmds_array[i].env = copy_env(envp);
 		if (!cmds_array[i].env)
-			return (error_input("malloc failed", 0));
+			return (error_input(ERR_MEM_ALLO, 0));
 		cmds_array[i].fd_in = -1;
 		cmds_array[i].fd_out = -1;
 		cmds_array[i].path_file = NULL;
 		cmds_array[i].cmd_path = NULL;
-		cmds_array[i].exit_status = 0;
+		cmds_array[i].exit_code = 0;
 		i++;
 	}
 	cmds_array[i].cmd = NULL;
@@ -164,7 +165,7 @@ int	parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char
 	if (!is_last_token_word(first_token))
 	{
 		// printf("last token not word\n");
-		return (error_input("syntax error", 0));
+		return (error_input(ERR_SYNTAX_T, 0));
 	}
 	if (!init_array(cmds_array, cmd_count, envp))
 		return (0);
@@ -176,7 +177,7 @@ int	parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char
 		if (!split_into_cmds(&cmds_array[i], &first_token))
 			return (0);
 		if (!cmds_array[i].cmd)
-			return (error_input("syntax error", 0));
+			return (error_input(ERR_SYNTAX_T, 0));
 		// if (first_token)
 		// 	first_token++;
 		printf("%s - cmd %d\n", cmds_array[i].cmd, i);

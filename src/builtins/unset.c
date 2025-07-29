@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 16:44:54 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/01 13:38:49 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/24 15:00:50 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,23 @@ Runs in parent process - since it affects env of shell
 int	unset_builtin(char **args, char **env)
 {
 	int	i;
+	int	exit_code;
 
 	i = 0;
+	exit_code = 0;
 	while (args[i])
 	{
 		if (!valid_identifier(args[i]))
 		{
-			ft_putstr_fd(ERR_ENV, 2);
+			print_error(args[i], ERR_ENV);
+			exit_code = 1;
 			i++;
 			continue ;
 		}
 		remove_var_from_env(args[i], env);
 		i++;
 	}
-	return (0);
+	return (exit_code);
 }
 
 void	remove_var_from_env(char *args, char **env)

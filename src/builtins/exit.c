@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:00:30 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/01 13:38:26 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/25 12:21:42 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,14 @@ int	exit_builtin(char **args)
 	if (!args[1])
 		exit(0);
 	if (args[2])
-	{
-		ft_putstr_fd(ERR_ARG_SIZE, 2);
-		return (1);
-	}
+		return (print_error(args[2], ERR_ARG_SIZE), 1);
 	if (args[1][i] == '-' || args[1][i] == '+')
 		i++;
 	while (args[1][i])
 	{
 		if (!ft_isdigit(args[1][i++]))
 		{
-			ft_putstr_fd("testshell: exit: ", 2);
-			ft_putstr_fd(args[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
+			print_error(args[1], ERR_NUMERIC);
 			exit(255);
 		}
 	}

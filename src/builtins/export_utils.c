@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:27:35 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/01 13:38:39 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/24 15:06:53 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**copy_env(char **env)
 		i++;
 	env_dup = malloc((i + 1) * sizeof(char *));
 	if (!env_dup)
-		return (NULL);
+		return (print_error("malloc", ERR_MEM_ALLO), NULL);
 	while (j < i)
 	{
 		env_dup[j] = ft_strdup(env[j]);
@@ -63,7 +63,7 @@ int	valid_identifier(char *arg)
 	int	i;
 
 	i = 0;
-	printf("%c\n", arg[0]);
+	// printf("%c\n", arg[0]);
 	if (!arg || (!ft_isalpha(arg[0]) && arg[0] != '_'))
 		return (0);
 	while (arg[i] && arg[i] != '=')
@@ -92,6 +92,8 @@ void	free_env(char **env)
 {
 	int	i;
 
+	if (!env)
+		return;
 	i = 0;
 	while (env[i])
 	{

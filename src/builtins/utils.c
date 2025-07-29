@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:03:18 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/03 14:15:50 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/24 19:10:19 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ Verifies and calls builtin cmd function.
 Returns 0 on success 
 Returns 1 on failure 
 */
-int	builtins(t_command *cmd, char **env)
+int	builtins(t_command *cmd, char ***global_env, int exit_code)
 {
 	char	cwd[BUFSIZ];
 
@@ -56,19 +56,19 @@ int	builtins(t_command *cmd, char **env)
 	const char *cmd_name = cmd->cmd_args[0];
 		
 	if (ft_strcmp(cmd_name, "cd") == 0)
-		cd_builtin(cmd, env);
+		return (cd_builtin(cmd, global_env));
 	else if (ft_strcmp(cmd_name, "echo") == 0)
-		echo_builtin(cmd, env);
+		return (echo_builtin(cmd, *global_env, exit_code));
 	else if (ft_strcmp(cmd_name, "pwd") == 0)
-		pwd_builtin(cmd->cmd_args, cwd, sizeof(cwd));
+		return (pwd_builtin(cmd->cmd_args, cwd, sizeof(cwd)));
 	else if (ft_strcmp(cmd_name, "export") == 0)
-		export_builtin(cmd->cmd_args, env);
+		return (export_builtin(cmd, global_env));
 	else if (ft_strcmp(cmd_name, "unset") == 0)
-		unset_builtin(cmd->cmd_args, env);
+		return (unset_builtin(cmd->cmd_args, *global_env));
 	else if (ft_strcmp(cmd_name, "env") == 0)
-		env_builtin(env);
+		return (env_builtin(cmd->cmd_args, *global_env));
 	else if (ft_strcmp(cmd_name, "exit") == 0)
-		exit_builtin(cmd->cmd_args);
+		return (exit_builtin(cmd->cmd_args));
 	return (EXIT_SUCCESS);
 }
 

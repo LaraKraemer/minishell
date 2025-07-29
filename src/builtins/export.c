@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:23:54 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/03 12:42:18 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/24 14:53:50 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,95 +23,148 @@ Return error:
 export 1VAR=value	
 */
 
-int	export_builtin(char **args, char **env)
+
+int	export_builtin(t_command *cmd, char ***global_env)
 {
-	if (!args[1])
-		return (export_without_var(env));
+	if (!cmd->cmd_args[1])
+		return (export_without_var(*global_env));
 	else
-		return (update_add_var(args, env));
+		return (update_add_var(cmd->cmd_args, global_env));
 	return (0);
 }
 
-int	export_without_var(char **env)
+/* 
+Handles export without arguments by printing sorted environment variables.
+*/
+int	export_without_var(char **global_env)
 {
-	char	**dup_env;
-
-	dup_env = copy_env(env);
-	if (!dup_env)
-		return (1);
-	sort_env(dup_env);
-	print_export(dup_env);
-	free_env(dup_env);
+	sort_env(global_env);
+	print_export(global_env);
+	free_env(global_env);
 	return (0);
 }
 
-int	update_add_var(char **args, char **env)
+/* 
+Processes export arguments to add or update environment variables.
+*/
+int	update_add_var(char **args, char ***global_env)
 {
 	int		i;
 	char	*equal_sign;
+	char    **new_env;
+	int		exit_code;
 
 	i = 1;
+	new_env = NULL;
 	while (args[i])
 	{
 		if (!valid_identifier(args[i]))
 		{
-			ft_putstr_fd(ERR_ENV, 2);
+			print_error(args[i], ERR_ENV);
+			exit_code = 1;
 			i++;
-			continue ;
+			continue;
 		}
 		equal_sign = ft_strchr(args[i], '=');
 		if (equal_sign)
-			assign_var_and_value(equal_sign, env, args[i]);
+			new_env = assign_var_and_value(equal_sign, args[i],*global_env);
 		else
-			assign_var(env, args[i]);
+			new_env = assign_var(args[i], *global_env);
+		if (!new_env)
+			return (1);
+		*global_env = new_env;
 		i++;
 	}
-	return (0);
+	return (exit_code);
 }
 
-char	**assign_var_and_value(char *equal_sign, char **env, char *args)
+/* 
+Creates a new environment array with an additional variable.
+*/
+char **add_new_env_var(char *var, char ***env)
 {
-	int		j;
-	size_t	var_len;
-	char	*var;
+    int     count;
+    char    **new_env;
+    char    *new_var;
 
-	j = 0;
-	var_len = equal_sign - args;
-	var = ft_substr(args, 0, var_len);
-	while (env[j])
-	{
-		if ((ft_strncmp(env[j], var, var_len) == 0 && env[j][var_len] == '='))
-		{
-			free_env(&env[j]);
-			env[j] = ft_strdup(args);
-			free(var);
-			return (env);
-		}
-		j++;
-	}
-	env[j] = ft_strdup(args);
-	env[j + 1] = NULL;
-	free(var);
-	return (env);
+    count = 0;
+    while ((*env)[count])
+        count++;
+    new_env = ft_calloc(count + 2, sizeof(char *));
+    if (!new_env)
+        return (NULL);
+    ft_memcpy(new_env, *env, count * sizeof(char *));
+    new_var = ft_strdup(var);
+    if (!new_var)
+    {
+        free(new_env);
+        return (NULL);
+    }
+    new_env[count] = new_var;
+    new_env[count + 1] = NULL;
+    free(*env);
+    return (new_env);
 }
 
-char	**assign_var(char **env, char *args)
+/* 
+Handles VAR=value assignments by updating or adding variables
+*/
+char **assign_var_and_value(char *equal_sign, char *arg, char **env)
 {
-	int		j;
-	size_t	var_len;
-	char	*new_var;
+    int     j;
+    size_t  var_len;
+    char    *var;
 
-	j = 0;
-	var_len = ft_strlen(args);
-	while (env[j])
-	{
-		if ((ft_strncmp(env[j], args, var_len) == 0 && env[j][var_len] == '=')
-		|| env[j][var_len] == '\0')
-			return (env);
-		j++;
-	}
-	new_var = ft_strjoin(args, "=");
-	env[j] = new_var;
-	env[j + 1] = NULL;
-	return (env);
+    j = 0;
+    var_len = equal_sign - arg;
+    var = ft_substr(arg, 0, var_len);
+    if (!var)
+        return (NULL);
+    while (env[j])
+    {
+        if ((ft_strncmp(env[j], var, var_len) == 0 && 
+            (env[j][var_len] == '=' || env[j][var_len] == '\0')))
+        {
+            free(env[j]);
+            env[j] = ft_strdup(arg);
+            free(var);
+            return (env);
+        }
+        j++;
+    }
+    free(var);
+    return (add_new_env_var(arg, &env));
 }
+
+/* 
+Handles bare variable names (without values) in export statements
+*/
+char **assign_var(char *arg, char **env)
+{
+    int     j;
+    size_t  var_len;
+
+    j = 0;
+    var_len = ft_strlen(arg);
+    while (env[j])
+    {
+        if ((ft_strncmp(env[j], arg, var_len) == 0 && 
+            (env[j][var_len] == '=' || env[j][var_len] == '\0')))
+        {
+            return (env);
+        }
+        j++;
+    }
+    return (add_new_env_var(arg, &env));
+} 
+
+
+/* void print_env(char **env)
+{
+    int i = 0;
+    while (env[i])
+    {
+        printf("env[%d]: %s\n", i, env[i]);
+        i++;
+    }
+} */

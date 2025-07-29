@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenisation.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-12 13:49:14 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-06-12 13:49:14 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/06/12 13:49:14 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/07/25 11:49:42 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
