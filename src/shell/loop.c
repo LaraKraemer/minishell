@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:59:09 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 13:01:14 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 13:51:41 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 void	minishell_loop(t_shell *sh, char ***global_env)
 {
 	if (isatty(STDIN_FILENO))
-    	print_banner();
-    while (1)
-    {
-        sh->error_in_setup = 0;
-        if (!read_trim_input(sh))
+		print_banner();
+	while (1)
+	{
+		sh->error_in_setup = 0;
+		if (!read_trim_input(sh))
 		{
 			if (!isatty(STDIN_FILENO))
-                break;
-            continue;
+				break ;
+			continue ;
 		}
-        if (!tokenize_input(sh))
-            continue;
-        if (!parse_prepare_cmds(sh, *global_env))
-            continue;
-        if (!setup_paths(sh, *global_env))
-        {
-            free_resources(sh->input, sh->cmds_array, sh->cmd_count);
-            continue;
-        }
-        if (handle_builtins(sh, global_env))
-            continue;
-        execute_commands(sh);
-    }
+		if (!tokenize_input(sh))
+			continue ;
+		if (!parse_prepare_cmds(sh, *global_env))
+			continue ;
+		if (!setup_paths(sh, *global_env))
+		{
+			free_resources(sh->input, sh->cmds_array, sh->cmd_count);
+			continue ;
+		}
+		if (handle_builtins(sh, global_env))
+			continue ;
+		execute_commands(sh);
+	}
 }

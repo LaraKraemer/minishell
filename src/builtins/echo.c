@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:53:19 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 12:07:52 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 14:23:41 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	echo_builtin(t_command *cmd, char **env, int exit_code)
 	i = 1;
 	new_line = 1;
 	if (!cmd || !cmd->cmd_args)
-        return (0);
+		return (0);
 	if (cmd->cmd_args[i] && ft_strcmp(cmd->cmd_args[i], "-n") == 0)
 	{
 		new_line = 0;
@@ -47,42 +47,42 @@ int	echo_builtin(t_command *cmd, char **env, int exit_code)
 	}
 	if (new_line)
 		printf("\n");
-    fflush(stdout);
-    if (cmd->fd_out != STDOUT_FILENO)
-        close(cmd->fd_out);
+	fflush(stdout);
+	if (cmd->fd_out != STDOUT_FILENO)
+		close(cmd->fd_out);
 	return (0);
 }
 
 void	check_echo_arg(char *arg, char **env, int exit_code)
 {
-    if (arg[1] == '?')
-        echo_exit_code(arg, exit_code);
-    else if (arg[0] == '$' && arg[1] != '\0')
-        echo_env(arg, env);
-    else
-        printf("%s", arg);
+	if (arg[1] == '?')
+		echo_exit_code(arg, exit_code);
+	else if (arg[0] == '$' && arg[1] != '\0')
+		echo_env(arg, env);
+	else
+		printf("%s", arg);
 }
 
 /*
 Calls env function and prints respective value to STDOUT
 */
-void echo_env(char *arg, char **env)
+void	echo_env(char *arg, char **env)
 {
-    char *expanded_var;
+	char	*expanded_var;
 
-    if (!arg || !env)
-        return;
-    if (arg[0] == '$')
-        arg++;
-    expanded_var = get_env_value(arg, env);
-    if (expanded_var)
-        printf("%s", expanded_var);
+	if (!arg || !env)
+		return ;
+	if (arg[0] == '$')
+		arg++;
+	expanded_var = get_env_value(arg, env);
+	if (expanded_var)
+		printf("%s", expanded_var);
 }
 
 /*
 Calls exit function and prints respective value to STDOUT
 */
-void echo_exit_code(char *arg, int exit_code)
+void	echo_exit_code(char *arg, int exit_code)
 {
 	char	*expanded_exit;
 
