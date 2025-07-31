@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:23:54 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/24 14:53:50 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 13:35:44 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	export_without_var(char **global_env)
 {
 	sort_env(global_env);
 	print_export(global_env);
-	free_env(global_env);
 	return (0);
 }
 
