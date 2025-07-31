@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/25 12:05:10 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 13:08:53 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ Manages file redirections and closes unused pipe ends
 Closes all pipe FDs not used by this command and applies
 file-based redirections when specified
 */
-void handle_child_redirections(t_command *cmd, int i, int *pipe_fds, int cmd_count)
+void handle_child_redir(t_command *cmd, int i, int *pipe_fds, int cmd_count)
 {
     int j;
 
@@ -130,7 +130,7 @@ void child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
     while (cmds[cmd_count].cmd)
         cmd_count++;
     setup_child_fds(i, pipe_fds, cmd_count);
-    handle_child_redirections(cmds, i, pipe_fds, cmd_count);
+    handle_child_redir(cmds, i, pipe_fds, cmd_count);
 	if (is_builtin(cmds[i].cmd_args[0]))
 		exit(builtins(&cmds[i], &envp, cmds[i].exit_code));
     check_status = check_command(&cmds[i]);

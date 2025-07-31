@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/25 19:14:19 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 13:02:47 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,34 @@
 #define CYAN			"\033[0;36m"
 #define WHITE			"\033[0;37m"
 
+typedef struct s_shell {
+    char		*input;
+    char		*raw_input;
+    t_token		*first_token;
+    int			cmd_count;
+    t_command	*cmds_array;
+    int			exit_code;
+    int			error_in_setup;
+    int			i;
+}	t_shell;
+
+/* Shell */
+void	minishell_loop(t_shell *sh, char ***global_env);
+void	init_shell(t_shell *sh);
+int		read_trim_input(t_shell *sh);
+int		tokenize_input(t_shell *sh);
+int		parse_prepare_cmds(t_shell *sh, char **global_env);
+int		execute_with_pipex_logic(t_command *cmds, int count);
+int		setup_paths(t_shell *sh, char **global_env);
+int		handle_builtins(t_shell *sh, char ***global_env);
+void	execute_commands(t_shell *sh);
+
+/* Utils */
 void	print_banner(void);
 void	free_resources(char *input, t_command *cmds, int count);
 void	print_error(char *arg, char *message);
 void	sys_error(char *context, char *arg);
 int		print_error_return(char *arg, char *message, int code);
+
 
 #endif
