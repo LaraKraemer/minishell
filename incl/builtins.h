@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/25 19:15:11 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 12:07:56 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		cd_change_and_update_env(char *target, char *oldpwd, char ***env);
 int		echo_builtin(t_command *cmd, char **env, int exit_code);
 void	echo_env(char *arg, char **env);
 void	echo_exit_code(char *arg, int exit_code);
+void	check_echo_arg(char *arg, char **env, int exit_code);
 
 // env.c
 int		env_builtin(char **args, char **env);

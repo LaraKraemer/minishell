@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:53:19 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/25 19:49:29 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 12:07:52 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,7 @@ int	echo_builtin(t_command *cmd, char **env, int exit_code)
 	}
 	while (cmd->cmd_args[i])
 	{
-		if (cmd->cmd_args[i][1] == '?')
-			echo_exit_code(cmd->cmd_args[i], exit_code);
-		else if (cmd->cmd_args[i][0] == '$')
-			echo_env(cmd->cmd_args[i], env);
-		else
-			printf("%s", cmd->cmd_args[i]);
+		check_echo_arg(cmd->cmd_args[i], env, exit_code);
 		if (cmd->cmd_args[i + 1])
 			printf(" ");
 		i++;
@@ -56,6 +51,16 @@ int	echo_builtin(t_command *cmd, char **env, int exit_code)
     if (cmd->fd_out != STDOUT_FILENO)
         close(cmd->fd_out);
 	return (0);
+}
+
+void	check_echo_arg(char *arg, char **env, int exit_code)
+{
+    if (arg[1] == '?')
+        echo_exit_code(arg, exit_code);
+    else if (arg[0] == '$' && arg[1] != '\0')
+        echo_env(arg, env);
+    else
+        printf("%s", arg);
 }
 
 /*
