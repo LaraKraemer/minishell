@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:03:18 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/24 19:10:19 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 14:22:25 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ Returns 1 on failure
 */
 int	builtins(t_command *cmd, char ***global_env, int exit_code)
 {
-	char	cwd[BUFSIZ];
+	char		cwd[BUFSIZ];
+	const char	*cmd_name;
 
 	if (!cmd || !cmd->cmd_args[0])
-        return (0);
-	const char *cmd_name = cmd->cmd_args[0];
-		
+		return (0);
+	cmd_name = cmd->cmd_args[0];
 	if (ft_strcmp(cmd_name, "cd") == 0)
 		return (cd_builtin(cmd, global_env));
 	else if (ft_strcmp(cmd_name, "echo") == 0)

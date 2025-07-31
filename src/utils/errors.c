@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 11:51:03 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/25 11:52:01 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 14:24:46 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
 
 int	error_input(char *msg, int error)
 {
@@ -33,14 +32,14 @@ void	print_error(char *arg, char *message)
 
 void	sys_error(char *context, char *arg)
 {
-    ft_putstr_fd(RED " ❌ error: ", 2);
-    ft_putstr_fd(context, 2);
-    ft_putstr_fd(": ", 2);
-    if (arg)
+	ft_putstr_fd(RED " ❌ error: ", 2);
+	ft_putstr_fd(context, 2);
+	ft_putstr_fd(": ", 2);
+	if (arg)
 		ft_putstr_fd(arg, 2);
-    ft_putstr_fd(": ", 2);
+	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(RESET, 2);
-    perror("");
+	perror("");
 }
 
 int	print_error_return(char *arg, char *message, int code)
