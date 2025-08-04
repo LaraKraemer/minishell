@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:25:14 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/25 19:12:23 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 13:59:00 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,29 @@ void	print_banner(void)
 
 void	free_resources(char *input, t_command *cmds, int count)
 {
-    free(input);
+	free(input);
     // free_tokens(tokens);
-    free_commands(cmds, count);
+	free_commands(cmds, count);
 }
 
 char	*ft_strjoin2(const char *s1, const char *s2)
 {
-    char	*result;
-    size_t	i;
-    size_t	j;
+	char	*result;
+	size_t	i;
+	size_t	j;
 
-    i = ft_strlen(s1);
-    j = ft_strlen(s2);
-    result = malloc(i + j + 1);
-    if (!result)
-        return (NULL);
-    i = 0;
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	result = malloc(i + j + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
 	j = 0;
-    while (s1[i])
-        result[j++] = s1[i++];
-    i = 0;
-    while (s2[i])
-        result[j++] = s2[i++];
-    result[j] = '\0';
-    return (result);
+	while (s1[i])
+		result[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		result[j++] = s2[i++];
+	result[j] = '\0';
+	return (result);
 }
