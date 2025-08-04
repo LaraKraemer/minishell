@@ -32,8 +32,8 @@
 
 
 // expansion
-char	*get_env_value(char *arg, char **env);
-char	*expand_exit_code(char *arg);
+// char	*get_env_value(char *arg, char **env);
+// char	*expand_exit_code(int exit_code);
 
 /*
 builtins folder

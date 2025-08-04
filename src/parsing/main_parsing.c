@@ -127,6 +127,70 @@ int	split_into_cmds(t_command *cmd, t_token **first_token)
 	return (1);
 }
 
+char	*do_expansion(char *value, char *dollar, char **env, int exit_code)
+{
+	//char	*expanded_value;
+	char	*env_value;
+	//int		len_env_value;
+
+	if (*(dollar + 1) == '?')
+		env_value = expand_exit_code(exit_code);
+	else
+		env_value = get_env_value(dollar + 1, env);
+	if (!env_value)
+		return (NULL);
+	// len_env_value = ft_strlen(env_value);
+	// expanded_value = malloc(ft_strlen(value) - 1 + len_env_value + 1);
+	free(value);
+	return (env_value);
+}
+
+void	check_expansion(t_token *first_token, char **env, int exit_code)
+{
+	t_token	*current;
+	char	*dollar;
+	int		double_quote;
+	int		i;
+	char	*to_expand;
+	char	*expanded_value;
+
+	current = first_token;
+	double_quote = 0;
+	i = 0;
+	while (current)
+	{
+		if (current->type == TOKEN_WORD)
+		{
+			while (current->value[i])
+			{
+				if (current->value[i] == '"')
+					double_quote++;
+				else if (current->value[i] == '$' && (double_quote % 2 == 1 || double_quote == 0))
+				{
+					dollar = current->value + i;
+					i++;
+					if (!current->value[i])
+						break;
+					while (current->value[i] && (current->value[i] != ' ' || current->value[i] != '$'))
+						i++;
+					to_expand = ft_substr(current->value, dollar + 1, current->value + i - dollar);
+					if (!to_expand)
+						error_input("malloc failed", 0);
+					printf("Expanding part of token: %s\n", to_expand);
+					expanded_value = do_expansion(to_expand, dollar, env, exit_code); // Simulate expansion
+					if (!expanded_value)
+						error_input("malloc failed", 0);
+						printf("Expanded token: %s\n", current->value);
+					}
+				}
+				i++;
+			}
+		}
+		current = current->next;
+	}
+	//return (1);
+}
+
 /*Initializes an array of command structures.*/
 int	init_array(t_command *cmds_array, int cmd_count, char **envp)
 {
@@ -168,7 +232,7 @@ int	parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char
 	}
 	if (!init_array(cmds_array, cmd_count, envp))
 		return (0);
-	// if (!do_expansion(first_token))
+	// if (!check_expansion(first_token, envp))
 	// 	return (0);
 	// printf("%s - first token value\n", first_token->value);
 	while (first_token && i < cmd_count)

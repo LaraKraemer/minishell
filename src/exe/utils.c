@@ -12,7 +12,7 @@
 
 #include "../../incl/execution.h"
 
-/* 
+/*
 Filter function for builtin cmd in parent process
 */
 int must_run_in_parent(const char *cmd)
@@ -40,6 +40,8 @@ void	free_commands(t_command *cmds, int cmd_count)
 			free(cmds[i].cmd_path);
 		if (cmds[i].cmd_args)
 			free_array(cmds[i].cmd_args);
+		if (cmds[i].env)
+			free_array(cmds[i].env);
 		if (cmds[i].path_file)
 			free_array(cmds[i].path_file);
 		i++;

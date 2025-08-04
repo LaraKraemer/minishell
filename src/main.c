@@ -23,10 +23,14 @@ int	main(int argc, char **argv, char **envp)
 	int			cmd_count;
 	t_command	*cmds_array;
 	int			exit_status;
+	char		**global_env;
 	int			i;
 
 	(void)argc;
 	(void)argv;
+	global_env = copy_env(envp);
+	if (!global_env)
+		return (error_input("malloc failed", 1));
 	exit_status = 0;
 	print_banner();
 	while (1)
@@ -67,7 +71,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		// Parser
-		if (!parse_input(cmds_array, first_token, cmd_count, envp))
+		check_expansion(first_token, envp, exit_status);
+		if (!parse_input(cmds_array, first_token, cmd_count, global_env))
 		{
 			free (cmds_array);
 			continue ;
@@ -98,15 +103,15 @@ int	main(int argc, char **argv, char **envp)
 		// Executing builtins
 		if (cmd_count == 1 && is_builtin(cmds_array[0].cmd_args[0]))
         {
-            if (must_run_in_parent(cmds_array[0].cmd_args[0]))
-            {
-                exit_status = builtins(cmds_array, envp);
+            // if (must_run_in_parent(cmds_array[0].cmd_args[0]))
+            // {
+                exit_status = builtins(cmds_array, global_env);
                 free_resources(input, cmds_array, cmd_count);
                 continue;
-            }
+            // }
         }
 		// Executing everything else
-		exit_status = execute_with_pipex_logic(cmds_array, cmd_count, envp);
+		exit_status = execute_with_pipex_logic(cmds_array, cmd_count);
 		free_resources(input, cmds_array, cmd_count);
 	}
 	return (exit_status);

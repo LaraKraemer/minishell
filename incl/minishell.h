@@ -30,7 +30,8 @@
 
 
 void	print_banner(void);
-void free_resources(char *input, t_command *cmds, int count);
+void	free_resources(char *input, t_command *cmds, int count);
+void	check_expansion(t_token *first_token, char **env, int exit_code);
 /* static char	**copy_environment(char **envp);
  */
 

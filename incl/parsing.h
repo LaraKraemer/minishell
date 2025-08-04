@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "tokenisation.h"
+# include "Libft/libft.h"
 
 # define MAX_ARGS 100
 
@@ -42,6 +43,8 @@ int		split_into_cmds(t_command *cmd, t_token **start);
 int		is_last_token_word(t_token *first_token);
 int		open_file(t_command *cmd, char *file, int i);
 char	**copy_env(char **env);
+char	*get_env_value(char *arg, char **env);
+char	*expand_exit_code(int exit_code);
 
 
 #endif
