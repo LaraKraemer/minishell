@@ -74,7 +74,7 @@ typedef struct s_shell
 void	minishell_loop(t_shell *sh, char ***global_env);
 void	init_shell(t_shell *sh);
 int		read_trim_input(t_shell *sh);
-int		tokenize_input(t_shell *sh);
+int		tokenize_input(t_shell *sh, char **global_env);
 int		parse_prepare_cmds(t_shell *sh, char **global_env);
 int		execute_with_pipex_logic(t_command *cmds, int count);
 int		setup_paths(t_shell *sh, char **global_env);

@@ -48,10 +48,17 @@ void			skip_delimiter(char **s);
 int				correct_delimiter(int c);
 int				special_character(int c);
 int				is_word_token_start(int c);
-char			*copy_words(char **start);
-int				get_tokens(char *input, t_token **first_token);
+char			*copy_words(char **start, char **envp, int last_exit_code);
+int				get_tokens(char *input, t_token **first_token, char **envp, int last_exit_code);
 t_token_type	determine_type(char *start, char *next);
-char			*determine_value(t_token_type type, char **start);
+char			*determine_value(t_token_type type, char **start, char **envp, int last_exit_code);
 int				error_input(char *msg, int error);
+char			*ft_strjoin_free(char *s1, char *s2);
+char			*ft_strjoin_char(char *s, char c);
+
+// expansion
+char	*get_env_value(char *arg, char **env);
+char	*expand_exit_code(char *arg, int exit_code);
+char	*expand_variable(char *start, char **envp, int last_exit_code);
 
 #endif

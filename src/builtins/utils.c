@@ -15,8 +15,8 @@
 /*
 Identifies builtin commands from input.
 
-Returns 0 on success 
-Returns 1 on failure 
+Returns 0 on success
+Returns 1 on failure
 */
 int	is_builtin(char *arg)
 {
@@ -44,10 +44,10 @@ int	is_builtin(char *arg)
 /*
 Verifies and calls builtin cmd function.
 
-Returns 0 on success 
-Returns 1 on failure 
+Returns 0 on success
+Returns 1 on failure
 */
-int	builtins(t_command *cmd, char ***global_env, int exit_code)
+int	builtins(t_command *cmd, char ***global_env)
 {
 	char		cwd[BUFSIZ];
 	const char	*cmd_name;
@@ -58,7 +58,7 @@ int	builtins(t_command *cmd, char ***global_env, int exit_code)
 	if (ft_strcmp(cmd_name, "cd") == 0)
 		return (cd_builtin(cmd, global_env));
 	else if (ft_strcmp(cmd_name, "echo") == 0)
-		return (echo_builtin(cmd, *global_env, exit_code));
+		return (echo_builtin(cmd));
 	else if (ft_strcmp(cmd_name, "pwd") == 0)
 		return (pwd_builtin(cmd->cmd_args, cwd, sizeof(cwd)));
 	else if (ft_strcmp(cmd_name, "export") == 0)
@@ -75,8 +75,8 @@ int	builtins(t_command *cmd, char ***global_env, int exit_code)
 /*
 Function verifies whether two strings are identical.
 
-Returns 0 on success 
-Returns 1 on failure 
+Returns 0 on success
+Returns 1 on failure
 */
 int	ft_strcmp(const char *s1, const char *s2)
 {

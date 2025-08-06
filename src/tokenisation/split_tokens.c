@@ -52,42 +52,65 @@ static void	handle_quotes(char **end, int *single_quote, int *double_quote)
 	}
 }
 
-char	*copy_words(char **start)
+char	*copy_words(char **start, char **envp, int last_exit_code)
 {
 	char		*end;
 	char		*word;
-	size_t		word_len;
+	char		*expanded_value;
+	//size_t		word_len;
 	int			single_quote;
 	int			double_quote;
 
 	end = *start;
 	single_quote = 0;
 	double_quote = 0;
-	while (!correct_delimiter(*end) && !special_character(*end) && *end)
+	word = NULL;
+	//word = ft_strdup("");
+	while (*end && !correct_delimiter(*end) && !special_character(*end))
 	{
 		if (*end == '"' || *end == '\'')
 			handle_quotes(&end, &single_quote, &double_quote);
-		end++;
+		else if (*end == '$') // Обработка $ expansion
+		{
+			end++;
+			expanded_value = expand_variable(end, envp, last_exit_code);
+			// if (!expanded_value)
+			// 	return (NULL);
+			word = ft_strjoin_free(word, expanded_value);
+			free(expanded_value);
+			if (*end != '?')
+			{
+				while (*end && (ft_isalnum(*end) || *end == '_'))
+					end++;
+			}
+			else
+			// {
+			// 	if (*end)
+					end++;
+			//}
+		}
+		else
+		{
+			word = ft_strjoin_char(word, *end); // ft_strjoin_char добавляет символ к строке
+			end++;
+		}
 	}
 	if (double_quote % 2 != 0 || single_quote % 2 != 0)
+	{
+		free(word);
 		return (NULL);
-	word_len = end - *start;
-	word = malloc((word_len + 1) * sizeof(char));
-	if (word == NULL)
-		return (NULL);
-	ft_memcpy(word, *start, word_len);
-	word[word_len] = '\0';
+	}
 	*start = end;
 	return (word);
 }
 
-char	*determine_value(t_token_type type, char **start)
+char	*determine_value(t_token_type type, char **start, char **envp, int last_exit_code)
 {
 	char	*copy_start;
 
 	copy_start = *start;
 	if (type == TOKEN_WORD)
-		return (copy_words(start));
+		return (copy_words(start, envp, last_exit_code));
 	else if (type == TOKEN_PIPE || type == TOKEN_REDIR_IN
 		|| type == TOKEN_REDIR_OUT)
 	{

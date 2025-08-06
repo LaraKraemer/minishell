@@ -12,10 +12,10 @@
 
 #include "../../incl/minishell.h"
 
-int	tokenize_input(t_shell *sh)
+int	tokenize_input(t_shell *sh, char **global_env)
 {
 	sh->first_token = NULL;
-	if (get_tokens(sh->input, &sh->first_token))
+	if (get_tokens(sh->input, &sh->first_token, global_env, sh->exit_code))
 		return (0);
 	return (1);
 }

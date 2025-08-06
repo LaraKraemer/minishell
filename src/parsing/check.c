@@ -30,7 +30,7 @@ int	open_file(t_command *cmd, char *file, int i)
 		cmd->fd_in = open(file, O_RDONLY);
 		if (cmd->fd_in == -1)
 		{
-			sys_error("parser", ERR_FILE_OPEN);
+			sys_error("parser", file);
 			return (0);
 		}
 	}
@@ -39,7 +39,7 @@ int	open_file(t_command *cmd, char *file, int i)
 		cmd->fd_out = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (cmd->fd_out == -1)
 		{
-			sys_error("parser", ERR_FILE_OPEN);
+			sys_error("parser", file);
 			return (0);
 		}
 	}
@@ -48,7 +48,7 @@ int	open_file(t_command *cmd, char *file, int i)
 		cmd->fd_out = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		if (cmd->fd_out == -1)
 		{
-			sys_error("parser", ERR_FILE_OPEN);
+			sys_error("parser", file);
 			return (0);
 		}
 	}

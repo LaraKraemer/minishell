@@ -41,3 +41,37 @@ void	skip_delimiter(char **s)
 		(*s)++;
 	}
 }
+
+char	*ft_strjoin_free(char *s1, char *s2)
+{
+    char	*result;
+
+	if (!s1)
+	{
+		result = ft_strdup(s2);
+		return (result);
+	}
+    result = ft_strjoin(s1, s2);
+    free(s1);
+    return (result);
+}
+
+char	*ft_strjoin_char(char *s, char c)
+{
+    char	*result;
+    size_t	len;
+
+	if (s)
+		len = ft_strlen(s);
+	else
+		len = 0;
+    result = malloc(len + 2);
+    if (!result)
+        return (NULL);
+    if (s)
+        ft_memcpy(result, s, len);
+    result[len] = c;
+    result[len + 1] = '\0';
+    free(s);
+    return (result);
+}
