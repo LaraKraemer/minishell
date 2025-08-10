@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incl/tokenisation.h"
-#include "Libft/libft.h"
+#include "libft/libft.h"
 
 
 char	*expand_variable(char *start, char **envp, int last_exit_code)

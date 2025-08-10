@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incl/tokenisation.h"
-#include "Libft/libft.h"
+#include "libft/libft.h"
 
 t_token_type	determine_type(char *start, char *next)
 {

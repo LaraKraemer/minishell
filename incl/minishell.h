@@ -25,7 +25,7 @@
 # include "parsing.h"
 # include "execution.h"
 # include "builtins.h"
-# include "Libft/libft.h"
+# include "libft/libft.h"
 
 // Error messages
 # define ERR_QUOTE		"error: Unclosed quotes\n"

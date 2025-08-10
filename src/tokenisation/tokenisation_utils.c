@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incl/tokenisation.h"
-#include "Libft/libft.h"
+#include "libft/libft.h"
 
 int	correct_delimiter(int c)
 {

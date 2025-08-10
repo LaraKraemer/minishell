@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incl/tokenisation.h"
-#include "Libft/libft.h"
+#include "libft/libft.h"
 
 char	*ft_strjoin_free(char *s1, char *s2)
 {
