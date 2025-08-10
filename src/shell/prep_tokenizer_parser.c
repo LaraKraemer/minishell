@@ -27,7 +27,7 @@ int	parse_prepare_cmds(t_shell *sh, char **global_env)
 	if (!sh->cmds_array)
 		return (error_input(ERR_MEM_ALLO, 1));
 	if (!parse_input
-		(sh->cmds_array, sh->first_token, sh->cmd_count, global_env))
+		(sh->cmds_array, sh->first_token, sh->cmd_count, sh->exit_code, global_env))
 	{
 		sh->exit_code = 258;
 		free(sh->cmds_array);

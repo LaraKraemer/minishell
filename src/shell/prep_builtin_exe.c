@@ -35,7 +35,7 @@ int	handle_builtins(t_shell *sh, char ***global_env)
 {
 	if (sh->cmd_count == 1 && is_builtin(sh->cmds_array[0].cmd_args[0]))
 	{
-		sh->exit_code = builtins(&sh->cmds_array[0], global_env, sh->exit_code);
+		sh->exit_code = builtins(&sh->cmds_array[0], global_env);
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count);
 		return (1);
 	}

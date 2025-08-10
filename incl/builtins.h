@@ -38,9 +38,6 @@ int		cd_change_and_update_env(char *target, char *oldpwd, char ***env);
 
 // echo.c
 int		echo_builtin(t_command *cmd);
-//void	echo_env(char *arg, char **env);
-//void	echo_exit_code(char *arg, int exit_code);
-//void	check_echo_arg(char *arg, char **env, int exit_code);
 
 // env.c
 int		env_builtin(char **args, char **env);

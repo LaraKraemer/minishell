@@ -30,7 +30,7 @@ void	print_error(char *arg, char *message)
 	ft_putstr_fd(message, 2);
 }
 
-void	sys_error(char *context, char *arg)
+int	sys_error(char *context, char *arg)
 {
 	ft_putstr_fd(RED " ❌ error: ", 2);
 	ft_putstr_fd(context, 2);
@@ -40,6 +40,7 @@ void	sys_error(char *context, char *arg)
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(RESET, 2);
 	perror("");
+	return (0);
 }
 
 int	print_error_return(char *arg, char *message, int code)

@@ -12,8 +12,8 @@
 
 #include "../../incl/execution.h"
 
-/* 
-Executes a pipeline of commands with fork/exec and pipe redirection 
+/*
+Executes a pipeline of commands with fork/exec and pipe redirection
 */
 int	execute_with_pipex_logic(t_command *cmds, int cmd_count)
 {
@@ -43,7 +43,7 @@ int	execute_with_pipex_logic(t_command *cmds, int cmd_count)
 	return (free(pipe_fds), free(child_pids), exit_status);
 }
 
-/* 
+/*
 Manages stdin/stdout redirection for a child process
 */
 void	setup_child_fds(int i, int *pipe_fds, int cmd_count)
@@ -60,7 +60,7 @@ void	setup_child_fds(int i, int *pipe_fds, int cmd_count)
 	}
 }
 
-/* 
+/*
 Manages file redirections and closes unused pipe ends
 Closes all pipe FDs not used by this command and applies
 file-based redirections when specified
@@ -87,7 +87,7 @@ void	handle_child_redir(t_command *cmd, int i, int *pipe_fds, int cmd_count)
 	}
 }
 
-/* 
+/*
 Child process execution handler
 Never returns - exits via exit() or execve()
 */
@@ -106,7 +106,7 @@ void	child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
 	setup_child_fds(i, pipe_fds, cmd_count);
 	handle_child_redir(cmds, i, pipe_fds, cmd_count);
 	if (is_builtin(cmds[i].cmd_args[0]))
-		exit(builtins(&cmds[i], &envp, cmds[i].exit_code));
+		exit(builtins(&cmds[i], &envp));
 	check_status = check_command(&cmds[i]);
 	if (check_status != 0)
 		exit(check_status);
@@ -115,7 +115,7 @@ void	child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
 	exit(127);
 }
 
-/* 
+/*
 Manages parent process responsibilities during pipeline execution
 Closes unused pipe ends and waits for child completion
 */
@@ -147,7 +147,7 @@ int	parent_process(pid_t pid, int *pipe_fds, int cmd_count, int i)
 
 /* Temporary debugging function */
 /* void print_child_debug(t_command *cmd, int i)
-{		   
+{
     fprintf(stderr, "Executing: %s\n", cmd[i].cmd_path);
     fprintf(stderr, "With args: ");
 	int k;
@@ -161,7 +161,7 @@ int	parent_process(pid_t pid, int *pipe_fds, int cmd_count, int i)
     }
     fprintf(stderr, "\n");
 
-fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]); 
+fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]);
 fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]);
 fprintf(stderr, "Connecting stdout to pipe %d\n", pipe_fds[i*2+1]);
 } */

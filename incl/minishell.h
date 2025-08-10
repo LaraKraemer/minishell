@@ -58,6 +58,7 @@
 # define CYAN		"\033[0;36m"
 # define WHITE		"\033[0;37m"
 
+
 typedef struct s_shell
 {
 	char		*input;
@@ -85,7 +86,7 @@ void	execute_commands(t_shell *sh);
 void	print_banner(void);
 void	free_resources(char *input, t_command *cmds, int count);
 void	print_error(char *arg, char *message);
-void	sys_error(char *context, char *arg);
+int		sys_error(char *context, char *arg);
 int		print_error_return(char *arg, char *message, int code);
 
 #endif

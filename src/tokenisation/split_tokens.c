@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incl/tokenisation.h"
-# include "Libft/libft.h"
+#include "Libft/libft.h"
 
 t_token_type	determine_type(char *start, char *next)
 {
@@ -30,81 +30,8 @@ t_token_type	determine_type(char *start, char *next)
 	return (TOKEN_UNKNOWN);
 }
 
-static void	handle_quotes(char **end, int *single_quote, int *double_quote)
-{
-	if (**end == '"')
-	{
-		(*double_quote)++;
-		(*end)++;
-		while (**end != '"' && **end)
-			(*end)++;
-		if (**end == '"')
-			(*double_quote)++;
-	}
-	else if (**end == '\'')
-	{
-		(*single_quote)++;
-		(*end)++;
-		while (**end != '\'' && **end)
-			(*end)++;
-		if (**end == '\'')
-			(*single_quote)++;
-	}
-}
-
-char	*copy_words(char **start, char **envp, int last_exit_code)
-{
-	char		*end;
-	char		*word;
-	char		*expanded_value;
-	//size_t		word_len;
-	int			single_quote;
-	int			double_quote;
-
-	end = *start;
-	single_quote = 0;
-	double_quote = 0;
-	word = NULL;
-	//word = ft_strdup("");
-	while (*end && !correct_delimiter(*end) && !special_character(*end))
-	{
-		if (*end == '"' || *end == '\'')
-			handle_quotes(&end, &single_quote, &double_quote);
-		else if (*end == '$') // Обработка $ expansion
-		{
-			end++;
-			expanded_value = expand_variable(end, envp, last_exit_code);
-			// if (!expanded_value)
-			// 	return (NULL);
-			word = ft_strjoin_free(word, expanded_value);
-			free(expanded_value);
-			if (*end != '?')
-			{
-				while (*end && (ft_isalnum(*end) || *end == '_'))
-					end++;
-			}
-			else
-			// {
-			// 	if (*end)
-					end++;
-			//}
-		}
-		else
-		{
-			word = ft_strjoin_char(word, *end); // ft_strjoin_char добавляет символ к строке
-			end++;
-		}
-	}
-	if (double_quote % 2 != 0 || single_quote % 2 != 0)
-	{
-		free(word);
-		return (NULL);
-	}
-	*start = end;
-	return (word);
-}
-
-char	*determine_value(t_token_type type, char **start, char **envp, int last_exit_code)
+char	*determine_value(t_token_type type, char **start,
+		char **envp, int last_exit_code)
 {
 	char	*copy_start;
 
