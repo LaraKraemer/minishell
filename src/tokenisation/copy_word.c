@@ -106,7 +106,7 @@ char	*copy_words(char **start, char **envp, int last_exit_code)
 		if (*end == '"' || *end == '\'')
 		{
 			handle_quotes(&end, &single_quote, &double_quote);
-			word = ft_substr(*start, 0, end - *start);
+			word = ft_substr(*start, 0, end - *start + 1);
 			end++;
 		}
 		else if (*end == '$')
