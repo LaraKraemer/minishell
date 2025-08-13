@@ -26,7 +26,9 @@ void	init_shell(t_shell *sh)
 
 int	read_trim_input(t_shell *sh)
 {
-	sh->raw_input = readline("minishell🐣>$ ");
+	if (isatty(STDIN_FILENO))
+		sh->raw_input = readline("minishell🐣>$ ");
+	//else
 	if (!sh->raw_input)
 		return (0);
 	sh->input = ft_strtrim(sh->raw_input, " \t\n");
@@ -36,6 +38,7 @@ int	read_trim_input(t_shell *sh)
 		free(sh->input);
 		return (0);
 	}
-	add_history(sh->input);
+	if (isatty(STDIN_FILENO))
+		add_history(sh->input);
 	return (1);
 }

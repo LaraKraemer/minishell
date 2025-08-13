@@ -44,9 +44,9 @@ int	split_into_cmds(t_command *cmd, t_token **first_token,
 	while (start && start->type != TOKEN_PIPE)
 	{
 		if (start->type == TOKEN_REDIR_IN || start->type == TOKEN_REDIR_OUT
-			|| start->type == TOKEN_APPEND)
+			|| start->type == TOKEN_APPEND || start->type == TOKEN_HEREDOC)
 		{
-			if (!in_out_redir(cmd, &start))
+			if (!in_out_redir(cmd, &start, envp, ex_code))
 				return (0);
 		}
 		else if (start->type == TOKEN_WORD)
