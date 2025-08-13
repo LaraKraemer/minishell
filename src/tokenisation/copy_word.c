@@ -109,7 +109,8 @@ char	*copy_words(char **start, char **envp, int last_exit_code)
 			word = ft_substr(*start, 0, end - *start + 1);
 			end++;
 		}
-		else if (*end == '$')
+		else if (*end == '$' && *(end + 1) && *(end + 1) != 32
+			&& ft_isprint(*(end + 1)))
 		{
 			end++;
 			word = do_expansion(&end, envp, last_exit_code, word);

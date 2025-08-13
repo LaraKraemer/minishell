@@ -45,7 +45,41 @@ static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 	new_str = ft_strdup("");
 	while (*start)
 	{
-		if (*start == '$' && *(start + 1))
+		if (*start == '$' && *(start + 1) && *(start + 1) != 32
+			&& ft_isprint(*(start + 1)))
+		{
+			start++;
+			if (*start == '?')
+			{
+				new_str = ft_strjoin(new_str, ft_itoa(ex_code));
+				start++;
+			}
+			else if (*start == '"')
+			{
+				start++;
+				while (*start && *start != '"')
+				{
+					new_str = ft_strjoin_char(new_str, *start);
+					start++;
+				}
+				if (*start == '"')
+					start++;
+			}
+			else if (*start == '\'')
+			{
+				start++;
+				while (*start && *start != '\'')
+				{
+					new_str = ft_strjoin_char(new_str, *start);
+					start++;
+				}
+				if (*start == '\'')
+					start++;
+			}
+			else
+				new_str = do_expansion(&start, env, ex_code, new_str);
+		}
+		else if (*start == '\\' && *(start + 1) && *(start + 1) != ' ')
 		{
 			start++;
 			new_str = do_expansion(&start, env, ex_code, new_str);
