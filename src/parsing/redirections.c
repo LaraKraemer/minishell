@@ -29,10 +29,7 @@ static int	check_quotes(char *delimiter)
 		delimiter++;
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-	{
-		printf("%d - sinle, %d - double\n", single_quotes, double_quotes);
 		return (error_input(ERR_SYNTAX_T, -1));
-	}
 	return (single_quotes + double_quotes);
 }
 
@@ -45,8 +42,8 @@ static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 	new_str = ft_strdup("");
 	while (*start)
 	{
-		if (*start == '$' && *(start + 1) && *(start + 1) != 32
-			&& ft_isprint(*(start + 1)))
+		if (*start == '$' && (ft_isalnum(*(start + 1))
+				|| *(start + 1) == '_' || *(start + 1) == '?'))
 		{
 			start++;
 			if (*start == '?')
@@ -54,36 +51,36 @@ static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 				new_str = ft_strjoin(new_str, ft_itoa(ex_code));
 				start++;
 			}
-			else if (*start == '"')
-			{
-				start++;
-				while (*start && *start != '"')
-				{
-					new_str = ft_strjoin_char(new_str, *start);
-					start++;
-				}
-				if (*start == '"')
-					start++;
-			}
-			else if (*start == '\'')
-			{
-				start++;
-				while (*start && *start != '\'')
-				{
-					new_str = ft_strjoin_char(new_str, *start);
-					start++;
-				}
-				if (*start == '\'')
-					start++;
-			}
+			// else if (*start == '"')
+			// {
+			// 	start++;
+			// 	while (*start && *start != '"')
+			// 	{
+			// 		new_str = ft_strjoin_char(new_str, *start);
+			// 		start++;
+			// 	}
+			// 	if (*start == '"')
+			// 		start++;
+			// }
+			// else if (*start == '\'')
+			// {
+			// 	start++;
+			// 	while (*start && *start != '\'')
+			// 	{
+			// 		new_str = ft_strjoin_char(new_str, *start);
+			// 		start++;
+			// 	}
+			// 	if (*start == '\'')
+			// 		start++;
+			// }
 			else
 				new_str = do_expansion(&start, env, ex_code, new_str);
 		}
-		else if (*start == '\\' && *(start + 1) && *(start + 1) != ' ')
-		{
-			start++;
-			new_str = do_expansion(&start, env, ex_code, new_str);
-		}
+		// else if (*start == '\\' && *(start + 1) && *(start + 1) != ' ')
+		// {
+		// 	start++;
+		// 	new_str = do_expansion(&start, env, ex_code, new_str);
+		// }
 		else
 		{
 			new_str = ft_strjoin_char(new_str, *start);
@@ -101,7 +98,6 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 	int		quotes_num;
 	char	*temp;
 
-	printf("Delimiter: %s\n", delimiter);
 	quotes_num = check_quotes(delimiter);
 	if (quotes_num < 0)
 		return (0);
@@ -113,7 +109,7 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 	while (1)
 	{
 		heredoc_content = readline("> ");
-		if (!heredoc_content || ft_strcmp(heredoc_content, delimiter) == 0) // TODO remove quotes from delimiter
+		if (!heredoc_content || ft_strcmp(heredoc_content, delimiter) == 0)
 			break ;
 		if (ft_strchr(heredoc_content, '$') && quotes_num == 0)
 			heredoc_content = exp_in_heredoc(heredoc_content, env, ex_code);
@@ -161,7 +157,6 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	{
 		if (cmd->fd_in != -1)
 			close(cmd->fd_in);
-		printf("Delimiter %s\n", (*current_token)->value);
 		if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, ex_code))
 			return (0);
 	}
