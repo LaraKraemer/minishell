@@ -25,7 +25,7 @@ char	*quotes_token(char *token, char **envp, int exit_code)
 			while (*token && *token != '"')
 			{
 				if (*token == '$' && (ft_isalnum(*(token + 1))
-						|| *(token + 1) == '_'))
+						|| *(token + 1) == '_' || *(token + 1) == '?'))
 				{
 					token++;
 					result = do_expansion(&token, envp, exit_code, result);

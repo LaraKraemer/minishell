@@ -51,36 +51,9 @@ static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 				new_str = ft_strjoin(new_str, ft_itoa(ex_code));
 				start++;
 			}
-			// else if (*start == '"')
-			// {
-			// 	start++;
-			// 	while (*start && *start != '"')
-			// 	{
-			// 		new_str = ft_strjoin_char(new_str, *start);
-			// 		start++;
-			// 	}
-			// 	if (*start == '"')
-			// 		start++;
-			// }
-			// else if (*start == '\'')
-			// {
-			// 	start++;
-			// 	while (*start && *start != '\'')
-			// 	{
-			// 		new_str = ft_strjoin_char(new_str, *start);
-			// 		start++;
-			// 	}
-			// 	if (*start == '\'')
-			// 		start++;
-			// }
 			else
 				new_str = do_expansion(&start, env, ex_code, new_str);
 		}
-		// else if (*start == '\\' && *(start + 1) && *(start + 1) != ' ')
-		// {
-		// 	start++;
-		// 	new_str = do_expansion(&start, env, ex_code, new_str);
-		// }
 		else
 		{
 			new_str = ft_strjoin_char(new_str, *start);
@@ -135,10 +108,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	if (!(*current_token)->next || (*current_token)->next->type != TOKEN_WORD)
 		return (error_input(ERR_SYNTAX_T, 0));
 	current_type = (*current_token)->type;
-	// printf("current token type %d\n", current_type);
-	// printf("current token value %s\n", (*current_token)->value);
 	*current_token = (*current_token)->next;
-	//printf("next token value %s\n", (*current_token)->value);
 	if (current_type == TOKEN_REDIR_IN)
 	{
 		if (cmd->fd_in != -1)
