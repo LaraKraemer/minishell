@@ -31,8 +31,10 @@ char	*quotes_token(char *token, char **envp, int exit_code)
 					result = do_expansion(&token, envp, exit_code, result);
 				}
 				else
+				{
 					result = ft_strjoin_char(result, *token);
-				token++;
+					token++;
+				}
 			}
 		}
 		else if (*token == '\'')
@@ -45,8 +47,10 @@ char	*quotes_token(char *token, char **envp, int exit_code)
 			}
 		}
 		else
+		{
 			result = ft_strjoin_char(result, *token);
-		token++;
+			token++;
+		}
 	}
 	return (result);
 }
