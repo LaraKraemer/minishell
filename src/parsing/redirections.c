@@ -13,6 +13,8 @@
 #include "../../incl/parsing.h"
 #include "../../incl/minishell.h"
 
+/*Checks whether the given delimiter string contains an even number of quotes.
+Used to detect syntax errors and determine if quotes were used.*/
 static int	check_quotes(char *delimiter)
 {
 	int	single_quotes;
@@ -33,6 +35,9 @@ static int	check_quotes(char *delimiter)
 	return (single_quotes + double_quotes);
 }
 
+/*Performs variable expansion within a heredoc line.
+If there is no expansion needed -
+appends a single character c to the end of a given string s.*/
 static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 {
 	char	*start;
@@ -64,6 +69,9 @@ static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 	return (new_str);
 }
 
+/*Handles heredoc input from the user until the delimiter is reached.
+Expands variables in the heredoc input only if the delimiter is unquoted.
+Writes the accumulated heredoc content into a pipe.*/
 static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 {
 	char	*heredoc_content;
@@ -96,7 +104,7 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 	return (1);
 }
 
-/*Checks the redirection types (input, output, append) and opens the
+/*Checks the redirection types (input, output, append, heredoc) and opens the
  corresponding files. Updates the file descriptors (fd_in, fd_out)
  in the command structure. Also checks for errors if there is redirection
  but without filename*/

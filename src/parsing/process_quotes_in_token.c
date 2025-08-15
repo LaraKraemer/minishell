@@ -12,6 +12,8 @@
 
 #include "../../incl/parsing.h"
 
+/*Parses a token and returns a new string with quotes removed and variable
+expansions applied where appropriate (inside quotations).*/
 char	*quotes_token(char *token, char **envp, int exit_code)
 {
 	char	*result;

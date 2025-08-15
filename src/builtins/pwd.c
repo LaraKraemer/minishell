@@ -13,7 +13,7 @@
 #include "../../incl/builtins.h"
 
 /*
-Runs in child process - no issues with forking since 
+Runs in child process - no issues with forking since
 it doesn’t change anything.
 */
 int	pwd_builtin(char **args, char *cwd, size_t cwd_size)
