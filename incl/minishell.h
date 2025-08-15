@@ -25,7 +25,7 @@
 # include "parsing.h"
 # include "execution.h"
 # include "builtins.h"
-# include "Libft/libft.h"
+# include "libft/libft.h"
 
 // Error messages
 # define ERR_QUOTE		"error: Unclosed quotes\n"
@@ -58,6 +58,7 @@
 # define CYAN		"\033[0;36m"
 # define WHITE		"\033[0;37m"
 
+
 typedef struct s_shell
 {
 	char		*input;
@@ -74,7 +75,7 @@ typedef struct s_shell
 void	minishell_loop(t_shell *sh, char ***global_env);
 void	init_shell(t_shell *sh);
 int		read_trim_input(t_shell *sh);
-int		tokenize_input(t_shell *sh);
+int		tokenize_input(t_shell *sh, char **global_env);
 int		parse_prepare_cmds(t_shell *sh, char **global_env);
 int		execute_with_pipex_logic(t_command *cmds, int count);
 int		setup_paths(t_shell *sh, char **global_env);
@@ -85,7 +86,7 @@ void	execute_commands(t_shell *sh);
 void	print_banner(void);
 void	free_resources(char *input, t_command *cmds, int count);
 void	print_error(char *arg, char *message);
-void	sys_error(char *context, char *arg);
+int		sys_error(char *context, char *arg);
 int		print_error_return(char *arg, char *message, int code);
 
 #endif

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incl/tokenisation.h"
-# include "Libft/libft.h"
+#include "libft/libft.h"
 
 t_token_type	determine_type(char *start, char *next)
 {
@@ -30,64 +30,14 @@ t_token_type	determine_type(char *start, char *next)
 	return (TOKEN_UNKNOWN);
 }
 
-static void	handle_quotes(char **end, int *single_quote, int *double_quote)
-{
-	if (**end == '"')
-	{
-		(*double_quote)++;
-		(*end)++;
-		while (**end != '"' && **end)
-			(*end)++;
-		if (**end == '"')
-			(*double_quote)++;
-	}
-	else if (**end == '\'')
-	{
-		(*single_quote)++;
-		(*end)++;
-		while (**end != '\'' && **end)
-			(*end)++;
-		if (**end == '\'')
-			(*single_quote)++;
-	}
-}
-
-char	*copy_words(char **start)
-{
-	char		*end;
-	char		*word;
-	size_t		word_len;
-	int			single_quote;
-	int			double_quote;
-
-	end = *start;
-	single_quote = 0;
-	double_quote = 0;
-	while (!correct_delimiter(*end) && !special_character(*end) && *end)
-	{
-		if (*end == '"' || *end == '\'')
-			handle_quotes(&end, &single_quote, &double_quote);
-		end++;
-	}
-	if (double_quote % 2 != 0 || single_quote % 2 != 0)
-		return (NULL);
-	word_len = end - *start;
-	word = malloc((word_len + 1) * sizeof(char));
-	if (word == NULL)
-		return (NULL);
-	ft_memcpy(word, *start, word_len);
-	word[word_len] = '\0';
-	*start = end;
-	return (word);
-}
-
-char	*determine_value(t_token_type type, char **start)
+char	*determine_value(t_token_type type, char **start,
+		char **envp, int last_exit_code)
 {
 	char	*copy_start;
 
 	copy_start = *start;
 	if (type == TOKEN_WORD)
-		return (copy_words(start));
+		return (copy_words(start, envp, last_exit_code));
 	else if (type == TOKEN_PIPE || type == TOKEN_REDIR_IN
 		|| type == TOKEN_REDIR_OUT)
 	{

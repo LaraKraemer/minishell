@@ -17,7 +17,7 @@
 # include <stdbool.h>
 # include "parsing.h"
 # include "builtins.h"
-# include "Libft/libft.h"
+# include "libft/libft.h"
 
 int		check_command(t_command *cmd_struct);
 int		execute_with_pipex_logic(t_command *cmds, int cmd_count);

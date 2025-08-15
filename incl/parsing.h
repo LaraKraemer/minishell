@@ -37,10 +37,16 @@ typedef struct s_command
 }	t_command;
 
 int		count_cmd_num(t_token *first_token);
-int		parse_input(t_command *cmds_array, t_token *first_token, int cmd_count, char **envp);
-int		split_into_cmds(t_command *cmd, t_token **start);
+int		parse_input(t_command *cmds_array, t_token *first_token,
+			int cmd_count, int exit_code, char **envp);
+int		split_into_cmds(t_command *cmd, t_token **start,
+			char **envp, int ex_code);
 int		is_last_token_word(t_token *first_token);
+int		in_out_redir(t_command *cmd, t_token **current_token,
+			char **env, int ex_code);
 int		open_file(t_command *cmd, char *file, int i);
+int		init_array(t_command *cmds_array, int cmd_count, char **envp);
+char	*quotes_token(char *token, char **envp, int exit_code);
 char	**copy_env(char **env);
 
 
