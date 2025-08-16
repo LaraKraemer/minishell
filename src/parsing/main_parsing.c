@@ -39,6 +39,7 @@ int	split_into_cmds(t_command *cmd, t_token **first_token,
 {
 	t_token	*start;
 	int		i;
+	int		return_from_redirections;
 
 	start = *first_token;
 	while (start && start->type != TOKEN_PIPE)
@@ -46,8 +47,15 @@ int	split_into_cmds(t_command *cmd, t_token **first_token,
 		if (start->type == TOKEN_REDIR_IN || start->type == TOKEN_REDIR_OUT
 			|| start->type == TOKEN_APPEND || start->type == TOKEN_HEREDOC)
 		{
-			if (!in_out_redir(cmd, &start, envp, ex_code))
+			return_from_redirections = in_out_redir(cmd, &start, envp, ex_code);
+			if (return_from_redirections == 0)
 				return (0);
+			else if (return_from_redirections == -1)
+			{
+				start = start->next;
+				continue ;
+
+			}
 		}
 		else if (start->type == TOKEN_WORD)
 		{
@@ -64,7 +72,7 @@ int	split_into_cmds(t_command *cmd, t_token **first_token,
 			}
 			cmd->cmd_args[i] = NULL;
 		}
-		if (start)
+		//if (start)
 			start = start->next;
 	}
 	if (start)

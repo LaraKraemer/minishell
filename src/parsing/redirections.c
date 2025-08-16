@@ -122,14 +122,14 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 		if (cmd->fd_in != -1)
 			close(cmd->fd_in);
 		if (!open_file(cmd, (*current_token)->value, current_type))
-			return (0);
+			return (-1);
 	}
 	else if (current_type == TOKEN_REDIR_OUT || current_type == TOKEN_APPEND)
 	{
 		if (cmd->fd_out != -1)
 			close(cmd->fd_out);
 		if (!open_file(cmd, (*current_token)->value, current_type))
-			return (0);
+			return (-1);
 	}
 	else if (current_type == TOKEN_HEREDOC)
 	{
