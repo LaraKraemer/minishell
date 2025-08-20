@@ -6,12 +6,16 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:57:44 by lkramer           #+#    #+#             */
-/*   Updated: 2025/08/20 15:50:47 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/20 16:56:41 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+/* 
+Sets up executable paths for non-builtin commands in the command array.
+Skips builtin commands as they don't require path resolution.
+*/
 int	setup_paths(t_shell *sh, char **global_env)
 {
 	int	i;
