@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 11:52:03 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/31 16:42:45 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/20 17:24:40 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	extract_path(char **env)
 			return (i);
 		i++;
 	}
-	print_error(env[i], ERR_PATH);
+	print_error("PATH", ERR_PATH);
 	return (-1);
 }
 
@@ -52,6 +52,9 @@ static int	add_slash_topath(char ***dest, char **path_file)
 	return (0);
 }
 
+/*
+Sets up command path array from PATH environment variable.
+*/
 int	set_path(t_command *cmd, char **envp)
 {
 	char	*path;
@@ -61,12 +64,11 @@ int	set_path(t_command *cmd, char **envp)
 
 	if (cmd->path_file)
 		free_array(cmd->path_file);
+	if (cmd->cmd && ft_strchr(cmd->cmd, '/') != NULL)
+		return (cmd->path_file = NULL, 0);
 	i = extract_path(envp);
 	if (i == -1)
-	{
-		print_error(envp[i], ERR_PATH);
 		return (-1);
-	}
 	path = ft_strtrim(envp[i], "PATH=");
 	if (!path)
 		return (-1);
