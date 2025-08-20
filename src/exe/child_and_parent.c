@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/31 16:43:13 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 17:43:51 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ void	child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
 	cmd_count = 0;
 	while (cmds[cmd_count].cmd)
 		cmd_count++;
-	setup_child_fds(i, pipe_fds, cmd_count);
+	if (cmd_count > 1)
+		setup_child_fds(i, pipe_fds, cmd_count);
 	handle_child_redir(cmds, i, pipe_fds, cmd_count);
 	if (is_builtin(cmds[i].cmd_args[0]))
 		exit(builtins(&cmds[i], &envp));
