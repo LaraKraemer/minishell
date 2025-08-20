@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:53:19 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 14:23:41 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/07/31 17:28:47 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,5 @@ int	echo_builtin(t_command *cmd)
 	}
 	if (new_line)
 		printf("\n");
-	fflush(stdout);
-	if (cmd->fd_out != STDOUT_FILENO)
-		close(cmd->fd_out);
 	return (0);
 }
