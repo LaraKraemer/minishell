@@ -6,13 +6,10 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:57:44 by lkramer           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/08/21 13:58:22 by lkramer          ###   ########.fr       */
-=======
-/*   Updated: 2025/08/20 16:56:41 by lkramer          ###   ########.fr       */
->>>>>>> 97ccf0e (feat: add function description)
+/*   Updated: 2025/08/21 14:01:00 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../incl/minishell.h"
 
