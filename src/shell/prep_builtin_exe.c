@@ -6,10 +6,9 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:57:44 by lkramer           #+#    #+#             */
-/*   Updated: 2025/08/21 14:24:11 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/21 14:43:24 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../incl/minishell.h"
 
@@ -42,8 +41,15 @@ int	setup_paths(t_shell *sh, char **global_env)
 	return (1);
 }
 
+/*
+Handles execution of builtin commands with redirection support.
+Executes builtin commands directly in parent process.
+Saves and restores original stdout to ensure shell state remains intact.
+*/
 int	handle_builtins(t_shell *sh, char ***global_env)
 {
+	int	saved_stdout;
+
 	if (sh->cmd_count == 1 && is_builtin(sh->cmds_array[0].cmd_args[0]))
 	{
 		sh->exit_code = builtins(&sh->cmds_array[0], global_env);
