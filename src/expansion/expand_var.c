@@ -1,43 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-04 09:57:45 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-06-04 09:57:45 by dtimofee         ###   ########.fr       */
+/*   Created: 2025-08-06 10:57:53 by dtimofee          #+#    #+#             */
+/*   Updated: 2025-08-06 10:57:53 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenisation.h"
 #include "libft/libft.h"
 
-int	correct_delimiter(int c)
-{
-	if (c == 9 || c == 10 || c == 32)
-		return (1);
-	return (0);
-}
 
-int	special_character(int c)
+char	*expand_variable(char *start, char **envp, int last_exit_code)
 {
-	if (c == '|' || c == '<' || c == '>')
-		return (1);
-	return (0);
-}
+	char	*var_name;
+	char	*expanded_value;
+	size_t	var_len;
 
-int	is_word_token_start(int c)
-{
-	if (ft_isprint(c) && !special_character(c))
-		return (1);
-	return (0);
-}
-
-void	skip_delimiter(char **s)
-{
-	while (correct_delimiter(**s) && **s)
+	if (*start == '?')
 	{
-		(*s)++;
+		expanded_value = ft_itoa(last_exit_code);
+		return (expanded_value);
+	}
+	else
+	{
+		var_len = 0;
+		while (start[var_len] && (ft_isalnum(start[var_len])
+				|| start[var_len] == '_'))
+			var_len++;
+		var_name = ft_substr(start, 0, var_len);
+		expanded_value = get_env_value(var_name, envp);
+		free(var_name);
+		return (expanded_value);
 	}
 }

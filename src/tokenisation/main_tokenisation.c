@@ -13,7 +13,8 @@
 #include "../../incl/tokenisation.h"
 #include "../../incl/minishell.h"
 
-int	get_tokens(char *input, t_token **first_token)
+int	get_tokens(char *input, t_token **first_token,
+		char **envp, int last_exit_code)
 {
 	t_token			*current_token;
 	t_token_type	type;
@@ -25,9 +26,14 @@ int	get_tokens(char *input, t_token **first_token)
 		if (!*input)
 			return (1);
 		type = determine_type(input, input + 1);
-		value = determine_value(type, &input);
+		value = determine_value(type, &input, envp, last_exit_code);
 		if (!value)
 			return (error_input(ERR_SYNTAX_T, 1));
+		if (value[0] == '\0')
+		{
+			free(value);
+			continue ;
+		}
 		if (*first_token == NULL)
 		{
 			*first_token = ms_lstnew(type, value);

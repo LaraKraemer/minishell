@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/execution.h"
+#include "../../incl/tokenisation.h"
 
 /*
 Retrieves value of an environment variable.
 
-Returns a pointer to variable's value after '=' 
+Returns a pointer to variable's value after '='
 or NULL if variable doesn't exist.
 */
 char	*get_env_value(char *arg, char **env)
@@ -33,15 +33,5 @@ char	*get_env_value(char *arg, char **env)
 			return (ft_strdup(env[i] + arg_len + 1));
 		i++;
 	}
-	return (NULL);
-}
-
-/*
-Returns exit code as a string for expansion.
-*/
-char	*expand_exit_code(char *arg, int exit_code)
-{
-	if (!arg || ft_strcmp(arg, "$?") != 0)
-		return (NULL);
-	return (ft_itoa(exit_code));
+	return (ft_strdup(""));
 }

@@ -18,13 +18,10 @@
 # include "minishell.h"
 # include "parsing.h"
 
-// expansion
-char	*get_env_value(char *arg, char **env);
-char	*expand_exit_code(char *arg, int exit_code);
 
 // utils.c
 int		ft_strcmp(const char *s1, const char *s2);
-int		builtins(t_command *cmd, char ***global_env, int exit_code);
+int		builtins(t_command *cmd, char ***global_env);
 int		is_builtin(char *arg);
 int		must_run_in_parent(const char *cmd);
 
@@ -40,10 +37,7 @@ int		cd_oldpwd(t_command *cmd, char ***env, char **target, char **oldpwd);
 int		cd_change_and_update_env(char *target, char *oldpwd, char ***env);
 
 // echo.c
-int		echo_builtin(t_command *cmd, char **env, int exit_code);
-void	echo_env(char *arg, char **env);
-void	echo_exit_code(char *arg, int exit_code);
-void	check_echo_arg(char *arg, char **env, int exit_code);
+int		echo_builtin(t_command *cmd);
 
 // env.c
 int		env_builtin(char **args, char **env);
