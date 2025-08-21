@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:03:18 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 14:22:25 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/21 15:14:19 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	builtins(t_command *cmd, char ***global_env)
 	else if (ft_strcmp(cmd_name, "echo") == 0)
 		return (echo_builtin(cmd));
 	else if (ft_strcmp(cmd_name, "pwd") == 0)
-		return (pwd_builtin(cmd->cmd_args, cwd, sizeof(cwd)));
+		return (pwd_builtin(cwd, sizeof(cwd)));
 	else if (ft_strcmp(cmd_name, "export") == 0)
 		return (export_builtin(cmd, global_env));
 	else if (ft_strcmp(cmd_name, "unset") == 0)
