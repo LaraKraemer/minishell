@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 13:40:53 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/08/21 14:42:03 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/22 17:25:53 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ int	open_file(t_command *cmd, char *file, int i)
 		cmd->fd_in = open(file, O_RDONLY);
 		if (cmd->fd_in == -1)
 		{
-			sys_error("parser", file);
+			if (!cmd->redir_err_flag)
+			{
+				sys_error("parser", file);
+				cmd->redir_err_flag = 1;
+			}
 			return (0);
 		}
 	}

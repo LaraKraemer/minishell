@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-07 10:28:59 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-08-07 10:28:59 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/08/07 10:28:59 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/08/21 17:35:45 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,21 +119,27 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	*current_token = (*current_token)->next;
 	if (current_type == TOKEN_REDIR_IN)
 	{
-		if (cmd->fd_in != -1)
+		if (cmd->fd_in != STDIN_FILENO)
 			close(cmd->fd_in);
 		if (!open_file(cmd, (*current_token)->value, current_type))
-			return (-1);
+		{
+			cmd->fd_in = -1;
+			return (1);
+		}
 	}
 	else if (current_type == TOKEN_REDIR_OUT || current_type == TOKEN_APPEND)
 	{
-		if (cmd->fd_out != -1)
+		if (cmd->fd_out != STDOUT_FILENO)
 			close(cmd->fd_out);
 		if (!open_file(cmd, (*current_token)->value, current_type))
-			return (-1);
+		{
+			cmd->fd_out = -1;
+			return (1);
+		}
 	}
 	else if (current_type == TOKEN_HEREDOC)
 	{
-		if (cmd->fd_in != -1)
+		if (cmd->fd_in != STDIN_FILENO)
 			close(cmd->fd_in);
 		if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, ex_code))
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/31 17:43:51 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/22 17:30:15 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,8 @@ void	child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
 	int	cmd_count;
 	int	check_status;
 
-	if (cmds[i].fd_in < 0)
-		cmds[i].fd_in = STDIN_FILENO;
-	if (cmds[i].fd_out < 0)
-		cmds[i].fd_out = STDOUT_FILENO;
+	if (cmds[i].fd_in == -1 || cmds[i].fd_out == -1)
+		exit(1);
 	cmd_count = 0;
 	while (cmds[cmd_count].cmd)
 		cmd_count++;
