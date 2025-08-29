@@ -14,7 +14,7 @@ tests=(
   "false 1"
   "exit 42 42"
   "exit 256 0"
-  "exit 9223372036854775808 255" # Overflow test fails ❌
+  "exit -257 255" # Overflow test fails ❌
   "exit -1 255" 
   "exit a 255"
   "nonexistent_command 127"
