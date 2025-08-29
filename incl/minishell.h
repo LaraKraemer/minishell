@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 13:43:42 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/23 14:17:19 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <dirent.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 # include "tokenisation.h"
 # include "parsing.h"
 # include "execution.h"
@@ -88,5 +89,13 @@ void	free_resources(char *input, t_command *cmds, int count);
 void	print_error(char *arg, char *message);
 int		sys_error(char *context, char *arg);
 int		print_error_return(char *arg, char *message, int code);
+
+
+/* Signals */
+void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
+void	setup_interactive_sigs(void);
+void	setup_child_sigs(void);
+void	setup_parent_sigs(void);
 
 #endif

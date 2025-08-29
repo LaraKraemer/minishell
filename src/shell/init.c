@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:53:30 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 13:54:59 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/23 13:45:34 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ void	init_shell(t_shell *sh)
 
 int	read_trim_input(t_shell *sh)
 {
-	//if (isatty(STDIN_FILENO))
-		sh->raw_input = readline("minishell🐣>$ ");
-	//else
+	sh->raw_input = readline("minishell🐣>$ ");
 	if (!sh->raw_input)
-		return (0);
+	{
+		if (isatty(STDIN_FILENO))
+			printf("exit\n");
+		exit(sh->exit_code);
+	}
 	sh->input = ft_strtrim(sh->raw_input, " \t\n");
 	free(sh->raw_input);
 	if (!sh->input || !*sh->input)
@@ -38,7 +40,6 @@ int	read_trim_input(t_shell *sh)
 		free(sh->input);
 		return (0);
 	}
-	//if (isatty(STDIN_FILENO))
-		add_history(sh->input);
+	add_history(sh->input);
 	return (1);
 }
