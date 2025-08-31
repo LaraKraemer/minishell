@@ -6,11 +6,36 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:00:30 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/25 12:21:42 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/29 10:11:57 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/builtins.h"
+
+static int	shell_atoi(char *str)
+{
+	long	result;
+	int		sign;
+	int		i;
+
+	result = 0;
+	sign = 1;
+	i = 0;
+	if (str[i] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	return ((int)(result * sign));
+}
+
 
 /*
 Runs in parent process - since it exit shell.
@@ -37,6 +62,6 @@ int	exit_builtin(char **args)
 			exit(255);
 		}
 	}
-	exit_code = ft_atoi(args[1]);
-	exit(exit_code % 256);
+	exit_code = shell_atoi(args[1]);
+	exit((exit_code % 256 + 256) % 256);
 }

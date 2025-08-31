@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:55:53 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 13:57:19 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/27 18:58:00 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	parse_prepare_cmds(t_shell *sh, char **global_env)
 	if (!sh->cmds_array)
 		return (error_input(ERR_MEM_ALLO, 1));
 	if (!parse_input
-		(sh->cmds_array, sh->first_token, sh->cmd_count, sh->exit_code, global_env))
+		(sh->cmds_array, sh->first_token, sh->cmd_count,
+			sh->exit_code, global_env))
 	{
 		sh->exit_code = 258;
 		free(sh->cmds_array);

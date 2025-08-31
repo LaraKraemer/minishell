@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:23:54 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 14:26:08 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/21 14:54:42 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	update_add_var(char **args, char ***global_env)
 	int		exit_code;
 
 	i = 1;
+	exit_code = 0;
 	while (args[i])
 	{
 		if (!valid_identifier(args[i]))

@@ -6,12 +6,16 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:57:44 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 13:53:01 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/26 15:41:11 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+/* 
+Sets up executable paths for non-builtin commands in the command array.
+Skips builtin commands as they don't require path resolution.
+*/
 int	setup_paths(t_shell *sh, char **global_env)
 {
 	int	i;
@@ -19,6 +23,12 @@ int	setup_paths(t_shell *sh, char **global_env)
 	i = 0;
 	while (i < sh->cmd_count)
 	{
+		if (sh->cmds_array[i].cmd_args && sh->cmds_array[i].cmd_args[0] 
+			&& is_builtin(sh->cmds_array[i].cmd_args[0]))
+		{
+			i++;
+			continue ;
+		}
 		if (set_path(&sh->cmds_array[i], global_env) == -1)
 		{
 			error_input(ERR_PATH, 127);
@@ -31,6 +41,11 @@ int	setup_paths(t_shell *sh, char **global_env)
 	return (1);
 }
 
+/*
+Handles execution of builtin commands with redirection support.
+Executes builtin commands directly in parent process.
+Saves and restores original stdout to ensure shell state remains intact.
+*/
 int	handle_builtins(t_shell *sh, char ***global_env)
 {
 	if (sh->cmd_count == 1 && is_builtin(sh->cmds_array[0].cmd_args[0]))

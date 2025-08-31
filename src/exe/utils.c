@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:15:00 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/31 16:45:47 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/08/26 22:01:25 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,21 @@ int	setup_pipes(int cmd_count, int **pipe_fds)
 		i++;
 	}
 	return (0);
+}
+
+/*
+Manages stdin/stdout redirection for a child process
+*/
+void	setup_child_fds(int i, int *pipe_fds, int cmd_count)
+{
+	if (i > 0)
+	{
+		if (dup2(pipe_fds[(i - 1) * 2], STDIN_FILENO) == -1)
+			sys_error("dup2", ERR_DUP2);
+	}
+	if (i < cmd_count - 1)
+	{
+		if (dup2(pipe_fds[i * 2 + 1], STDOUT_FILENO) == -1)
+			sys_error("dup2", ERR_DUP2);
+	}
 }
