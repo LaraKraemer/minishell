@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:59:13 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/31 17:34:48 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 13:08:11 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	split_into_cmds(t_command *cmd, t_token **first_token,
 			{
 				start = start->next;
 				continue ;
-
 			}
 		}
 		else if (start->type == TOKEN_WORD)
