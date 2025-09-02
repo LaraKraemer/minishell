@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/08/26 22:03:24 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 14:25:42 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,13 @@ int	wait_all_children(pid_t *child_pids, int cmd_count)
 		if (WIFEXITED(status))
 			exit_status = WEXITSTATUS(status);
 		if (WIFSIGNALED(status))
+		{
 			exit_status = 128 + WTERMSIG(status);
+			if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+				write(1, "\n", 1);
+			else if (WTERMSIG(status) == SIGQUIT)
+                write(1, "Quit (core dumped)\n", 19);
+		}
 		i++;
 	}
 	return (exit_status);
@@ -140,34 +146,3 @@ void	child_process(t_command *cmds, int i, int *pipe_fds, char **envp)
 	exit(127);
 }
 
-
-// child process debugging
-/* fprintf(stderr, "\n=== CHILD PROCESS DEBUG ===\n");
-    fprintf(stderr, "Command index: %d\n", i);
-    fprintf(stderr, "Command: %s\n", cmds[i].cmd); */
-
-// fprintf(stderr, "Executing builtin: %s\n", cmds[i].cmd_args[0]);
-
-/* print_child_debug(cmds, i); */
-// printf("\033[0;31mCommand %d path: %s\033[0m\n", i, cmds[i].cmd_path);
-
-/* Temporary debugging function */
-/* void print_child_debug(t_command *cmd, int i)
-{
-    fprintf(stderr, "Executing: %s\n", cmd[i].cmd_path);
-    fprintf(stderr, "With args: ");
-	int k;
-    k = 0;
-    while (cmd[i].cmd_args[k])
-    {
-        fprintf(stderr, "'%s' ", cmd[i].cmd_args[k]);
-        k++;
-		if (cmd[i].cmd_args[k] == NULL)
-			printf("NULL\n");
-    }
-    fprintf(stderr, "\n");
-
-fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]);
-fprintf(stderr, "Connecting stdin to pipe %d\n", pipe_fds[(i-1)*2]);
-fprintf(stderr, "Connecting stdout to pipe %d\n", pipe_fds[i*2+1]);
-} */

@@ -6,11 +6,16 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 12:56:27 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/31 17:07:53 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/01 15:28:56 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execution.h"
+#include <fcntl.h>
+
+#ifndef O_DIRECTORY
+#define O_DIRECTORY 0200000
+#endif
 
 /* 
 	Debug Messages:
@@ -49,11 +54,20 @@ static int	find_path(t_command *cmd)
 
 int	handle_absolute_path(t_command *cmd)
 {
+	int 	dir_fd;
+
 	if (access(cmd->cmd, F_OK) != 0)
 	{
 		cmd->exit_code = 127;
 		return (print_error(cmd->cmd, EER_NO_FILE), 127);
 	}
+	dir_fd = open(cmd->cmd, O_DIRECTORY);
+	if (dir_fd != -1)
+    {
+        close(dir_fd);
+        cmd->exit_code = 126;
+        return (print_error(cmd->cmd, ERR_PERMISSION), 126);
+    }
 	cmd->cmd_path = ft_strdup(cmd->cmd);
 	if (!cmd->cmd_path)
 	{
