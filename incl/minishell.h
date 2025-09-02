@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/08/23 14:17:19 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 12:18:47 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define ERR_DUP2		"error: Dup2 output\n"
 # define ERR_EXECVE		"error: Execve failed\n"
 # define DEL			" \t\r\n\a"
+# define ERR_SIGNAL		"minishell: warning: here-document delimited by end-of-file (wanted `%s\')\n"
 
 // Colors for error messages
 # define RESET		"\033[0m"
@@ -92,10 +93,12 @@ int		print_error_return(char *arg, char *message, int code);
 
 
 /* Signals */
+extern	volatile sig_atomic_t	g_signal_received;
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 void	setup_interactive_sigs(void);
 void	setup_child_sigs(void);
 void	setup_parent_sigs(void);
+void	handle_heredoc_sigs(int sig);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:28:59 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/08/22 17:52:36 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 13:27:48 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,41 @@ static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 	return (new_str);
 }
 
+static void	read_heredoc_content(int write_fd, char *delimiter, char **env, int ex_code, int quotes_num)
+{
+	char	*heredoc_content;
+
+	while (1)
+	{
+		heredoc_content = readline("> ");
+		if (!heredoc_content)
+		{
+			printf(ERR_SIGNAL, delimiter);
+			break;
+		}
+		if (ft_strcmp(heredoc_content, delimiter) == 0)
+		{
+			free(heredoc_content);
+			break;
+		}
+		if (ft_strchr(heredoc_content, '$') && quotes_num == 0)
+			heredoc_content = exp_in_heredoc(heredoc_content, env, ex_code);
+		write(write_fd, heredoc_content, ft_strlen(heredoc_content));
+		write(write_fd, "\n", 1);
+		free(heredoc_content);
+	}
+}
+
 /*Handles heredoc input from the user until the delimiter is reached.
 Expands variables in the heredoc input only if the delimiter is unquoted.
 Writes the accumulated heredoc content into a pipe.*/
 static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 {
-	char	*heredoc_content;
 	int		pipe_fd[2];
 	int		quotes_num;
 	char	*temp;
-
+	pid_t	pid;
+	int		status;
 	quotes_num = check_quotes(delimiter);
 	if (quotes_num < 0)
 		return (0);
@@ -87,22 +112,30 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 	temp = ft_strtrim(delimiter, " \"\'");
 	free(delimiter);
 	delimiter = temp;
-	while (1)
+	pid = fork();
+	if (pid == -1)
+		return (close(pipe_fd[0]), close(pipe_fd[1]),
+			free(delimiter), sys_error("parser", "fork"));
+	if (pid == 0)
 	{
-		heredoc_content = readline("> ");
-		if (!heredoc_content || ft_strcmp(heredoc_content, delimiter) == 0)
-			break ;
-		if (ft_strchr(heredoc_content, '$') && quotes_num == 0)
-			heredoc_content = exp_in_heredoc(heredoc_content, env, ex_code);
-		write(pipe_fd[1], heredoc_content, ft_strlen(heredoc_content));
-		write(pipe_fd[1], "\n", 1);
-		free(heredoc_content);
+		signal(SIGINT, handle_heredoc_sigs);
+		close(pipe_fd[0]);
+		read_heredoc_content(pipe_fd[1], delimiter, env, ex_code, quotes_num);
+		close(pipe_fd[1]);
+		free(delimiter);
+		exit(0);
 	}
-	free(heredoc_content);
+	signal(SIGINT, SIG_IGN);
 	close(pipe_fd[1]);
+	free(delimiter);
+	waitpid(pid, &status, 0);
+	setup_interactive_sigs();
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		return (close(pipe_fd[0]), 0);
 	*fd_in = pipe_fd[0];
 	return (1);
 }
+
 
 /*Checks the redirection types (input, output, append, heredoc) and opens the
  corresponding files. Updates the file descriptors (fd_in, fd_out)
@@ -147,3 +180,22 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	return (1);
 }
 
+
+/* static void	heredoc_child(int pipe_fd[2], char *delim, int quotes)
+{
+	signal(SIGINT, handle_heredoc_sigs);
+	close(pipe_fd[0]);
+	read_heredoc_content(pipe_fd[1], delim, quotes);
+	close(pipe_fd[1]);
+	free(delim);
+	exit(0);
+	
+}
+
+static int cleanup_heredoc(int pipe_fd[2], char *delim, char *error)
+{
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+	free(delim);
+	sys_error("parser", error);
+} */
