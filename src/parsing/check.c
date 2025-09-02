@@ -30,11 +30,11 @@ int	open_file(t_command *cmd, char *file, int i)
 		cmd->fd_in = open(file, O_RDONLY);
 		if (cmd->fd_in == -1)
 		{
-			if (!cmd->redir_err_flag)
-			{
+			// if (!cmd->redir_err_flag)
+			// {
 				sys_error("parser", file);
-				cmd->redir_err_flag = 1;
-			}
+				//cmd->redir_err_flag = 1;
+			//}
 			return (0);
 		}
 	}

@@ -30,7 +30,10 @@ int	parse_prepare_cmds(t_shell *sh, char **global_env)
 		(sh->cmds_array, sh->first_token, sh->cmd_count,
 			sh->exit_code, global_env))
 	{
-		sh->exit_code = 258;
+		if (!sh->cmds_array->exit_code)
+			sh->exit_code = 258;
+		else
+			sh->exit_code = sh->cmds_array->exit_code;
 		free(sh->cmds_array);
 		return (0);
 	}

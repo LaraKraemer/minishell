@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:28:59 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/02 13:27:48 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/01 15:03:30 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 		return (error_input(ERR_SYNTAX_T, 0));
 	current_type = (*current_token)->type;
 	*current_token = (*current_token)->next;
+	(*current_token)->value = quotes_token((*current_token)->value, env, ex_code); //here I need quotations and expansions handling
 	if (current_type == TOKEN_REDIR_IN)
 	{
 		if (cmd->fd_in != STDIN_FILENO)
@@ -157,7 +158,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 		if (!open_file(cmd, (*current_token)->value, current_type))
 		{
 			cmd->fd_in = -1;
-			return (1);
+			return (-1);
 		}
 	}
 	else if (current_type == TOKEN_REDIR_OUT || current_type == TOKEN_APPEND)
@@ -167,7 +168,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 		if (!open_file(cmd, (*current_token)->value, current_type))
 		{
 			cmd->fd_out = -1;
-			return (1);
+			return (-1);
 		}
 	}
 	else if (current_type == TOKEN_HEREDOC)
