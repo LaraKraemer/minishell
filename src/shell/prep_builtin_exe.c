@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   prep_builtin_exe.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:57:44 by lkramer           #+#    #+#             */
-/*   Updated: 2025/08/26 15:41:11 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 15:40:38 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-/* 
+/*
 Sets up executable paths for non-builtin commands in the command array.
 Skips builtin commands as they don't require path resolution.
 */
@@ -23,7 +23,7 @@ int	setup_paths(t_shell *sh, char **global_env)
 	i = 0;
 	while (i < sh->cmd_count)
 	{
-		if (sh->cmds_array[i].cmd_args && sh->cmds_array[i].cmd_args[0] 
+		if (sh->cmds_array[i].cmd_args && sh->cmds_array[i].cmd_args[0]
 			&& is_builtin(sh->cmds_array[i].cmd_args[0]))
 		{
 			i++;
@@ -50,6 +50,11 @@ int	handle_builtins(t_shell *sh, char ***global_env)
 {
 	if (sh->cmd_count == 1 && is_builtin(sh->cmds_array[0].cmd_args[0]))
 	{
+		if (sh->cmds_array->fd_in == -1 || sh->cmds_array->fd_out == -1)
+		{
+			sh->exit_code = 1;
+			return(1);
+		}
 		sh->exit_code = builtins(&sh->cmds_array[0], global_env);
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count);
 		return (1);
