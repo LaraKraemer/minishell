@@ -4,7 +4,7 @@ SRC := $(shell find src -name "*.c")
 OBJ := $(SRC:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I. -Ilibft
+CFLAGS = -Wall -Wextra -Werror -I. -Ilibft -g
 LIBS = -lreadline
 
 # Default rule
