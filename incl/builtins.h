@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/08/21 15:14:43 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/03 21:06:24 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 int		ft_strcmp(const char *s1, const char *s2);
 int		builtins(t_command *cmd, char ***global_env);
 int		is_builtin(char *arg);
-int		must_run_in_parent(const char *cmd);
+int		must_run_in_parent(const char *cmd_name);
 
 // exit.c
 int		exit_builtin(char **args);
@@ -54,7 +54,6 @@ char	**add_new_env_var(char *var, char ***env);
 int		valid_identifier(char *arg);
 void	sort_env(char **env);
 void	print_export(char **env);
-void	free_env(char **env);
 
 // unset.c
 int		unset_builtin(char **args, char **env);

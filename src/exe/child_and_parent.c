@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/02 14:25:42 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/03 20:40:37 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	wait_all_children(pid_t *child_pids, int cmd_count)
 			if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 				write(1, "\n", 1);
 			else if (WTERMSIG(status) == SIGQUIT)
-                write(1, "Quit (core dumped)\n", 19);
+				write(1, "Quit (core dumped)\n", 19);
 		}
 		i++;
 	}
@@ -115,6 +115,11 @@ void	handle_child_redir(t_command *cmd, int i, int *pipe_fds, int cmd_count)
 	{
 		dup2(cmd[i].fd_out, STDOUT_FILENO);
 		close(cmd[i].fd_out);
+	}
+	else if (cmd_count > 1 && i < cmd_count - 1)
+	{
+		dup2(pipe_fds[2 * i + 1], STDOUT_FILENO);
+		close(pipe_fds[2 * i + 1]);
 	}
 }
 
