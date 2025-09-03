@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 18:04:28 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/02 14:29:41 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/03 21:05:29 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	setup_interactive_sigs(void)
 {
 	struct sigaction	sa_int;
 
-    sa_int.sa_handler = handle_sigint;
-    sigemptyset(&sa_int.sa_mask);
-    sa_int.sa_flags = SA_RESTART;
-    sigaction(SIGINT, &sa_int, NULL);
-    signal(SIGQUIT, SIG_IGN);
+	sa_int.sa_handler = handle_sigint;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa_int, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	setup_child_sigs(void)
@@ -51,11 +51,4 @@ void	setup_parent_sigs(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-}
-
-void	handle_heredoc_sigs(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	exit(130);
 }

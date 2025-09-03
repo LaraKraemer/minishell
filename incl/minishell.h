@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/02 12:18:47 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/03 21:06:40 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	free_resources(char *input, t_command *cmds, int count);
 void	print_error(char *arg, char *message);
 int		sys_error(char *context, char *arg);
 int		print_error_return(char *arg, char *message, int code);
+void	free_env(char **env);
+void	free_cmds_array_env(t_command *cmds_array, int cmd_count);
 
 
 /* Signals */
