@@ -6,7 +6,7 @@
 /*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:28:59 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/01 15:03:30 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:42:31 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	}
 	else if (current_type == TOKEN_REDIR_OUT || current_type == TOKEN_APPEND)
 	{
+		//printf("%d - out_fd in in_out_redirection before\n", cmd->fd_out);
 		if (cmd->fd_out != STDOUT_FILENO)
 			close(cmd->fd_out);
 		if (!open_file(cmd, (*current_token)->value, current_type))
@@ -170,6 +171,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 			cmd->fd_out = -1;
 			return (-1);
 		}
+		//printf("%d - out_fd in in_out_redirection after\n", cmd->fd_out);
 	}
 	else if (current_type == TOKEN_HEREDOC)
 	{
@@ -190,7 +192,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	close(pipe_fd[1]);
 	free(delim);
 	exit(0);
-	
+
 }
 
 static int cleanup_heredoc(int pipe_fd[2], char *delim, char *error)

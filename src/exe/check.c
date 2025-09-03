@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 12:56:27 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/01 15:28:56 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 18:41:01 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 #define O_DIRECTORY 0200000
 #endif
 
-/* 
+/*
 	Debug Messages:
 	printf("Searching PATH directories:\n");
 	printf("cmd: %s\n", cmd->cmd);
-	printf("cmd_path: %s\n", cmd->cmd_path); 
+	printf("cmd_path: %s\n", cmd->cmd_path);
 	printf("  FOUND at: %s\n", temp);
 	printf("Calling find path\n");
 */
@@ -66,7 +66,7 @@ int	handle_absolute_path(t_command *cmd)
     {
         close(dir_fd);
         cmd->exit_code = 126;
-        return (print_error(cmd->cmd, ERR_PERMISSION), 126);
+        return (print_error(cmd->cmd, ERR_IS_DIR), 126);
     }
 	cmd->cmd_path = ft_strdup(cmd->cmd);
 	if (!cmd->cmd_path)

@@ -6,7 +6,7 @@
 /*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:59:13 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/01 16:36:57 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:42:45 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	split_into_cmds(t_command *cmd, t_token **first_token,
 			|| start->type == TOKEN_APPEND || start->type == TOKEN_HEREDOC)
 		{
 			return_from_redirections = in_out_redir(cmd, &start, envp, ex_code);
+			//printf("%d - out_fd in split into cmd\n", cmd->fd_out);
 			if (return_from_redirections == 0)
 				return (0);
 			else if (return_from_redirections == -1)
@@ -108,6 +109,7 @@ int	parse_input(t_command *cmds_array, t_token *first_token,
 	{
 		if (!split_into_cmds(&cmds_array[i], &first_token, envp, exit_code))
 			return (0);
+		//printf("%d - out_fd in parse input\n", cmds_array[i].fd_out);
 		if (!cmds_array[i].cmd)
 			return (error_input(ERR_SYNTAX_T, 0));
 		i++;

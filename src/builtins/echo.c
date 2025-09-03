@@ -6,7 +6,7 @@
 /*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:53:19 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/02 15:29:56 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:42:06 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	get_output_fd(t_command *cmd)
 {
+	//printf("%d - out_fd in builtins\n", cmd->fd_out);
 	if (cmd->fd_out != STDOUT_FILENO)
 		return (cmd->fd_out);
 	return (STDOUT_FILENO);
@@ -65,6 +66,7 @@ int	echo_builtin(t_command *cmd)
 	if (!cmd || !cmd->cmd_args)
 		return (0);
 	output_fd = get_output_fd(cmd);
+	//printf("%d - output_fd\n", output_fd);
 	new_line = parse_echo_args(cmd->cmd_args, &start_index);
 	print_args(cmd->cmd_args, start_index, output_fd);
 	if (new_line)

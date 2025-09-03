@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/02 12:18:47 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 18:40:37 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define ERR_STR_DUP	"error: String duplication failed\n"
 # define ERR_CMD_NFOUND	"error: Command not found\n"
 # define ERR_PERMISSION "error: Permission denied\n"
+# define ERR_IS_DIR		"error: Is a directory\n"
 # define ERR_SYNTAX_T	"Syntax Tokenizer\n"
 # define ERR_SYNTAX_P	"Syntax Parser\n"
 # define ERR_FILE_OPEN	"error: File open failed\n"
