@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 11:52:03 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/08/20 17:24:40 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/04 18:02:43 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	extract_path(char **env)
 			return (i);
 		i++;
 	}
-	print_error("PATH", ERR_PATH);
 	return (-1);
 }
 
