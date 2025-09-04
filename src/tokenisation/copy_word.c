@@ -96,7 +96,6 @@ char	*do_expansion(char **end, char **envp, int last_exit_code, char *word)
 	else
 		current++;
 	*end = current;
-	//printf("%s - end\n", *end);
 	return (result);
 }
 
@@ -129,7 +128,6 @@ char	*copy_words(char **start, char **envp, int last_exit_code)
 		{
 			end++;
 			word = do_expansion(&end, envp, last_exit_code, word);
-			//printf("%s - word\n", word);
 		}
 		else
 		{

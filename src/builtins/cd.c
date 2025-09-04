@@ -12,7 +12,7 @@
 
 #include "../../incl/builtins.h"
 
-/* 
+/*
 Runs in parent process - since it affects shell state
 
 Relative path:

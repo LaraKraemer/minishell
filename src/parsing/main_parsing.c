@@ -52,36 +52,25 @@ int	split_into_cmds(t_command *cmd, t_token **first_token,
 			|| start->type == TOKEN_APPEND || start->type == TOKEN_HEREDOC)
 		{
 			return_from_redirections = in_out_redir(cmd, &start, envp, ex_code);
-			//printf("%d - out_fd in split into cmd\n", cmd->fd_out);
 			if (return_from_redirections == 0)
+			{
+				cmd->exit_code = 130;
 				return (0);
+			}
 			else if (return_from_redirections == -1)
 			{
 				cmd->exit_code = 1;
 				while (start->next && start->next->type != TOKEN_PIPE)
 					start = start->next;
-				continue;
-				// *first_token = start;
-				// return (0);
+				continue ;
 			}
 		}
 		else if (start->type == TOKEN_WORD)
 		{
 			if (!cmd->cmd)
 				cmd->cmd = quotes_token(start->value, envp, ex_code);
-			// i = 0;
-			// cmd->cmd_args = malloc(MAX_ARGS * sizeof(char *));
-			// if (!cmd->cmd_args)
-			// 	return (error_input(ERR_MEM_ALLO, 0));
 			cmd->cmd_args[i++] = quotes_token(start->value, envp, ex_code);
-			// while (start->next && start->next->type == TOKEN_WORD)
-			// {
-			// 	start = start->next;
-			// 	cmd->cmd_args[i++] = quotes_token(start->value, envp, ex_code);
-			// }
-			//cmd->cmd_args[i] = NULL;
 		}
-		//if (start)
 		start = start->next;
 	}
 	cmd->cmd_args[i] = NULL;
@@ -109,7 +98,6 @@ int	parse_input(t_command *cmds_array, t_token *first_token,
 	{
 		if (!split_into_cmds(&cmds_array[i], &first_token, envp, exit_code))
 			return (0);
-		//printf("%d - out_fd in parse input\n", cmds_array[i].fd_out);
 		if (!cmds_array[i].cmd)
 			return (error_input(ERR_SYNTAX_T, 0));
 		i++;

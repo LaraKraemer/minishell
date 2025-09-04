@@ -79,12 +79,12 @@ static void	read_heredoc_content(int write_fd, char *delimiter, char **env, int 
 		if (!heredoc_content)
 		{
 			printf(ERR_SIGNAL, delimiter);
-			break;
+			break ;
 		}
 		if (ft_strcmp(heredoc_content, delimiter) == 0)
 		{
 			free(heredoc_content);
-			break;
+			break ;
 		}
 		if (ft_strchr(heredoc_content, '$') && quotes_num == 0)
 			heredoc_content = exp_in_heredoc(heredoc_content, env, ex_code);
@@ -104,6 +104,7 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 	char	*temp;
 	pid_t	pid;
 	int		status;
+
 	quotes_num = check_quotes(delimiter);
 	if (quotes_num < 0)
 		return (0);
@@ -150,20 +151,31 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 		return (error_input(ERR_SYNTAX_T, 0));
 	current_type = (*current_token)->type;
 	*current_token = (*current_token)->next;
-	(*current_token)->value = quotes_token((*current_token)->value, env, ex_code); //here I need quotations and expansions handling
+	(*current_token)->value = quotes_token((*current_token)->value, env, ex_code);
 	if (current_type == TOKEN_REDIR_IN)
 	{
 		if (cmd->fd_in != STDIN_FILENO)
 			close(cmd->fd_in);
 		if (!open_file(cmd, (*current_token)->value, current_type))
 		{
+			while ((*current_token)->next
+				&& (*current_token)->next->type != TOKEN_PIPE)
+			{
+				*current_token = (*current_token)->next;
+				if ((*current_token)->type == TOKEN_HEREDOC)
+				{
+					*current_token = (*current_token)->next;
+					(*current_token)->value = quotes_token((*current_token)->value, env, ex_code);
+					if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, ex_code))
+						return (0);
+				}
+			}
 			cmd->fd_in = -1;
 			return (-1);
 		}
 	}
 	else if (current_type == TOKEN_REDIR_OUT || current_type == TOKEN_APPEND)
 	{
-		//printf("%d - out_fd in in_out_redirection before\n", cmd->fd_out);
 		if (cmd->fd_out != STDOUT_FILENO)
 			close(cmd->fd_out);
 		if (!open_file(cmd, (*current_token)->value, current_type))
@@ -171,7 +183,6 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 			cmd->fd_out = -1;
 			return (-1);
 		}
-		//printf("%d - out_fd in in_out_redirection after\n", cmd->fd_out);
 	}
 	else if (current_type == TOKEN_HEREDOC)
 	{

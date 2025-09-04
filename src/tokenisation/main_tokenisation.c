@@ -27,7 +27,6 @@ int	get_tokens(char *input, t_token **first_token,
 			return (1);
 		type = determine_type(input, input + 1);
 		value = determine_value(type, &input, envp, last_exit_code);
-		//printf("%s - value\n", value);
 		if (!value)
 			return (error_input(ERR_SYNTAX_T, 1));
 		if (value[0] == '\0')
