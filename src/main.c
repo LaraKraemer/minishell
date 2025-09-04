@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:23 by lkramer           #+#    #+#             */
-/*   Updated: 2025/08/29 10:05:38 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 18:18:49 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int	main(int argc, char **argv, char **envp)
 	minishell_loop(&sh, &global_env);
 	final_exit_code = sh.exit_code;
 	free(global_env);
+	// free_env(global_env);
 	return (final_exit_code);
 }

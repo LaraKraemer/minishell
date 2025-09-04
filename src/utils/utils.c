@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:25:14 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 13:59:00 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/03 21:00:57 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,23 @@ char	*ft_strjoin2(const char *s1, const char *s2)
 		result[j++] = s2[i++];
 	result[j] = '\0';
 	return (result);
+}
+
+void	free_cmds_array_env(t_command *cmds_array, int cmd_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd_count)
+	{
+		free_env(cmds_array[i].env);
+		i++;
+	}
+}
+
+void	handle_heredoc_sigs(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	exit(130);
 }
