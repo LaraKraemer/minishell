@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:15:00 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/08/26 22:01:25 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/03 21:03:24 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,14 @@
 /* 
 Filter function for builtin cmd in parent process
 */
-int	must_run_in_parent(const char *cmd)
+int	must_run_in_parent(const char *cmd_name)
 {
-	int			i;
-	const char	*parent_builtins[5];
-
-	parent_builtins[0] = "cd";
-	parent_builtins[1] = "export";
-	parent_builtins[2] = "unset";
-	parent_builtins[3] = "exit";
-	parent_builtins[4] = NULL;
-	i = 0;
-	while (parent_builtins[i])
-	{
-		if (ft_strcmp(cmd, parent_builtins[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
+	if (!cmd_name)
+		return (0);
+	return (ft_strcmp(cmd_name, "cd") == 0 ||
+		ft_strcmp(cmd_name, "exit") == 0 ||
+		ft_strcmp(cmd_name, "export") == 0 ||
+		ft_strcmp(cmd_name, "unset") == 0);
 }
 
 void	free_commands(t_command *cmds, int cmd_count)

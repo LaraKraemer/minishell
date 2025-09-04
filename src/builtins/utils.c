@@ -6,17 +6,14 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:03:18 by lkramer           #+#    #+#             */
-/*   Updated: 2025/08/21 15:14:19 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/03 20:53:10 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/builtins.h"
 
 /*
-Identifies builtin commands from input.
-
-Returns 0 on success
-Returns 1 on failure
+Identifies builtin commands from input
 */
 int	is_builtin(char *arg)
 {
@@ -43,9 +40,6 @@ int	is_builtin(char *arg)
 
 /*
 Verifies and calls builtin cmd function.
-
-Returns 0 on success
-Returns 1 on failure
 */
 int	builtins(t_command *cmd, char ***global_env)
 {
@@ -74,9 +68,6 @@ int	builtins(t_command *cmd, char ***global_env)
 
 /*
 Function verifies whether two strings are identical.
-
-Returns 0 on success
-Returns 1 on failure
 */
 int	ft_strcmp(const char *s1, const char *s2)
 {

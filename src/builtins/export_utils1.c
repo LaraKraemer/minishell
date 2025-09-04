@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 16:27:35 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 14:06:42 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/03 20:58:50 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ void	free_env(char **env)
 {
 	int	i;
 
-	if (!env)
-		return ;
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		free(env[i]);
 		i++;

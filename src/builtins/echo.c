@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:53:19 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/02 15:29:56 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/03 21:08:23 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/builtins.h"
-
-static int	get_output_fd(t_command *cmd)
-{
-	if (cmd->fd_out != STDOUT_FILENO)
-		return (cmd->fd_out);
-	return (STDOUT_FILENO);
-}
 
 static int	parse_echo_args(char **args, int *start_index)
 {
@@ -60,14 +53,12 @@ int	echo_builtin(t_command *cmd)
 {
 	int	start_index;
 	int	new_line;
-	int	output_fd;
 
 	if (!cmd || !cmd->cmd_args)
 		return (0);
-	output_fd = get_output_fd(cmd);
 	new_line = parse_echo_args(cmd->cmd_args, &start_index);
-	print_args(cmd->cmd_args, start_index, output_fd);
+	print_args(cmd->cmd_args, start_index, STDOUT_FILENO);
 	if (new_line)
-		ft_putchar_fd('\n', output_fd);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }
