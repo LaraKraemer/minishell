@@ -6,7 +6,7 @@
 /*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:28:59 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/01 15:03:30 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:42:31 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ static void	read_heredoc_content(int write_fd, char *delimiter, char **env, int 
 		if (!heredoc_content)
 		{
 			printf(ERR_SIGNAL, delimiter);
-			break;
+			break ;
 		}
 		if (ft_strcmp(heredoc_content, delimiter) == 0)
 		{
 			free(heredoc_content);
-			break;
+			break ;
 		}
 		if (ft_strchr(heredoc_content, '$') && quotes_num == 0)
 			heredoc_content = exp_in_heredoc(heredoc_content, env, ex_code);
@@ -104,6 +104,7 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 	char	*temp;
 	pid_t	pid;
 	int		status;
+
 	quotes_num = check_quotes(delimiter);
 	if (quotes_num < 0)
 		return (0);
@@ -150,13 +151,25 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 		return (error_input(ERR_SYNTAX_T, 0));
 	current_type = (*current_token)->type;
 	*current_token = (*current_token)->next;
-	(*current_token)->value = quotes_token((*current_token)->value, env, ex_code); //here I need quotations and expansions handling
+	(*current_token)->value = quotes_token((*current_token)->value, env, ex_code);
 	if (current_type == TOKEN_REDIR_IN)
 	{
 		if (cmd->fd_in != STDIN_FILENO)
 			close(cmd->fd_in);
 		if (!open_file(cmd, (*current_token)->value, current_type))
 		{
+			while ((*current_token)->next
+				&& (*current_token)->next->type != TOKEN_PIPE)
+			{
+				*current_token = (*current_token)->next;
+				if ((*current_token)->type == TOKEN_HEREDOC)
+				{
+					*current_token = (*current_token)->next;
+					(*current_token)->value = quotes_token((*current_token)->value, env, ex_code);
+					if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, ex_code))
+						return (0);
+				}
+			}
 			cmd->fd_in = -1;
 			return (-1);
 		}
@@ -190,7 +203,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	close(pipe_fd[1]);
 	free(delim);
 	exit(0);
-	
+
 }
 
 static int cleanup_heredoc(int pipe_fd[2], char *delim, char *error)

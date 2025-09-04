@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 13:40:53 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/01 18:15:30 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 18:47:53 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,19 @@ int	open_file(t_command *cmd, char *file, int i)
 	{
 		cmd->fd_in = open(file, O_RDONLY);
 		if (cmd->fd_in == -1)
-		{
-			// if (!cmd->redir_err_flag)
-			// {
-				sys_error("parser", file);
-				//cmd->redir_err_flag = 1;
-			//}
-			return (0);
-		}
+			return (sys_error("parser", file));
 	}
 	else if (i == 3)
 	{
 		cmd->fd_out = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (cmd->fd_out == -1)
-		{
-			sys_error("parser", file);
-			return (0);
-		}
+			return (sys_error("parser", file));
 	}
 	else if (i == 4)
 	{
 		cmd->fd_out = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		if (cmd->fd_out == -1)
-		{
-			sys_error("parser", file);
-			return (0);
-		}
+			return (sys_error("parser", file));
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:57:44 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/03 20:56:23 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/02 18:24:08 by dtimofee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	handle_builtins(t_shell *sh, char ***global_env)
 	{
 		if (sh->cmds_array->fd_in == -1 || sh->cmds_array->fd_out == -1)
 		{
+			free_resources(sh->input, sh->cmds_array, sh->cmd_count);
 			sh->exit_code = 1;
 			return (1);
 		}

@@ -32,7 +32,10 @@ int	get_tokens(char *input, t_token **first_token,
 		if (value[0] == '\0')
 		{
 			free(value);
-			continue ;
+			if (!*(input + 1))
+				return (1);
+			else
+				continue ;
 		}
 		if (*first_token == NULL)
 		{
