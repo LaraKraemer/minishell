@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/03 21:06:24 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/05 16:35:27 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdbool.h>
 # include "minishell.h"
 # include "parsing.h"
-
 
 // utils.c
 int		ft_strcmp(const char *s1, const char *s2);

@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:57:44 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/02 18:24:08 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:39:05 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ Saves and restores original stdout to ensure shell state remains intact.
 */
 int	handle_builtins(t_shell *sh, char ***global_env)
 {
-	if (sh->cmd_count == 1 && sh->cmds_array[0].cmd_args &&
-		must_run_in_parent(sh->cmds_array[0].cmd_args[0]))
+	if (sh->cmd_count == 1 && sh->cmds_array[0].cmd_args
+		&& must_run_in_parent(sh->cmds_array[0].cmd_args[0]))
 	{
 		if (sh->cmds_array->fd_in == -1 || sh->cmds_array->fd_out == -1)
 		{

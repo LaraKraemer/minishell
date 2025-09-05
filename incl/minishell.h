@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/02 18:40:37 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:35:00 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define ERR_DUP2		"error: Dup2 output\n"
 # define ERR_EXECVE		"error: Execve failed\n"
 # define DEL			" \t\r\n\a"
-# define ERR_SIGNAL		"minishell: warning: here-document delimited by end-of-file (wanted `%s\')\n"
+# define ERR_SIGNAL		"minishell: here-doc delimited by EOF(wanted `%s\')\n"
 
 // Colors for error messages
 # define RESET		"\033[0m"
@@ -60,7 +60,6 @@
 # define MAGENTA	"\033[0;35m"
 # define CYAN		"\033[0;36m"
 # define WHITE		"\033[0;37m"
-
 
 typedef struct s_shell
 {
@@ -94,9 +93,8 @@ int		print_error_return(char *arg, char *message, int code);
 void	free_env(char **env);
 void	free_cmds_array_env(t_command *cmds_array, int cmd_count);
 
-
 /* Signals */
-extern	volatile sig_atomic_t	g_signal_received;
+extern volatile sig_atomic_t	g_signal_received;
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 void	setup_interactive_sigs(void);

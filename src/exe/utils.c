@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:15:00 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/03 21:03:24 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/05 18:00:07 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	must_run_in_parent(const char *cmd_name)
 {
 	if (!cmd_name)
 		return (0);
-	return (ft_strcmp(cmd_name, "cd") == 0 ||
-		ft_strcmp(cmd_name, "exit") == 0 ||
-		ft_strcmp(cmd_name, "export") == 0 ||
-		ft_strcmp(cmd_name, "unset") == 0);
+	return (ft_strcmp(cmd_name, "cd") == 0
+		|| ft_strcmp(cmd_name, "exit") == 0
+		|| ft_strcmp(cmd_name, "export") == 0
+		|| ft_strcmp(cmd_name, "unset") == 0);
 }
 
 void	free_commands(t_command *cmds, int cmd_count)

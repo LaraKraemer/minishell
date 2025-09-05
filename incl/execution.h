@@ -6,12 +6,16 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:37:27 by lkramer           #+#    #+#             */
-/*   Updated: 2025/08/26 22:05:03 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/05 17:58:07 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
+
+# ifndef O_DIRECTORY
+#  define O_DIRECTORY 0200000
+# endif
 
 # include <stdlib.h>
 # include <stdbool.h>
