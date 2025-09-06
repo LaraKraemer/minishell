@@ -132,7 +132,10 @@ void	child_process(t_shell *sh, int i, int *pipe_fds)
 	int	check_status;
 
 	if (sh->cmds_array[i].fd_in == -1 || sh->cmds_array[i].fd_out == -1)
+	{
+		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 		exit(1);
+	}
 	setup_child_sigs();
 	cmd_count = 0;
 	while (sh->cmds_array[cmd_count].cmd)
@@ -144,9 +147,13 @@ void	child_process(t_shell *sh, int i, int *pipe_fds)
 		exit(builtins(&sh->cmds_array[i], &sh->cmds_array[i].env, sh));
 	check_status = check_command(&sh->cmds_array[i]);
 	if (check_status != 0)
+	{
+		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 		exit(check_status);
+	}
 	execve(sh->cmds_array[i].cmd_path, sh->cmds_array[i].cmd_args, sh->cmds_array[i].env);
 	sys_error("execve", ERR_EXECVE);
+	free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 	exit(127);
 }
 
