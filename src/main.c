@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envp)
 		return (error_input("malloc", 0));
 	minishell_loop(&sh, &global_env);
 	final_exit_code = sh.exit_code;
-	free(global_env);
-	// free_env(global_env);
+	free_array(global_env);
 	return (final_exit_code);
 }

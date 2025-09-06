@@ -28,7 +28,7 @@ int	init_array(t_command *cmds_array, int cmd_count, char **envp)
 		if (!cmds_array[i].env)
 		{
 			while (i-- > 0)
-				free_env(cmds_array[i].env);
+				free_array(cmds_array[i].env);
 			return (error_input(ERR_MEM_ALLO, 0));
 		}
 		cmds_array[i].fd_in = STDIN_FILENO;

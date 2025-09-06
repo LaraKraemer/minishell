@@ -19,7 +19,9 @@ int	get_tokens(char *input, t_token **first_token,
 	t_token			*current_token;
 	t_token_type	type;
 	char			*value;
+	char			*original_input;
 
+	original_input = input;
 	while (*input)
 	{
 		skip_delimiter(&input);
@@ -29,13 +31,13 @@ int	get_tokens(char *input, t_token **first_token,
 		value = determine_value(type, &input, envp, last_exit_code);
 		if (!value)
 		{
-			ms_lstclear(first_token);
+			free_if_error(original_input, first_token);
 			return (error_input(ERR_SYNTAX_T, 1));
 		}
 		if (value[0] == '\0')
 		{
 			if (!*(input + 1))
-				return (ms_lstclear(first_token));
+				return (free_if_error(original_input, first_token), 1);
 			else
 			{
 				free(value);

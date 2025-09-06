@@ -55,11 +55,12 @@ int	split_into_cmds(t_command *cmd, t_token **first_token,
 			if (return_from_redirections == 0)
 			{
 				cmd->exit_code = 130;
+				free_commands(cmd, count_cmd_num(*first_token));
 				return (0);
 			}
 			else if (return_from_redirections == -1)
 			{
-				cmd->exit_code = 1;
+				cmd->exit_code = 1; //возможно тут надо что-то чистить
 				while (start->next && start->next->type != TOKEN_PIPE)
 					start = start->next;
 				continue ;
@@ -97,12 +98,12 @@ int	parse_input(t_command *cmds_array, t_token *first_token,
 	while (first_token && i < cmd_count)
 	{
 		if (!split_into_cmds(&cmds_array[i], &first_token, envp, exit_code))
+			return (0);
+		if (!cmds_array[i].cmd) //возможно тут нужно что-то почистить
 		{
 			free_cmds_array_env(cmds_array, cmd_count);
-			return (0);
-		}
-		if (!cmds_array[i].cmd)
 			return (error_input(ERR_SYNTAX_T, 0));
+		}
 		i++;
 	}
 	return (1);

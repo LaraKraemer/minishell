@@ -12,7 +12,7 @@
 
 #include "../../incl/execution.h"
 
-/* 
+/*
 Filter function for builtin cmd in parent process
 */
 int	must_run_in_parent(const char *cmd_name)
@@ -36,6 +36,8 @@ void	free_commands(t_command *cmds, int cmd_count)
 			free(cmds[i].cmd_path);
 		if (cmds[i].cmd_args)
 			free_array(cmds[i].cmd_args);
+		if (cmds[i].cmd)
+			free(cmds[i].cmd);
 		if (cmds[i].path_file)
 			free_array(cmds[i].path_file);
 		if (cmds[i].env)
@@ -55,8 +57,8 @@ void	free_array(char **str_array)
 	free (str_array);
 }
 
-/* 
-Initializes pipe file descriptors for command pipeline 
+/*
+Initializes pipe file descriptors for command pipeline
 Allocates (cmd_count-1)*2 file descriptors in pipe_fds
 */
 int	setup_pipes(int cmd_count, int **pipe_fds)

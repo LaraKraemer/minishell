@@ -92,7 +92,7 @@ void	free_resources(char *input, t_command *cmds, int count, t_token **tokens);
 void	print_error(char *arg, char *message);
 int		sys_error(char *context, char *arg);
 int		print_error_return(char *arg, char *message, int code);
-void	free_env(char **env);
+//void	free_env(char **env);
 void	free_cmds_array_env(t_command *cmds_array, int cmd_count);
 
 

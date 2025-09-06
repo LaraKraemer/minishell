@@ -63,7 +63,7 @@ void	free_cmds_array_env(t_command *cmds_array, int cmd_count)
 	i = 0;
 	while (i < cmd_count)
 	{
-		free_env(cmds_array[i].env);
+		free_array(cmds_array[i].env);
 		i++;
 	}
 }

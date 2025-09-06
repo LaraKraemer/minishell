@@ -31,8 +31,7 @@ int	setup_paths(t_shell *sh, char **global_env)
 		}
 		if (set_path(&sh->cmds_array[i], global_env) == -1)
 		{
-			error_input(ERR_PATH, 127);
-			sh->exit_code = 127;
+			sh->exit_code = error_input(ERR_PATH, 127);
 			sh->error_in_setup = 1;
 			return (0);
 		}
