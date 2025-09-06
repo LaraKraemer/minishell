@@ -74,7 +74,10 @@ int	setup_pipes(int cmd_count, int **pipe_fds)
 	while (i < cmd_count - 1)
 	{
 		if (pipe(*pipe_fds + i * 2) == -1)
+		{
+			free(*pipe_fds);
 			return (-1);
+		}
 		i++;
 	}
 	return (0);

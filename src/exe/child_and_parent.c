@@ -26,7 +26,7 @@ int	fork_all_children(t_shell *sh, int *pipe_fds, pid_t *child_pids)
 		if (child_pids[i] == -1)
 			return (sys_error("fork", ERR_FORK), -1);
 		if (child_pids[i] == 0)
-			child_process(sh, i, pipe_fds);
+			child_process(sh, i, pipe_fds, child_pids);
 		else
 		{
 			if (i > 0)
@@ -83,7 +83,10 @@ int	execute_with_pipex_logic(t_shell *sh)
 		return (free(child_pids), 1);
 	setup_parent_sigs();
 	if (fork_all_children(sh, pipe_fds, child_pids) == -1)
+	{
+		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 		return (free(pipe_fds), free(child_pids), exit(1), 1);
+	}
 	exit_status = wait_all_children(child_pids, sh->cmd_count);
 	setup_interactive_sigs();
 	return (free(pipe_fds), free(child_pids), exit_status);
@@ -126,13 +129,15 @@ void	handle_child_redir(t_command *cmd, int i, int *pipe_fds, int cmd_count)
 Child process execution handler
 Never returns - exits via exit() or execve()
 */
-void	child_process(t_shell *sh, int i, int *pipe_fds)
+void	child_process(t_shell *sh, int i, int *pipe_fds, pid_t *child_pids)
 {
 	int	cmd_count;
 	int	check_status;
 
 	if (sh->cmds_array[i].fd_in == -1 || sh->cmds_array[i].fd_out == -1)
 	{
+		free(pipe_fds);
+		free(child_pids);
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 		exit(1);
 	}
@@ -148,6 +153,8 @@ void	child_process(t_shell *sh, int i, int *pipe_fds)
 	check_status = check_command(&sh->cmds_array[i]);
 	if (check_status != 0)
 	{
+		free(pipe_fds);
+		free(child_pids);
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 		exit(check_status);
 	}

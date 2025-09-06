@@ -26,7 +26,7 @@ int		wait_all_children(pid_t *child_pids, int cmd_count);
 void	handle_child_redir(t_command *cmd, int i, int *pipe_fds, int cmd_count);
 int		fork_all_children(t_shell *sh, int *pipe_fds, pid_t *child_pids);
 void	setup_child_fds(int i, int *pipe_fds, int cmd_count);
-void	child_process(t_shell *sh, int i, int *pipe_fds);
+void	child_process(t_shell *sh, int i, int *pipe_fds, pid_t *child_pids);
 int		set_path(t_command *cmd, char *envp[]);
 void	free_array(char **str_array);
 void	free_commands(t_command *cmds, int cmd_count);
