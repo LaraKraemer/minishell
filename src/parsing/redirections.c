@@ -145,13 +145,16 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 int	in_out_redir(t_command *cmd, t_token **current_token,
 		char **env, int ex_code)
 {
-	int	current_type;
+	int		current_type;
+	char	*temp_value;
 
 	if (!(*current_token)->next || (*current_token)->next->type != TOKEN_WORD)
 		return (error_input(ERR_SYNTAX_T, 0));
 	current_type = (*current_token)->type;
 	*current_token = (*current_token)->next;
+	temp_value = (*current_token)->value;
 	(*current_token)->value = quotes_token((*current_token)->value, env, ex_code);
+	free(temp_value);
 	if (current_type == TOKEN_REDIR_IN)
 	{
 		if (cmd->fd_in != STDIN_FILENO)

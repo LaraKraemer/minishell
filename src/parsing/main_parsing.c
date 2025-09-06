@@ -60,7 +60,7 @@ int	split_into_cmds(t_command *cmd, t_token **first_token,
 			}
 			else if (return_from_redirections == -1)
 			{
-				cmd->exit_code = 1; //возможно тут надо что-то чистить
+				cmd->exit_code = 1;
 				while (start->next && start->next->type != TOKEN_PIPE)
 					start = start->next;
 				continue ;
@@ -92,7 +92,10 @@ int	parse_input(t_command *cmds_array, t_token *first_token,
 
 	i = 0;
 	if (!is_last_token_word(first_token))
+	{
+		cmds_array->exit_code = 258;
 		return (error_input(ERR_SYNTAX_T, 0));
+	}
 	if (!init_array(cmds_array, cmd_count, envp))
 		return (0);
 	while (first_token && i < cmd_count)
