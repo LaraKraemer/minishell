@@ -6,7 +6,7 @@
 /*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:59:13 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/02 18:42:45 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/05 20:57:21 by 123              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ int	parse_input(t_command *cmds_array, t_token *first_token,
 	while (first_token && i < cmd_count)
 	{
 		if (!split_into_cmds(&cmds_array[i], &first_token, envp, exit_code))
+		{
+			free_cmds_array_env(cmds_array, cmd_count);
 			return (0);
+		}
 		if (!cmds_array[i].cmd)
 			return (error_input(ERR_SYNTAX_T, 0));
 		i++;

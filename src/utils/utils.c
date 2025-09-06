@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 11:25:14 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/03 21:00:57 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/05 16:56:52 by 123              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@ void	print_banner(void)
 		   "........................................................................\n");
 }
 
-void	free_resources(char *input, t_command *cmds, int count)
+void	free_if_error(char *input, t_token **first_token)
 {
 	free(input);
-    // free_tokens(tokens);
+	ms_lstclear(first_token);
+}
+
+void	free_resources(char *input, t_command *cmds, int count, t_token **first_token)
+{
+	free_if_error(input, first_token);
 	free_commands(cmds, count);
 }
 

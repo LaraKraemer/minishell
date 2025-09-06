@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:38:57 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/25 11:49:03 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/05 11:37:11 by 123              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,19 @@ int	get_tokens(char *input, t_token **first_token,
 		type = determine_type(input, input + 1);
 		value = determine_value(type, &input, envp, last_exit_code);
 		if (!value)
+		{
+			ms_lstclear(first_token);
 			return (error_input(ERR_SYNTAX_T, 1));
+		}
 		if (value[0] == '\0')
 		{
-			free(value);
 			if (!*(input + 1))
-				return (1);
+				return (ms_lstclear(first_token));
 			else
+			{
+				free(value);
 				continue ;
+			}
 		}
 		if (*first_token == NULL)
 		{

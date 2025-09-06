@@ -6,7 +6,7 @@
 /*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:50:02 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/02 18:40:37 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:58:12 by 123              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	execute_commands(t_shell *sh);
 
 /* Utils */
 void	print_banner(void);
-void	free_resources(char *input, t_command *cmds, int count);
+void	free_if_error(char *input, t_token **first_token);
+void	free_resources(char *input, t_command *cmds, int count, t_token **tokens);
 void	print_error(char *arg, char *message);
 int		sys_error(char *context, char *arg);
 int		print_error_return(char *arg, char *message, int code);

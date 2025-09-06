@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:25:28 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/02 18:18:32 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/05 17:06:06 by 123              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int	init_array(t_command *cmds_array, int cmd_count, char **envp)
 		//cmds_array[i].env = envp;
 		cmds_array[i].env = copy_env(envp);
 		if (!cmds_array[i].env)
+		{
+			while (i-- > 0)
+				free_env(cmds_array[i].env);
 			return (error_input(ERR_MEM_ALLO, 0));
+		}
 		cmds_array[i].fd_in = STDIN_FILENO;
 		cmds_array[i].fd_out = STDOUT_FILENO;
 		cmds_array[i].path_file = NULL;

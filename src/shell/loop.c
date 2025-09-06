@@ -6,7 +6,7 @@
 /*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:59:09 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/02 18:30:15 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/05 10:17:26 by 123              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	minishell_loop(t_shell *sh, char ***global_env)
 			continue ;
 		if (!setup_paths(sh, *global_env))
 		{
-			free_resources(sh->input, sh->cmds_array, sh->cmd_count);
+			free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 			continue ;
 		}
 		if (handle_builtins(sh, global_env))

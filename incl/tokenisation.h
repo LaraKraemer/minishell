@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:49:14 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/07/25 11:49:42 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/05 11:37:56 by 123              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+//token list
 t_token			*ms_lstnew(int type, char *value);
 t_token			*ms_lstlast(t_token *lst);
 void			ms_lstadd_back(t_token **lst, t_token *new_node);
+int			ms_lstclear(t_token **first_token);
+
 void			skip_delimiter(char **s);
 int				correct_delimiter(int c);
 int				special_character(int c);
