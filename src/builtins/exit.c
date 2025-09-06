@@ -39,17 +39,20 @@ static int	shell_atoi(char *str)
 
 /*
 Runs in parent process - since it exit shell.
-# one cmd run in parent process 
-# two run in child process 
+# one cmd run in parent process
+# two run in child process
 */
-int	exit_builtin(char **args)
+int	exit_builtin(char **args, t_shell *sh)
 {
 	int	i;
 	int	exit_code;
 
 	i = 0;
 	if (!args[1])
+	{
+		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 		exit(0);
+	}
 	if (args[2])
 		return (print_error(args[2], ERR_ARG_SIZE), 1);
 	if (args[1][i] == '-' || args[1][i] == '+')
@@ -59,9 +62,11 @@ int	exit_builtin(char **args)
 		if (!ft_isdigit(args[1][i++]))
 		{
 			print_error(args[1], ERR_NUMERIC);
+			free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 			exit(255);
 		}
 	}
 	exit_code = shell_atoi(args[1]);
+	free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 	exit((exit_code % 256 + 256) % 256);
 }

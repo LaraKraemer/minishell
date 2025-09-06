@@ -56,7 +56,7 @@ int	handle_builtins(t_shell *sh, char ***global_env)
 			sh->exit_code = 1;
 			return (1);
 		}
-		sh->exit_code = builtins(&sh->cmds_array[0], global_env);
+		sh->exit_code = builtins(&sh->cmds_array[0], global_env, sh);
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 		return (1);
 	}
@@ -65,6 +65,6 @@ int	handle_builtins(t_shell *sh, char ***global_env)
 
 void	execute_commands(t_shell *sh)
 {
-	sh->exit_code = execute_with_pipex_logic(sh->cmds_array, sh->cmd_count);
+	sh->exit_code = execute_with_pipex_logic(sh);
 	free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 }

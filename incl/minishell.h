@@ -24,6 +24,7 @@
 # include <signal.h>
 # include "tokenisation.h"
 # include "parsing.h"
+# include "shell.h"
 # include "execution.h"
 # include "builtins.h"
 # include "libft/libft.h"
@@ -62,17 +63,17 @@
 # define WHITE		"\033[0;37m"
 
 
-typedef struct s_shell
-{
-	char		*input;
-	char		*raw_input;
-	t_token		*first_token;
-	int			cmd_count;
-	t_command	*cmds_array;
-	int			exit_code;
-	int			error_in_setup;
-	int			i;
-}	t_shell;
+// typedef struct s_shell
+// {
+// 	char		*input;
+// 	char		*raw_input;
+// 	t_token		*first_token;
+// 	int			cmd_count;
+// 	t_command	*cmds_array;
+// 	int			exit_code;
+// 	int			error_in_setup;
+// 	int			i;
+// }	t_shell;
 
 /* Shell */
 void	minishell_loop(t_shell *sh, char ***global_env);
@@ -80,7 +81,7 @@ void	init_shell(t_shell *sh);
 int		read_trim_input(t_shell *sh);
 int		tokenize_input(t_shell *sh, char **global_env);
 int		parse_prepare_cmds(t_shell *sh, char **global_env);
-int		execute_with_pipex_logic(t_command *cmds, int count);
+//int		execute_with_pipex_logic(t_command *cmds, int count);
 int		setup_paths(t_shell *sh, char **global_env);
 int		handle_builtins(t_shell *sh, char ***global_env);
 void	execute_commands(t_shell *sh);

@@ -41,7 +41,7 @@ int	is_builtin(char *arg)
 /*
 Verifies and calls builtin cmd function.
 */
-int	builtins(t_command *cmd, char ***global_env)
+int	builtins(t_command *cmd, char ***global_env, t_shell *sh)
 {
 	char		cwd[BUFSIZ];
 	const char	*cmd_name;
@@ -62,7 +62,10 @@ int	builtins(t_command *cmd, char ***global_env)
 	else if (ft_strcmp(cmd_name, "env") == 0)
 		return (env_builtin(cmd->cmd_args, *global_env));
 	else if (ft_strcmp(cmd_name, "exit") == 0)
-		return (exit_builtin(cmd->cmd_args));
+	{
+		free_array(*global_env);
+		return (exit_builtin(cmd->cmd_args, sh));
+	}
 	return (EXIT_SUCCESS);
 }
 
