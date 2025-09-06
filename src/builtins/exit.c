@@ -42,7 +42,7 @@ Runs in parent process - since it exit shell.
 # one cmd run in parent process
 # two run in child process
 */
-int	exit_builtin(char **args, t_shell *sh)
+int	exit_builtin(char **args, t_shell *sh, char **env)
 {
 	int	i;
 	int	exit_code;
@@ -51,6 +51,7 @@ int	exit_builtin(char **args, t_shell *sh)
 	if (!args[1])
 	{
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
+		free_array(env);
 		exit(0);
 	}
 	if (args[2])
@@ -63,10 +64,12 @@ int	exit_builtin(char **args, t_shell *sh)
 		{
 			print_error(args[1], ERR_NUMERIC);
 			free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
+			free_array(env);
 			exit(255);
 		}
 	}
 	exit_code = shell_atoi(args[1]);
 	free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
+	free_array(env);
 	exit((exit_code % 256 + 256) % 256);
 }

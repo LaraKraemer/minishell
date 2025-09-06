@@ -62,10 +62,7 @@ int	builtins(t_command *cmd, char ***global_env, t_shell *sh)
 	else if (ft_strcmp(cmd_name, "env") == 0)
 		return (env_builtin(cmd->cmd_args, *global_env));
 	else if (ft_strcmp(cmd_name, "exit") == 0)
-	{
-		free_array(*global_env);
-		return (exit_builtin(cmd->cmd_args, sh));
-	}
+		return (exit_builtin(cmd->cmd_args, sh, *global_env));
 	return (EXIT_SUCCESS);
 }
 

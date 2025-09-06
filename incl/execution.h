@@ -30,5 +30,7 @@ void	child_process(t_shell *sh, int i, int *pipe_fds, pid_t *child_pids);
 int		set_path(t_command *cmd, char *envp[]);
 void	free_array(char **str_array);
 void	free_commands(t_command *cmds, int cmd_count);
+void	cleanup_and_exit(t_shell *sh, int *pipe_fds, pid_t *child_pids,
+			int exit_code);
 
 #endif
