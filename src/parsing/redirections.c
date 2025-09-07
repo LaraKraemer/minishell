@@ -106,7 +106,6 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, t_shell *sh)
 	int		status;
 
 	quotes_num = check_quotes(delimiter);
-	printf("%d - quotes_num\n", quotes_num);
 	if (quotes_num < 0)
 		return (0);
 	if (pipe(pipe_fd) == -1)
@@ -126,6 +125,7 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, t_shell *sh)
 		close(pipe_fd[1]);
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 		free(temp);
+		free(delimiter);
 		exit(0);
 	}
 	signal(SIGINT, SIG_IGN);

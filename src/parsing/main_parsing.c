@@ -45,6 +45,7 @@ int	split_into_cmds(t_command *cmd, t_shell *sh, char **envp)
 	cmd->cmd_args = malloc(MAX_ARGS * sizeof(char *));
 	if (!cmd->cmd_args)
 		return (error_input(ERR_MEM_ALLO, 0));
+	ft_bzero(cmd->cmd_args, MAX_ARGS * sizeof(char *));
 	while (start && start->type != TOKEN_PIPE)
 	{
 		if (start->type == TOKEN_REDIR_IN || start->type == TOKEN_REDIR_OUT
