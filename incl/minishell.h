@@ -62,19 +62,6 @@
 # define CYAN		"\033[0;36m"
 # define WHITE		"\033[0;37m"
 
-
-// typedef struct s_shell
-// {
-// 	char		*input;
-// 	char		*raw_input;
-// 	t_token		*first_token;
-// 	int			cmd_count;
-// 	t_command	*cmds_array;
-// 	int			exit_code;
-// 	int			error_in_setup;
-// 	int			i;
-// }	t_shell;
-
 /* Shell */
 void	minishell_loop(t_shell *sh, char ***global_env);
 void	init_shell(t_shell *sh);
@@ -89,7 +76,8 @@ void	execute_commands(t_shell *sh);
 /* Utils */
 void	print_banner(void);
 void	free_if_error(char *input, t_token **first_token);
-void	free_resources(char *input, t_command *cmds, int count, t_token **tokens);
+void	free_resources(char *input, t_command *cmds, int count,
+			t_token **tokens);
 void	print_error(char *arg, char *message);
 int		sys_error(char *context, char *arg);
 int		print_error_return(char *arg, char *message, int code);

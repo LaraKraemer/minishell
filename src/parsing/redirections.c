@@ -111,8 +111,6 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, t_shell *sh)
 	if (pipe(pipe_fd) == -1)
 		return (sys_error("parser", "pipe"));
 	temp = ft_strtrim(delimiter, " \"\'");
-	//free(delimiter);
-	//delimiter = temp;
 	pid = fork();
 	if (pid == -1)
 		return (close(pipe_fd[0]), close(pipe_fd[1]),
@@ -123,7 +121,9 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, t_shell *sh)
 		close(pipe_fd[0]);
 		read_heredoc_content(pipe_fd[1], temp, env, sh->exit_code, quotes_num);
 		close(pipe_fd[1]);
-		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
+		free_resources(sh->input, sh->cmds_array, sh->cmd_count,
+			&sh->first_token);
+		free_array(sh->global_env);
 		free(temp);
 		free(delimiter);
 		exit(0);
@@ -168,8 +168,9 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 				*current_token = (*current_token)->next;
 				if ((*current_token)->type == TOKEN_HEREDOC)
 				{
+					free(temp_value);
 					*current_token = (*current_token)->next;
-					(*current_token)->value = quotes_token((*current_token)->value, env, sh->exit_code);
+					//(*current_token)->value = quotes_token((*current_token)->value, env, sh->exit_code);
 					if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, sh))
 						return (0);
 				}
@@ -198,23 +199,3 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	free(temp_value);
 	return (1);
 }
-
-
-/* static void	heredoc_child(int pipe_fd[2], char *delim, int quotes)
-{
-	signal(SIGINT, handle_heredoc_sigs);
-	close(pipe_fd[0]);
-	read_heredoc_content(pipe_fd[1], delim, quotes);
-	close(pipe_fd[1]);
-	free(delim);
-	exit(0);
-
-}
-
-static int cleanup_heredoc(int pipe_fd[2], char *delim, char *error)
-{
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	free(delim);
-	sys_error("parser", error);
-} */

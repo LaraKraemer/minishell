@@ -31,7 +31,8 @@ void	minishell_loop(t_shell *sh, char ***global_env)
 			continue ;
 		if (!setup_paths(sh, *global_env))
 		{
-			free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
+			free_resources(sh->input, sh->cmds_array, sh->cmd_count,
+				&sh->first_token);
 			continue ;
 		}
 		if (handle_builtins(sh, global_env))

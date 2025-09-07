@@ -84,7 +84,8 @@ int	execute_with_pipex_logic(t_shell *sh)
 	setup_parent_sigs();
 	if (fork_all_children(sh, pipe_fds, child_pids) == -1)
 	{
-		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
+		free_resources(sh->input, sh->cmds_array, sh->cmd_count,
+			&sh->first_token);
 		return (free(pipe_fds), free(child_pids), exit(1), 1);
 	}
 	exit_status = wait_all_children(child_pids, sh->cmd_count);

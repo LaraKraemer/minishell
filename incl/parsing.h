@@ -25,19 +25,6 @@
 
 # define MAX_ARGS 100
 
-// typedef struct s_command
-// {
-// 	char	*cmd;
-// 	char	**cmd_args;
-// 	char	**env;
-// 	int		fd_in;
-// 	int		fd_out;
-// 	char	**path_file;
-// 	char	*cmd_path;
-// 	int		exit_code;
-// 	int		redir_err_flag;
-// }	t_command;
-
 int		count_cmd_num(t_token *first_token);
 int		parse_input(t_shell *sh, char **envp);
 int		split_into_cmds(t_command *cmd, t_shell *sh, char **envp);

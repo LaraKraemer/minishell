@@ -54,7 +54,7 @@ static int	find_path(t_command *cmd)
 
 int	handle_absolute_path(t_command *cmd)
 {
-	int 	dir_fd;
+	int	dir_fd;
 
 	if (access(cmd->cmd, F_OK) != 0)
 	{
@@ -63,11 +63,11 @@ int	handle_absolute_path(t_command *cmd)
 	}
 	dir_fd = open(cmd->cmd, O_DIRECTORY);
 	if (dir_fd != -1)
-    {
-        close(dir_fd);
-        cmd->exit_code = 126;
-        return (print_error(cmd->cmd, ERR_IS_DIR), 126);
-    }
+	{
+		close(dir_fd);
+		cmd->exit_code = 126;
+		return (print_error(cmd->cmd, ERR_IS_DIR), 126);
+	}
 	cmd->cmd_path = ft_strdup(cmd->cmd);
 	if (!cmd->cmd_path)
 	{

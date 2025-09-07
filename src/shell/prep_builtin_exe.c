@@ -47,17 +47,19 @@ Saves and restores original stdout to ensure shell state remains intact.
 */
 int	handle_builtins(t_shell *sh, char ***global_env)
 {
-	if (sh->cmd_count == 1 && sh->cmds_array[0].cmd_args &&
-		must_run_in_parent(sh->cmds_array[0].cmd_args[0]))
+	if (sh->cmd_count == 1 && sh->cmds_array[0].cmd_args
+		&& must_run_in_parent(sh->cmds_array[0].cmd_args[0]))
 	{
 		if (sh->cmds_array->fd_in == -1 || sh->cmds_array->fd_out == -1)
 		{
-			free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
+			free_resources(sh->input, sh->cmds_array, sh->cmd_count,
+				&sh->first_token);
 			sh->exit_code = 1;
 			return (1);
 		}
 		sh->exit_code = builtins(&sh->cmds_array[0], global_env, sh);
-		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
+		free_resources(sh->input, sh->cmds_array, sh->cmd_count,
+			&sh->first_token);
 		return (1);
 	}
 	return (0);

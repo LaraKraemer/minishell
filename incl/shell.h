@@ -38,6 +38,7 @@ typedef struct s_shell
 	int			exit_code;
 	int			error_in_setup;
 	int			i;
+	char		**global_env;
 }	t_shell;
 
 #endif

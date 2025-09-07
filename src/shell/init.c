@@ -22,6 +22,7 @@ void	init_shell(t_shell *sh)
 	sh->exit_code = 0;
 	sh->error_in_setup = 0;
 	sh->i = 0;
+	sh->global_env = NULL;
 }
 
 int	read_trim_input(t_shell *sh)

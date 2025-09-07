@@ -23,7 +23,6 @@ int	init_array(t_command *cmds_array, int cmd_count, char **envp)
 	{
 		cmds_array[i].cmd = NULL;
 		cmds_array[i].cmd_args = NULL;
-		//cmds_array[i].env = envp;
 		cmds_array[i].env = copy_env(envp);
 		if (!cmds_array[i].env)
 		{
