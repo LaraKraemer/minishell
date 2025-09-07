@@ -106,30 +106,31 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, t_shell *sh)
 	int		status;
 
 	quotes_num = check_quotes(delimiter);
+	printf("%d - quotes_num\n", quotes_num);
 	if (quotes_num < 0)
 		return (0);
 	if (pipe(pipe_fd) == -1)
 		return (sys_error("parser", "pipe"));
 	temp = ft_strtrim(delimiter, " \"\'");
-	free(delimiter);
-	delimiter = temp;
+	//free(delimiter);
+	//delimiter = temp;
 	pid = fork();
 	if (pid == -1)
 		return (close(pipe_fd[0]), close(pipe_fd[1]),
-			free(delimiter), sys_error("parser", "fork"));
+			free(temp), sys_error("parser", "fork"));
 	if (pid == 0)
 	{
 		signal(SIGINT, handle_heredoc_sigs);
 		close(pipe_fd[0]);
-		read_heredoc_content(pipe_fd[1], delimiter, env, sh->exit_code, quotes_num);
+		read_heredoc_content(pipe_fd[1], temp, env, sh->exit_code, quotes_num);
 		close(pipe_fd[1]);
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
-		//free(delimiter);
+		free(temp);
 		exit(0);
 	}
 	signal(SIGINT, SIG_IGN);
 	close(pipe_fd[1]);
-	//free(delimiter);
+	free(temp);
 	waitpid(pid, &status, 0);
 	setup_interactive_sigs();
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
@@ -155,7 +156,6 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	*current_token = (*current_token)->next;
 	temp_value = (*current_token)->value;
 	(*current_token)->value = quotes_token((*current_token)->value, env, sh->exit_code);
-	free(temp_value);
 	if (current_type == TOKEN_REDIR_IN)
 	{
 		if (cmd->fd_in != STDIN_FILENO)
@@ -192,9 +192,10 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	{
 		if (cmd->fd_in != STDIN_FILENO)
 			close(cmd->fd_in);
-		if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, sh))
+		if (!handle_heredoc(&cmd->fd_in, temp_value, env, sh))
 			return (0);
 	}
+	free(temp_value);
 	return (1);
 }
 
