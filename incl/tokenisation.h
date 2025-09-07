@@ -44,7 +44,7 @@ typedef struct s_token
 t_token			*ms_lstnew(int type, char *value);
 t_token			*ms_lstlast(t_token *lst);
 void			ms_lstadd_back(t_token **lst, t_token *new_node);
-int			ms_lstclear(t_token **first_token);
+int				ms_lstclear(t_token **first_token);
 
 void			skip_delimiter(char **s);
 int				correct_delimiter(int c);

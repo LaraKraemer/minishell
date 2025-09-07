@@ -28,7 +28,7 @@ void	handle_sigint(int sig)
 void	handle_sigquit(int sig)
 {
 	(void)sig;
-	//free_resources();
+	//free_array(global_env);
 }
 
 void	setup_interactive_sigs(void)

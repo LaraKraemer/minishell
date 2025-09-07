@@ -15,6 +15,19 @@
 # include "tokenisation.h"
 # include "parsing.h"
 
+typedef struct s_command
+{
+	char	*cmd;
+	char	**cmd_args;
+	char	**env;
+	int		fd_in;
+	int		fd_out;
+	char	**path_file;
+	char	*cmd_path;
+	int		exit_code;
+	int		redir_err_flag;
+}	t_command;
+
 typedef struct s_shell
 {
 	char		*input;

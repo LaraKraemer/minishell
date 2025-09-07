@@ -97,7 +97,7 @@ static void	read_heredoc_content(int write_fd, char *delimiter, char **env, int 
 /*Handles heredoc input from the user until the delimiter is reached.
 Expands variables in the heredoc input only if the delimiter is unquoted.
 Writes the accumulated heredoc content into a pipe.*/
-static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
+static int	handle_heredoc(int *fd_in, char *delimiter, char **env, t_shell *sh)
 {
 	int		pipe_fd[2];
 	int		quotes_num;
@@ -121,14 +121,15 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
 	{
 		signal(SIGINT, handle_heredoc_sigs);
 		close(pipe_fd[0]);
-		read_heredoc_content(pipe_fd[1], delimiter, env, ex_code, quotes_num);
+		read_heredoc_content(pipe_fd[1], delimiter, env, sh->exit_code, quotes_num);
 		close(pipe_fd[1]);
-		free(delimiter);
+		free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
+		//free(delimiter);
 		exit(0);
 	}
 	signal(SIGINT, SIG_IGN);
 	close(pipe_fd[1]);
-	free(delimiter);
+	//free(delimiter);
 	waitpid(pid, &status, 0);
 	setup_interactive_sigs();
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
@@ -143,7 +144,7 @@ static int	handle_heredoc(int *fd_in, char *delimiter, char **env, int ex_code)
  in the command structure. Also checks for errors if there is redirection
  but without filename*/
 int	in_out_redir(t_command *cmd, t_token **current_token,
-		char **env, int ex_code)
+		char **env, t_shell *sh)
 {
 	int		current_type;
 	char	*temp_value;
@@ -153,7 +154,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	current_type = (*current_token)->type;
 	*current_token = (*current_token)->next;
 	temp_value = (*current_token)->value;
-	(*current_token)->value = quotes_token((*current_token)->value, env, ex_code);
+	(*current_token)->value = quotes_token((*current_token)->value, env, sh->exit_code);
 	free(temp_value);
 	if (current_type == TOKEN_REDIR_IN)
 	{
@@ -168,8 +169,8 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 				if ((*current_token)->type == TOKEN_HEREDOC)
 				{
 					*current_token = (*current_token)->next;
-					(*current_token)->value = quotes_token((*current_token)->value, env, ex_code);
-					if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, ex_code))
+					(*current_token)->value = quotes_token((*current_token)->value, env, sh->exit_code);
+					if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, sh))
 						return (0);
 				}
 			}
@@ -191,7 +192,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	{
 		if (cmd->fd_in != STDIN_FILENO)
 			close(cmd->fd_in);
-		if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, ex_code))
+		if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, env, sh))
 			return (0);
 	}
 	return (1);
