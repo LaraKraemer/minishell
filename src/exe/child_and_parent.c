@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/03 20:40:37 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/08 12:29:38 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	execute_with_pipex_logic(t_shell *sh)
 	return (free(pipe_fds), free(child_pids), exit_status);
 }
 
-
 /*
 Manages file redirections and closes unused pipe ends
 Closes all pipe FDs not used by this command and applies
@@ -155,4 +154,3 @@ void	child_process(t_shell *sh, int i, int *pipe_fds, pid_t *child_pids)
 	sys_error("execve", ERR_EXECVE);
 	cleanup_and_exit(sh, pipe_fds, child_pids, 127);
 }
-

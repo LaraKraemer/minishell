@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:45:04 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/08/22 10:25:02 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/07 14:23:19 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ int		open_file(t_command *cmd, char *file, int i);
 int		init_array(t_command *cmds_array, int cmd_count, char **envp);
 char	*quotes_token(char *token, char **envp, int exit_code);
 char	**copy_env(char **env);
-
 
 #endif

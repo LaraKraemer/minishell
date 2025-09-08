@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:28:59 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/02 18:42:31 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/05 18:02:26 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 	return (new_str);
 }
 
-static void	read_heredoc_content(int write_fd, char *delimiter, char **env, int ex_code, int quotes_num)
+static void	read_heredoc_content(int write_fd, char
+		*delimiter, char **env, int ex_code, int quotes_num)
 {
 	char	*heredoc_content;
 
