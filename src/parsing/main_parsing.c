@@ -106,7 +106,7 @@ int	parse_input(t_shell *sh, char **envp)
 		if (!sh->cmds_array[i].cmd)
 		{
 			free_cmds_array_env(sh->cmds_array, sh->cmd_count);
-			return (error_input(ERR_SYNTAX_T, 0));
+			return (0);
 		}
 		i++;
 	}
