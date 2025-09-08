@@ -25,9 +25,9 @@ int	main(int argc, char **argv, char **envp)
 	global_env = copy_env(envp);
 	if (!global_env)
 		return (error_input("malloc", 0));
+	sh.global_env = global_env;
 	minishell_loop(&sh, &global_env);
 	final_exit_code = sh.exit_code;
-	free(global_env);
-	// free_env(global_env);
+	free_array(global_env);
 	return (final_exit_code);
 }

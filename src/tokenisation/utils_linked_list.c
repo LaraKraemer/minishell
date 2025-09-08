@@ -6,7 +6,7 @@
 /*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:44:00 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/06/02 17:20:35 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/05 11:38:48 by 123              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,21 @@ void	ms_lstadd_back(t_token **lst, t_token *new_node)
 		return ;
 	last = ms_lstlast(*lst);
 	last->next = new_node;
+}
+
+int	ms_lstclear(t_token **first_token)
+{
+	t_token	*next;
+
+	if (first_token == NULL || *first_token == NULL)
+		return (0) ;
+	while (*first_token != NULL)
+	{
+		next = (*first_token)->next;
+		free((*first_token)->value);
+		free(*first_token);
+		*first_token = next;
+	}
+	*first_token = NULL;
+	return (1);
 }

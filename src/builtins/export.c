@@ -20,7 +20,7 @@ export VAR=value
 export VAR
 
 Return error:
-export 1VAR=value	
+export 1VAR=value
 */
 
 int	export_builtin(t_command *cmd, char ***global_env)
@@ -32,7 +32,7 @@ int	export_builtin(t_command *cmd, char ***global_env)
 	return (0);
 }
 
-/* 
+/*
 Handles export without arguments by printing sorted environment variables.
 */
 int	export_without_var(char **global_env)
@@ -42,7 +42,7 @@ int	export_without_var(char **global_env)
 	return (0);
 }
 
-/* 
+/*
 Processes export arguments to add or update environment variables.
 */
 int	update_add_var(char **args, char ***global_env)
@@ -74,7 +74,7 @@ int	update_add_var(char **args, char ***global_env)
 	return (exit_code);
 }
 
-/* 
+/*
 Handles VAR=value assignments by updating or adding variables
 */
 char	**assign_var_and_value(char *equal_sign, char *arg, char **env)
@@ -104,7 +104,7 @@ char	**assign_var_and_value(char *equal_sign, char *arg, char **env)
 	return (add_new_env_var(arg, &env));
 }
 
-/* 
+/*
 Handles bare variable names (without values) in export statements
 */
 char	**assign_var(char *arg, char **env)
@@ -125,13 +125,3 @@ char	**assign_var(char *arg, char **env)
 	}
 	return (add_new_env_var(arg, &env));
 }
-
-/* void print_env(char **env)
-{
-    int i = 0;
-    while (env[i])
-    {
-        printf("env[%d]: %s\n", i, env[i]);
-        i++;
-    }
-} */
