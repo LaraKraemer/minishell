@@ -45,3 +45,42 @@ int	open_file(t_command *cmd, char *file, int i)
 	}
 	return (1);
 }
+
+/*Checks whether the given delimiter string contains an even number of quotes.
+Used to detect syntax errors and determine if quotes were used.*/
+int	check_quotes(char *delimiter)
+{
+	int	single_quotes;
+	int	double_quotes;
+
+	single_quotes = 0;
+	double_quotes = 0;
+	while (*delimiter)
+	{
+		if (*delimiter == '"')
+			double_quotes++;
+		else if (*delimiter == '\'')
+			single_quotes++;
+		delimiter++;
+	}
+	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
+		return (error_input(ERR_SYNTAX_T, -1));
+	return (single_quotes + double_quotes);
+}
+
+int	check_for_heredocs(t_token **current_token, t_command *cmd,
+	t_shell *sh)
+{
+	while ((*current_token)->next
+		&& (*current_token)->next->type != TOKEN_PIPE)
+	{
+		*current_token = (*current_token)->next;
+		if ((*current_token)->type == TOKEN_HEREDOC)
+		{
+			*current_token = (*current_token)->next;
+			if (!handle_heredoc(&cmd->fd_in, (*current_token)->value, sh))
+				return (0);
+		}
+	}
+	return (1);
+}

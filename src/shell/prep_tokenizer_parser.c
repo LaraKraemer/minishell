@@ -12,15 +12,15 @@
 
 #include "../../incl/minishell.h"
 
-int	tokenize_input(t_shell *sh, char **global_env)
+int	tokenize_input(t_shell *sh)
 {
 	sh->first_token = NULL;
-	if (get_tokens(sh->input, &sh->first_token, global_env, sh->exit_code))
+	if (get_tokens(sh->input, &sh->first_token, sh->global_env, sh->exit_code))
 		return (0);
 	return (1);
 }
 
-int	parse_prepare_cmds(t_shell *sh, char **global_env)
+int	parse_prepare_cmds(t_shell *sh)
 {
 	sh->cmd_count = count_cmd_num(sh->first_token);
 	sh->cmds_array = malloc((sh->cmd_count + 1) * sizeof(t_command));
@@ -29,7 +29,7 @@ int	parse_prepare_cmds(t_shell *sh, char **global_env)
 		free_if_error(sh->input, &sh->first_token);
 		return (error_input(ERR_MEM_ALLO, 1));
 	}
-	if (!parse_input(sh, global_env))
+	if (!parse_input(sh))
 	{
 		if (!sh->cmds_array->exit_code)
 			sh->exit_code = 258;

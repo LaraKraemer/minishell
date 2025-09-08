@@ -66,9 +66,8 @@
 void	minishell_loop(t_shell *sh, char ***global_env);
 void	init_shell(t_shell *sh);
 int		read_trim_input(t_shell *sh);
-int		tokenize_input(t_shell *sh, char **global_env);
-int		parse_prepare_cmds(t_shell *sh, char **global_env);
-//int		execute_with_pipex_logic(t_command *cmds, int count);
+int		tokenize_input(t_shell *sh);
+int		parse_prepare_cmds(t_shell *sh);
 int		setup_paths(t_shell *sh, char **global_env);
 int		handle_builtins(t_shell *sh, char ***global_env);
 void	execute_commands(t_shell *sh);

@@ -14,6 +14,39 @@
 
 /*Parses a token and returns a new string with quotes removed and variable
 expansions applied where appropriate (inside quotations).*/
+
+static void	process_double_quotes(char **token, char **result,
+		char **envp, int exit_code)
+{
+	(*token)++;
+	while (**token && **token != '"')
+	{
+		if (**token == '$' && (ft_isalnum(*(*token + 1))
+				|| *(*token + 1) == '_' || *(*token + 1) == '?'))
+		{
+			(*token)++;
+			*result = do_expansion(token, envp, exit_code, *result);
+		}
+		else
+		{
+			*result = ft_strjoin_char(*result, **token);
+			(*token)++;
+		}
+	}
+}
+
+static void	process_single_quotes(char **token, char **result)
+{
+	(*token)++;
+	while (**token && **token != '\'')
+	{
+		*result = ft_strjoin_char(*result, **token);
+		(*token)++;
+	}
+	if (**token == '\'')
+		(*token)++;
+}
+
 char	*quotes_token(char *token, char **envp, int exit_code)
 {
 	char	*result;
@@ -22,32 +55,9 @@ char	*quotes_token(char *token, char **envp, int exit_code)
 	while (*token)
 	{
 		if (*token == '"')
-		{
-			token++;
-			while (*token && *token != '"')
-			{
-				if (*token == '$' && (ft_isalnum(*(token + 1))
-						|| *(token + 1) == '_' || *(token + 1) == '?'))
-				{
-					token++;
-					result = do_expansion(&token, envp, exit_code, result);
-				}
-				else
-				{
-					result = ft_strjoin_char(result, *token);
-					token++;
-				}
-			}
-		}
+			process_double_quotes(&token, &result, envp, exit_code);
 		else if (*token == '\'')
-		{
-			token++;
-			while (*token && *token != '\'')
-			{
-				result = ft_strjoin_char(result, *token);
-				token++;
-			}
-		}
+			process_single_quotes(&token, &result);
 		else
 		{
 			result = ft_strjoin_char(result, *token);

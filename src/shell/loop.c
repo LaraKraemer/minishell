@@ -25,9 +25,9 @@ void	minishell_loop(t_shell *sh, char ***global_env)
 				break ;
 			continue ;
 		}
-		if (!tokenize_input(sh, *global_env))
+		if (!tokenize_input(sh))
 			continue ;
-		if (!parse_prepare_cmds(sh, *global_env))
+		if (!parse_prepare_cmds(sh))
 			continue ;
 		if (!setup_paths(sh, *global_env))
 		{

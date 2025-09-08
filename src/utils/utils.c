@@ -28,7 +28,8 @@ void	free_if_error(char *input, t_token **first_token)
 	ms_lstclear(first_token);
 }
 
-void	free_resources(char *input, t_command *cmds, int count, t_token **first_token)
+void	free_resources(char *input, t_command *cmds, int count,
+		t_token **first_token)
 {
 	free_if_error(input, first_token);
 	free_commands(cmds, count);
@@ -66,11 +67,4 @@ void	free_cmds_array_env(t_command *cmds_array, int cmd_count)
 		free_array(cmds_array[i].env);
 		i++;
 	}
-}
-
-void	handle_heredoc_sigs(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	exit(130);
 }
