@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 11:52:03 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/04 18:02:43 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/07 14:27:55 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,3 @@ int	set_path(t_command *cmd, char **envp)
 	cmd->path_file = path_cache;
 	return (0);
 }
-
-// Debug: Print each path in the split PATH
-/* for (int j = 0; split_path[j]; j++) {
-	printf("\033[0;31mDebug: split_path[%d] = %s\033[0m\n", j, split_path[j]);
-} */

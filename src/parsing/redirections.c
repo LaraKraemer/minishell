@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:28:59 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/02 18:42:31 by dtimofee         ###   ########.fr       */
+/*   Updated: 2025/09/05 18:02:26 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 	return (new_str);
 }
 
-static void	read_heredoc_content(int write_fd, char *delimiter, char **env, int ex_code, int quotes_num)
+static void	read_heredoc_content(int write_fd, char
+		*delimiter, char **env, int ex_code, int quotes_num)
 {
 	char	*heredoc_content;
 
@@ -193,23 +194,3 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	}
 	return (1);
 }
-
-
-/* static void	heredoc_child(int pipe_fd[2], char *delim, int quotes)
-{
-	signal(SIGINT, handle_heredoc_sigs);
-	close(pipe_fd[0]);
-	read_heredoc_content(pipe_fd[1], delim, quotes);
-	close(pipe_fd[1]);
-	free(delim);
-	exit(0);
-
-}
-
-static int cleanup_heredoc(int pipe_fd[2], char *delim, char *error)
-{
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	free(delim);
-	sys_error("parser", error);
-} */
