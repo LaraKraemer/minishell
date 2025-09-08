@@ -115,6 +115,7 @@ void	cleanup_and_exit(t_shell *sh, int *pipe_fds, pid_t *child_pids,
 {
 	free(pipe_fds);
 	free(child_pids);
+	free_array(sh->global_env);
 	free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 	exit(exit_code);
 }

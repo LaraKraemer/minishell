@@ -88,8 +88,10 @@ and stores the information in the array of command structures.*/
 int	parse_input(t_shell *sh, char **envp)
 {
 	int		i;
+	t_token	*temp;
 
 	i = 0;
+	temp = sh->first_token;
 	if (!is_last_token_word(sh->first_token))
 	{
 		sh->cmds_array->exit_code = 258;
@@ -108,5 +110,6 @@ int	parse_input(t_shell *sh, char **envp)
 		}
 		i++;
 	}
+	sh->first_token = temp;
 	return (1);
 }
