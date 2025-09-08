@@ -20,12 +20,12 @@
 
 // utils.c
 int		ft_strcmp(const char *s1, const char *s2);
-int		builtins(t_command *cmd, char ***global_env);
+int		builtins(t_command *cmd, char ***global_env, t_shell *sh);
 int		is_builtin(char *arg);
 int		must_run_in_parent(const char *cmd_name);
 
 // exit.c
-int		exit_builtin(char **args);
+int		exit_builtin(char **args, t_shell *sh, char **env);
 
 // pwd.c
 int		pwd_builtin(char *cwd, size_t cwd_size);

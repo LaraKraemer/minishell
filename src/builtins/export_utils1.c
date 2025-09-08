@@ -86,16 +86,3 @@ void	print_export(char **env)
 		i++;
 	}
 }
-
-void	free_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env && env[i])
-	{
-		free(env[i]);
-		i++;
-	}
-	free(env);
-}

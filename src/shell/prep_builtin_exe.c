@@ -31,8 +31,7 @@ int	setup_paths(t_shell *sh, char **global_env)
 		}
 		if (set_path(&sh->cmds_array[i], global_env) == -1)
 		{
-			error_input(ERR_PATH, 127);
-			sh->exit_code = 127;
+			sh->exit_code = error_input(ERR_PATH, 127);
 			sh->error_in_setup = 1;
 			return (0);
 		}
@@ -53,12 +52,14 @@ int	handle_builtins(t_shell *sh, char ***global_env)
 	{
 		if (sh->cmds_array->fd_in == -1 || sh->cmds_array->fd_out == -1)
 		{
-			free_resources(sh->input, sh->cmds_array, sh->cmd_count);
+			free_resources(sh->input, sh->cmds_array, sh->cmd_count,
+				&sh->first_token);
 			sh->exit_code = 1;
 			return (1);
 		}
-		sh->exit_code = builtins(&sh->cmds_array[0], global_env);
-		free_resources(sh->input, sh->cmds_array, sh->cmd_count);
+		sh->exit_code = builtins(&sh->cmds_array[0], global_env, sh);
+		free_resources(sh->input, sh->cmds_array, sh->cmd_count,
+			&sh->first_token);
 		return (1);
 	}
 	return (0);
@@ -66,6 +67,6 @@ int	handle_builtins(t_shell *sh, char ***global_env)
 
 void	execute_commands(t_shell *sh)
 {
-	sh->exit_code = execute_with_pipex_logic(sh->cmds_array, sh->cmd_count);
-	free_resources(sh->input, sh->cmds_array, sh->cmd_count);
+	sh->exit_code = execute_with_pipex_logic(sh);
+	free_resources(sh->input, sh->cmds_array, sh->cmd_count, &sh->first_token);
 }

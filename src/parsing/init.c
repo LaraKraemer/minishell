@@ -25,7 +25,11 @@ int	init_array(t_command *cmds_array, int cmd_count, char **envp)
 		cmds_array[i].cmd_args = NULL;
 		cmds_array[i].env = copy_env(envp);
 		if (!cmds_array[i].env)
+		{
+			while (i-- > 0)
+				free_array(cmds_array[i].env);
 			return (error_input(ERR_MEM_ALLO, 0));
+		}
 		cmds_array[i].fd_in = STDIN_FILENO;
 		cmds_array[i].fd_out = STDOUT_FILENO;
 		cmds_array[i].path_file = NULL;

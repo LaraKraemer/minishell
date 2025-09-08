@@ -14,18 +14,23 @@
 
 void	print_banner(void)
 {
-	printf("..####...##..##..######..##......##.....\n"
+	printf("..###..##..##..######..##......##.....\n"
 		"....##......##..##..##......##......##.....\n"
 		".....####...######..####....##......##.....\n"
 		"........##..##..##..##......##......##.....\n"
-		".....####...##..##..######..######..######.\n"
+		"....#####...##..##..######..######..######.\n"
 		".............................................\n");
 }
 
-/* free_tokens(tokens);*/
-void	free_resources(char *input, t_command *cmds, int count)
+void	free_if_error(char *input, t_token **first_token)
 {
 	free(input);
+	ms_lstclear(first_token);
+}
+
+void	free_resources(char *input, t_command *cmds, int count, t_token **first_token)
+{
+	free_if_error(input, first_token);
 	free_commands(cmds, count);
 }
 
@@ -58,7 +63,7 @@ void	free_cmds_array_env(t_command *cmds_array, int cmd_count)
 	i = 0;
 	while (i < cmd_count)
 	{
-		free_env(cmds_array[i].env);
+		free_array(cmds_array[i].env);
 		i++;
 	}
 }

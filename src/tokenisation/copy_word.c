@@ -114,7 +114,8 @@ char	*copy_words(char **start, char **envp, int last_exit_code)
 		{
 			handle_quotes(&end, &single_quote, &double_quote);
 			word = ft_substr(*start, 0, end - *start + 1);
-			end++;
+			if (*end)
+				end++;
 		}
 		else if (*end == '$' && (ft_isalnum(*(end + 1))
 				|| *(end + 1) == '_' || *(end + 1) == '?'))
