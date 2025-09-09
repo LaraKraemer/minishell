@@ -16,7 +16,7 @@
 Sets up executable paths for non-builtin commands in the command array.
 Skips builtin commands as they don't require path resolution.
 */
-int	setup_paths(t_shell *sh, char **global_env)
+int	setup_paths(t_shell *sh)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ int	setup_paths(t_shell *sh, char **global_env)
 			i++;
 			continue ;
 		}
-		if (set_path(&sh->cmds_array[i], global_env) == -1)
+		if (set_path(&sh->cmds_array[i], sh->global_env) == -1)
 		{
 			sh->exit_code = error_input(ERR_PATH, 127);
 			sh->error_in_setup = 1;
@@ -45,7 +45,7 @@ Handles execution of builtin commands with redirection support.
 Executes builtin commands directly in parent process.
 Saves and restores original stdout to ensure shell state remains intact.
 */
-int	handle_builtins(t_shell *sh, char ***global_env)
+int	handle_builtins(t_shell *sh)
 {
 	if (sh->cmd_count == 1 && sh->cmds_array[0].cmd_args
 		&& must_run_in_parent(sh->cmds_array[0].cmd_args[0]))
@@ -57,7 +57,7 @@ int	handle_builtins(t_shell *sh, char ***global_env)
 			sh->exit_code = 1;
 			return (1);
 		}
-		sh->exit_code = builtins(&sh->cmds_array[0], global_env, sh);
+		sh->exit_code = builtins(&sh->cmds_array[0], &sh->global_env, sh);
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count,
 			&sh->first_token);
 		return (1);

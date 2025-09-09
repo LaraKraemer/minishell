@@ -12,7 +12,7 @@
 
 #include "../../incl/minishell.h"
 
-void	minishell_loop(t_shell *sh, char ***global_env)
+void	minishell_loop(t_shell *sh)
 {
 	if (isatty(STDIN_FILENO))
 		print_banner();
@@ -25,17 +25,17 @@ void	minishell_loop(t_shell *sh, char ***global_env)
 				break ;
 			continue ;
 		}
-		if (!tokenize_input(sh, *global_env))
+		if (!tokenize_input(sh))
 			continue ;
-		if (!parse_prepare_cmds(sh, *global_env))
+		if (!parse_prepare_cmds(sh))
 			continue ;
-		if (!setup_paths(sh, *global_env))
+		if (!setup_paths(sh))
 		{
 			free_resources(sh->input, sh->cmds_array, sh->cmd_count,
 				&sh->first_token);
 			continue ;
 		}
-		if (handle_builtins(sh, global_env))
+		if (handle_builtins(sh))
 			continue ;
 		execute_commands(sh);
 	}

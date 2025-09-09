@@ -51,7 +51,7 @@ int	ms_lstclear(t_token **first_token)
 	t_token	*next;
 
 	if (first_token == NULL || *first_token == NULL)
-		return (0) ;
+		return (0);
 	while (*first_token != NULL)
 	{
 		next = (*first_token)->next;

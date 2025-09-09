@@ -63,14 +63,13 @@
 # define WHITE		"\033[0;37m"
 
 /* Shell */
-void	minishell_loop(t_shell *sh, char ***global_env);
+void	minishell_loop(t_shell *sh);
 void	init_shell(t_shell *sh);
 int		read_trim_input(t_shell *sh);
-int		tokenize_input(t_shell *sh, char **global_env);
-int		parse_prepare_cmds(t_shell *sh, char **global_env);
-//int		execute_with_pipex_logic(t_command *cmds, int count);
-int		setup_paths(t_shell *sh, char **global_env);
-int		handle_builtins(t_shell *sh, char ***global_env);
+int		tokenize_input(t_shell *sh);
+int		parse_prepare_cmds(t_shell *sh);
+int		setup_paths(t_shell *sh);
+int		handle_builtins(t_shell *sh);
 void	execute_commands(t_shell *sh);
 
 /* Utils */
@@ -81,7 +80,6 @@ void	free_resources(char *input, t_command *cmds, int count,
 void	print_error(char *arg, char *message);
 int		sys_error(char *context, char *arg);
 int		print_error_return(char *arg, char *message, int code);
-//void	free_env(char **env);
 void	free_cmds_array_env(t_command *cmds_array, int cmd_count);
 
 /* Signals */
