@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:57:44 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/05 16:39:05 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/09 13:15:44 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	handle_builtins(t_shell *sh)
 			sh->exit_code = 1;
 			return (1);
 		}
-		sh->exit_code = builtins(&sh->cmds_array[0], &sh->global_env, sh);
+		sh->exit_code = builtins(&sh->cmds_array[0], sh);
 		free_resources(sh->input, sh->cmds_array, sh->cmd_count,
 			&sh->first_token);
 		return (1);

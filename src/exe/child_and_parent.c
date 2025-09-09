@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:19:33 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/08 12:29:38 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/09 13:15:44 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	child_process(t_shell *sh, int i, int *pipe_fds, pid_t *child_pids)
 	handle_child_redir(sh->cmds_array, i, pipe_fds, cmd_count);
 	if (is_builtin(sh->cmds_array[i].cmd_args[0]))
 		cleanup_and_exit(sh, pipe_fds, child_pids,
-			builtins(&sh->cmds_array[i], &sh->cmds_array[i].env, sh));
+			builtins(&sh->cmds_array[i], sh));
 	check_status = check_command(&sh->cmds_array[i]);
 	if (check_status != 0)
 		cleanup_and_exit(sh, pipe_fds, child_pids, check_status);
