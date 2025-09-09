@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 14:05:39 by lkramer           #+#    #+#             */
-/*   Updated: 2025/07/31 14:11:01 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/08 18:53:55 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ char	**add_new_env_var(char *var, char ***env)
 	}
 	new_env[count] = new_var;
 	new_env[count + 1] = NULL;
-	free(*env);
 	return (new_env);
 }
