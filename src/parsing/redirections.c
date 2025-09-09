@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:28:59 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/05 18:02:26 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/09 14:04:43 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,16 @@ int	handle_out_append(t_command *cmd, int current_type,
 	return (1);
 }
 
-int	handle_redir_heredoc(t_command *cmd, char *delimiter, t_shell *sh)
+int	handle_redir_heredoc(t_command *cmd, char **delimiter, t_shell *sh)
 {
 	if (cmd->fd_in != STDIN_FILENO)
 		close(cmd->fd_in);
-	if (!handle_heredoc(&cmd->fd_in, delimiter, sh))
+	if (!handle_heredoc(&cmd->fd_in, *delimiter, sh))
+	{
+		free(*delimiter);
 		return (0);
+	}
+	free(*delimiter);
 	return (1);
 }
 
@@ -69,7 +73,7 @@ int	in_out_redir(t_command *cmd, t_token **current_token,
 	(*current_token)->value = quotes_token((*current_token)->value,
 			sh->global_env, sh->exit_code);
 	if (current_type == TOKEN_HEREDOC)
-		return (handle_redir_heredoc(cmd, temp_value, sh));
+		return (handle_redir_heredoc(cmd, &temp_value, sh));
 	free(temp_value);
 	if (current_type == TOKEN_REDIR_OUT || current_type == TOKEN_APPEND)
 		return (handle_out_append(cmd, current_type, (*current_token)->value));

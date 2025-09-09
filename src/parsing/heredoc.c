@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtimofee <dtimofee@student.42berlin.de>    #+#  +:+       +#+        */
+/*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-09-08 11:49:18 by dtimofee          #+#    #+#             */
-/*   Updated: 2025-09-08 11:49:18 by dtimofee         ###   ########.fr       */
+/*   Created: 2025/09/08 11:49:18 by dtimofee          #+#    #+#             */
+/*   Updated: 2025/09/09 13:55:35 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ static char	*need_expansion(char *new_str, char **start,
 /*Performs variable expansion within a heredoc line.
 If there is no expansion needed -
 appends a single character c to the end of a given string s.*/
-static char	*exp_in_heredoc(char *str, char **env, int ex_code)
+static char	*exp_in_heredoc(char **str, char **env, int ex_code)
 {
 	char	*start;
 	char	*new_str;
 
-	start = str;
+	start = *str;
 	new_str = ft_strdup("");
 	while (*start)
 	{
@@ -52,7 +52,7 @@ static char	*exp_in_heredoc(char *str, char **env, int ex_code)
 			start++;
 		}
 	}
-	free (str);
+	free (*str);
 	return (new_str);
 }
 
@@ -75,7 +75,7 @@ static void	read_heredoc_content(int write_fd, char *delimiter,
 			break ;
 		}
 		if (ft_strchr(heredoc_content, '$') && quotes_num == 0)
-			heredoc_content = exp_in_heredoc(heredoc_content,
+			heredoc_content = exp_in_heredoc(&heredoc_content,
 					sh->global_env, sh->exit_code);
 		write(write_fd, heredoc_content, ft_strlen(heredoc_content));
 		write(write_fd, "\n", 1);

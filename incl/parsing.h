@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:45:04 by dtimofee          #+#    #+#             */
-/*   Updated: 2025/09/07 14:23:19 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/09 14:04:15 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**copy_env(char **env);
 void	free_and_exit(t_shell *sh, char *temp, char *delimiter);
 
 /*heredoc*/
-int		handle_redir_heredoc(t_command *cmd, char *delimiter, t_shell *sh);
+int		handle_redir_heredoc(t_command *cmd, char **delimiter, t_shell *sh);
 int		handle_heredoc(int *fd_in, char *delimiter, t_shell *sh);
 int		check_quotes(char *delimiter);
 
