@@ -15,9 +15,9 @@
 
 static int	handle_empty_value(char **value, char *input)
 {
+	free(*value);
 	if (!*(input + 1))
 		return (1);
-  free(*value);
 	return (-1);
 }
 
@@ -54,10 +54,8 @@ int	get_tokens(char *input, t_token **first_token,
 		type = determine_type(input, input + 1);
 		value = determine_value(type, &input, envp, last_exit_code);
 		if (!value)
-		{
-			free_if_error(original_input, first_token);
-			return (error_input(ERR_SYNTAX_T, 1));
-		}
+			return (free_if_error(original_input, first_token),
+				error_input(ERR_SYNTAX_T, 1));
 		if (value[0] == '\0')
 		{
 			result = handle_empty_value(&value, input);
