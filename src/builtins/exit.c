@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:00:30 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/05 17:06:50 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/08 15:14:08 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	exit_builtin(char **args, t_shell *sh, char **env)
 		if (!ft_isdigit(args[1][i++]))
 		{
 			print_error(args[1], ERR_NUMERIC);
-			clean_res_exit(sh, env, 255);
+			clean_res_exit(sh, env, 2);
 		}
 	}
 	exit_code = shell_atoi(args[1]);
