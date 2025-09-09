@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:53:30 by lkramer           #+#    #+#             */
-/*   Updated: 2025/08/23 13:45:34 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/09 13:07:24 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	read_trim_input(t_shell *sh)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("exit\n");
+		free_array(sh->global_env);
 		exit(sh->exit_code);
 	}
 	sh->input = ft_strtrim(sh->raw_input, " \t\n");

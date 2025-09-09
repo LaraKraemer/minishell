@@ -6,7 +6,7 @@
 /*   By: lkramer <lkramer@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 17:49:58 by lkramer           #+#    #+#             */
-/*   Updated: 2025/09/05 16:35:27 by lkramer          ###   ########.fr       */
+/*   Updated: 2025/09/09 13:15:44 by lkramer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 // utils.c
 int		ft_strcmp(const char *s1, const char *s2);
-int		builtins(t_command *cmd, char ***global_env, t_shell *sh);
+int		builtins(t_command *cmd, t_shell *sh);
 int		is_builtin(char *arg);
 int		must_run_in_parent(const char *cmd_name);
 
